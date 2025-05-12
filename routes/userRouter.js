@@ -6,6 +6,6 @@ const userController = require("../controller/userController")
 
 
 //register
-router.get("/",userController.register)
+router.get("/signup",userController.register)
 
 module.exports=router

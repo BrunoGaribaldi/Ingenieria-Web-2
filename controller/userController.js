@@ -1,8 +1,8 @@
-
+const path = require('path');
 
 const userController = {
     register:(req,res) =>{
-        res.json("Hola!")
+        res.sendFile(path.join(__dirname, '../public/users/signup.html'));
     }
 }
 
