@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "user",
+    "password": "0101",
+    "database": "Proyecto-ingenieria-web-2",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+     "username": "user",
+    "password": "0101",
+    "database": "Proyecto-ingenieria-web-2",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "user",
+    "password": "0101",
+    "database": "Proyecto-ingenieria-web-2",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

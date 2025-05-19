@@ -21,6 +21,18 @@ app.use("/user",userRouter)
 //aca vamos a mostrar la vista home
 app.get('/', mainController.home);
 
+//esto es solo para saber si se conecto correctamente a la bd
+const db = require('./models/index');
+async function testConnection() {
+  try {
+    await db.sequelize.authenticate();
+    console.log('Conexión con la base de datos establecida.');
+  } catch (error) {
+    console.error('Error al conectar con la base de datos:', error);
+  }
+}
+
+testConnection();
 
 
 
