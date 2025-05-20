@@ -16,10 +16,11 @@
 <body>
 
   <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
-    <div class="container">
+    <div class="container-md">
+
       <!-- Logo -->
       <a class="navbar-brand" href="home.html">
-        <img src="/Public/logo.png" alt="Logo" width="200px" height="" class="d-inline-block align-text-top me-2">
+        <img  id= "agape-logo" src="/Public/logo.png" alt="Logo" width="200px" height="" class="d-inline-block align-text-top me-2">
       </a>
 
       <!-- Botón para menú colapsable en móviles -->
@@ -30,36 +31,46 @@
 
       <!-- Enlaces -->
       <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
-        <ul class="navbar-nav align-items-center mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/cuenta">Ver mi cuenta</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sobrenosotros.html">Sobre nosotros</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Inicar Sesion</a>
-          </li>
-          <li class="nav-item">
-            <a class="btn custom-red-btn" href="/get-started">Registrate</a>
-          </li>
-          <li class="nav-item">
-            <a class="btn custom-red-btn" href="/get-started">Ver Productos</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="navbar-nav align-items-center mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" href="/cuenta">Ver Productos</a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link" href="sobrenosotros.html">Sobre nosotros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.html">Iniciar Sesión</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn custom-red-btn btn-lg shadow-lg px-4" href="signup.html" style="font-weight: 600; transition: background-color 0.3s ease;">
+            Registrate
+          </a>
+        </li>
+        <!-- la idea es que ver mi cuenta solo aparezca cuando ya hemos iniciado sesión, sino no.-->
+        <li class="nav-item">
+          <a class="nav-link" href="/cuenta">Ver mi cuenta</a>
+        </li>
+      </ul>
     </div>
+
+    </div>
+
   </nav>
 
+  
   <div class="container mt-4 position-relative">
-
 
   <img src="/Public/main_home_image.png" alt="Imagen principal" class="img-fluid w-100 rounded shadow" style="filter: brightness(50%);">
 
-  <div class="position-absolute top-50 start-50 translate-middle text-white text-center">
+  <div class="position-absolute top-50 start-50 translate-middle text-white text-center d-flex flex-column align-items-center">
     <h1 class="mb-3">La moda que necesitabas</h1>
-    <h8 class="mb-3">Busca entre todos nuestros productos y encontra tu mejor outfit</h8>
-    <a href="/get-started" class="btn custom-red-btn" style="margin-top: 40px;">Ver Productos</a>
+    <p class="mb-3">Busca entre todos nuestros productos y encontrá tu mejor outfit</p>
+    <a href="/get-started" class="btn custom-red-btn btn-lg mt-3" style="padding: 1.2rem 3rem; font-size: 1.5rem; font-weight: 700; border-radius: 12px;">
+      Ver Productos
+    </a>
   </div>
 
 </div>
@@ -87,6 +98,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- Sección de marcas -->
 <section class="bg-black text-white py-5">
@@ -148,15 +160,22 @@
   </div>
 </section>
 
+<section class="mt-5" style="padding: 50px;">
+  <h4 class="mb-3" >Realizamos envios a todo el país</h4>
+  <p class="text-muted fs-5">
+    anashe anashe anashe anashe anashe anashe anashe anasheanashe anashe anashe anasheanashe anashe anashe anasheanashe anashe anashe anasheanashe anashe anashe anashe
+  </p>
+</section>
+
 <!-- footer de la pagina-->
 <footer class="bg-dark text-white pt-5 pb-3">
   <div class="container text-center">
     <div class="row justify-content-center">
       <!-- Contacto -->
       <div class="col-12 col-md-4 mb-4">
-        <h5 class="fw-bold mb-3">Contacto</h5>
         <p class="mb-1">Email: <a href="mailto:contacto@tuempresa.com" class="text-white text-decoration-underline">contacto@tuempresa.com</a></p>
-        <p>Tel: +54 11 1234 5678</p>
+        <p class="mb-1">Tel: +54 11 1234 5678</p>
+        <p class="mb-1">Ubicación: San Martín 342 H3700BJH Sáenz Peña Chaco</p>
       </div>
 
       <!-- Enlaces útiles -->

@@ -7,6 +7,8 @@
     color: #7e7eaa; /* Color gris-lila claro */
     font-size: 0.95rem;
 }
+
+/* brand-logo son justamente las marcas de ropa */
 .brand-logo {
   height: 64px;
   width: auto;
@@ -31,4 +33,9 @@
   background-color: #e63b60;
   border-color: #e63b60;
   color: white;
+}
+
+#agape-logo:hover{
+  transform: scale(1.05);
+  opacity: 1;
 }

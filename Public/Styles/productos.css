@@ -1,0 +1,30 @@
+
+.custom-red-btn {
+  background-color: #ff416c;
+  border-color: #ff416c;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.custom-red-btn:hover {
+  background-color: #e63b60;
+  border-color: #e63b60;
+  color: white;
+}
+
+#agape-logo:hover{
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+
+
+.product-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  border: 2px solid #ff416c;
+  box-shadow: 0 0 10px rgba(255, 65, 108, 0.2);
+}

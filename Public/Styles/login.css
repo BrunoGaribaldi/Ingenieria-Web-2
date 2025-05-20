@@ -1,0 +1,12 @@
+/* login.css */
+.custom-red-btn {
+  background-color: #ff416c !important;
+  border-color: #ff416c !important;
+  color: white !important;
+}
+
+.custom-red-btn:hover {
+  background-color: #e63b60 !important;
+  border-color: #e63b60 !important;
+  color: white !important;
+}
