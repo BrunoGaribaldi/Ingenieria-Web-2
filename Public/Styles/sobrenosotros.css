@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+    section#sobre-nosotros {
+      background-color: #ffffff;
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    section#sobre-nosotros h2 {
+      font-weight: 700;
+      color: #212529;
+    }
+
+    section#sobre-nosotros p.lead {
+      font-size: 1.25rem;
+      color: #495057;
+    }
+
+    section#sobre-nosotros p {
+      color: #6c757d;
+    }
+
+    section#sobre-nosotros .btn-primary {
+      background-color: #0d6efd;
+      border: none;
+      padding: 0.6rem 1.3rem;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    section#sobre-nosotros .btn-primary:hover {
+      background-color: #0b5ed7;
+    }
+
+    /* Imagen */
+    section#sobre-nosotros img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+
+    .stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff416c; /* Color rosa fuerte */
+}
+.stat-label {
+    color: #7e7eaa; /* Color gris-lila claro */
+    font-size: 0.95rem;
+}
+.brand-logo {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  margin: 0 12px;
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.custom-red-btn {
+  background-color: #ff416c;
+  border-color: #ff416c;
+  color: white;
+}
+
+.custom-red-btn:hover {
+  background-color: #e63b60;
+  border-color: #e63b60;
+  color: white;
+}
