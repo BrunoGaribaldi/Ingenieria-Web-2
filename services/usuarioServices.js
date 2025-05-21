@@ -1,9 +1,11 @@
 const { Usuario } = require("../models");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken")
 const usuarioServices = {
   createUsuario: async function createUsuario(usuario) {
     //Usuario.create(usuario);
     const usuarioEncontrado = await this.findUsuarioByEmail(usuario.email);
+
     if (usuarioEncontrado) {
       throw new Error("Email ya existente en la bd");
     } else {
@@ -13,22 +15,34 @@ const usuarioServices = {
     }
   },
   logUser: async function logUser(email, password) {
-    const usuarioEncontrado = await this.findUsuarioByEmail(email); 
+    const usuarioEncontrado = await this.findUsuarioByEmail(email);
 
-    if(!usuarioEncontrado){
-        throw new Error("Mail no encontrado") //no se encontro el mail
-    }
-    else{
-        //se encontro el usuario, chequeamos la contrasena
-        const validPassword = await bcrypt.compare(password, usuarioEncontrado.password)
-        if(validPassword){
-            //login
-            return usuarioEncontrado
+    if (!usuarioEncontrado) {
+      throw new Error("Mail no encontrado"); //no se encontro el mail
+    } else {
+      //se encontro el usuario, chequeamos la contrasena
+      const validPassword = await bcrypt.compare(
+        password,
+        usuarioEncontrado.password
+      );
+      let token;
+      if (validPassword) {
+        //login
+        //creamos el token:
+        token = jwt.sign(
+            {id: usuarioEncontrado.id, email: usuarioEncontrado.email}, //payload
+            "palabrasecreta", //se le pone una frase de encriptacion
+            {expiresIn: '1h'}
+        );
+    
+        return {
+          token: token,
+          user: usuarioEncontrado
         }
-        else{
-            throw new Error("Password incorrecta")
-        }
-
+        
+      } else {
+        throw new Error("Password incorrecta");
+      }
     }
   },
   /*findUsuarioById: async function findUsuarioById(id) {

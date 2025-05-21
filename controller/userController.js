@@ -20,8 +20,13 @@ const userController = {
   },
   loginProcess: async (req,res) =>{
     try {
-      const user = await usuarioServices.logUser(req.body.email, req.body.password);
-      res.status(201).json(user);
+      const responseLogin = await usuarioServices.logUser(req.body.email, req.body.password);
+      const token = responseLogin.token
+      res.status(201).json(
+        {
+          user: responseLogin.user,
+          token: token
+        });
 
     } catch (err) {
       res.status(400).json({ error: err.message });
