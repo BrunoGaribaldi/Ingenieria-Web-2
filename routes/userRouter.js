@@ -9,4 +9,7 @@ const userController = require("../controller/userController")
 router.get("/signup",userController.register)
 router.post("/signup",userController.registerProcess)
 
+//login
+router.post("/login",userController.loginProcess)
+
 module.exports=router
