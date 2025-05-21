@@ -6,7 +6,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Servir archivos estáticos
-app.use(express.static('public'));
+app.use(express.static('Public'));
 
 
 //para las rutas de usuario
