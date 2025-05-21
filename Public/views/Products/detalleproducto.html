@@ -10,13 +10,17 @@
 </head>
 
 <body>
+
+
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
     <div class="container-md">
 
-      <!-- Logo -->
-      <a class="navbar-brand" href="home.html">
-        <img  id= "agape-logo" src="/Public/logo.png" alt="Logo" width="200px" height="" class="d-inline-block align-text-top me-2">
-      </a>
+        <div class="text-center py-3">
+  <a href="home.html">
+    <img src="/Public/Images/Screenshot 2025-05-21 172606.png" alt="Logo" width="200" id="agape-logo">
+  </a>
+</div>
 
       <!-- Botón para menú colapsable en móviles -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
@@ -47,6 +51,16 @@
         <!-- la idea es que ver mi cuenta solo aparezca cuando ya hemos iniciado sesión, sino no.-->
         <li class="nav-item">
           <a class="nav-link" href="/cuenta">Ver mi cuenta</a>
+        </li>
+
+        <li>
+
+  <form class="d-flex" role="search">
+  <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar">
+  <button class="btn btn-outline-secondary" type="submit">
+    <i class="bi bi-search"></i>
+  </button>
+</form>
         </li>
         <li class="nav-item">
   <a class="nav-link position-relative" href="/carrito" aria-label="Carrito">
