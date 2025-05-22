@@ -7,11 +7,23 @@ const usuarioServices = {
     const usuarioEncontrado = await this.findUsuarioByEmail(usuario.email);
 
     if (usuarioEncontrado) {
-      throw new Error("Email ya existente en la bd");
+      const err = new Error("Este email ya se encuentra registrado");
+      err.code = "EMAIL_ALREADY_REGISTERED";
+      throw err;
     } else {
       usuario.password = await bcrypt.hash(usuario.password, 10);
       const newUser = await Usuario.create(usuario);
-      return newUser;
+      //creamos el token:
+        token = jwt.sign(
+          { id: newUser.id, email: newUser.email }, //payload
+          "palabrasecreta", //se le pone una frase de encriptacion
+          { expiresIn: "1h" }
+        );
+
+        return {
+          token: token,
+          user: newUser,
+        };
     }
   },
   logUser: async function logUser(email, password) {

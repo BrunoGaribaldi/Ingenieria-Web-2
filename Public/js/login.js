@@ -1,6 +1,5 @@
 //aca me va a llegar el token de inicio de sesion
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("login.js cargado correctamente");
   document
     .getElementById("login-form")
     .addEventListener("submit", async (e) => {
@@ -21,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let textErrorEmail = document.getElementById("error-email");
         //al recargarse la pagina hay que asegurarse de que los errores revios ya no esten
 
-        textErrorEmail.innerHTML = '';
-        textErrorPassword.innerHTML = '';
+        textErrorEmail.innerHTML = "";
+        textErrorPassword.innerHTML = "";
         if (err.response.data.code == "EMAIL_NOT_FOUND") {
           textErrorEmail.innerHTML = `Error: ${err.response?.data?.error}`;
         } else {

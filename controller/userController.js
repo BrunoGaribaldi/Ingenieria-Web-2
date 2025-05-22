@@ -1,17 +1,33 @@
 const path = require("path");
 
 const usuarioServices = require("../services/usuarioServices");
+const { validationResult } = require("express-validator");
 const userController = {
-  register: (req, res) => {
+  signup: (req, res) => {
     res.sendFile(path.join(__dirname, "../Public/views/Signup/signup.html"));
   },
 
-  registerProcess: async (req, res) => {
+  signupProcess: async (req, res) => {
+    // Captura errores de validación antes de crear el usuario
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     try {
-      const user = await usuarioServices.createUsuario(req.body);
-      res.status(201).json(user);
+      const responseSignup = await usuarioServices.createUsuario(req.body);
+      console.log('====================================');
+      console.log(responseSignup);
+      console.log('====================================');
+      const token = responseSignup.token;
+      res.status(201).json({
+        user: responseSignup.user,
+        token: token,
+      });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json({
+        error: err.message,
+        code: err.code,
+      });
     }
   },
   login: (req, res) => {
