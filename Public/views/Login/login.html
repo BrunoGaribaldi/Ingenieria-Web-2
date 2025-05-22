@@ -1,58 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bootstrap demo</title>
-    <link href="/" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-  
+    <link href="/" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-   <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card shadow-lg rounded-4">
-          <div class="card-body p-4" >
-           <img src="/Public/logo.png" alt="Logo del negocio" class="mb-4 mx-auto d-block" style="max-width: 150px; height: auto;">
-            <h3 class="card-title mb-4 text-center">Iniciar Sesion</h3>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card shadow-lg rounded-4">
+            <div class="card-body p-4">
+              <img
+                src="/Images/logo.png"
+                alt="Logo del negocio"
+                class="mb-4 mx-auto d-block"
+                style="max-width: 150px; height: auto"
+              />
+              <h3 class="card-title mb-4 text-center">Iniciar Sesion</h3>
 
-            <form class="row g-3" id="login-form" method="post" action="/user/login" novalidate>
-              
-              <div class="col-md-12">
-                <label for="validationCustomUsername" class="form-label">Mail</label>
-                <div class="input-group has-validation">
-                  <span class="input-group-text" id="inputGroupPrepend">@</span>
-                  <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese un email" required>
+              <form
+                class="row g-3"
+                id="login-form"
+                method="post"
+                action="/user/login"
+                novalidate
+              >
+                <div class="col-md-12">
+                  <label for="validationCustomUsername" class="form-label"
+                    >Mail</label
+                  >
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend"
+                      >@</span
+                    >
+                    <input
+                      type="email"
+                      name="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="Ingrese un email"
+                      required
+                    />
+
+                    <!--Aca va cuando hay un error-->
+                    <p id="error-email" class="text-danger"></p>
+                  </div>
                 </div>
-              </div>
 
-              <div> 
-                    <label for="inputPassword5" class="form-label">Contraseña</label>
-                    <input type="password" name="password" id="password" class="form-control" aria-describedby="passwordHelpBlock">
-              </div>
-              
+                <div>
+                  <label for="inputPassword5" class="form-label"
+                    >Contraseña</label
+                  >
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    class="form-control"
+                    aria-describedby="passwordHelpBlock"
+                  />
+
+                  <!--Aca va cuando hay un error de pssword-->
+                  <p id="error-password" class="text-danger"></p>
+                </div>
+
                 <div class="col-md-12 text-end">
-                    <a href="passwordforgoten.html" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                  <a href="passwordforgoten.html" class="text-decoration-none"
+                    >¿Olvidaste tu contraseña?</a
+                  >
                 </div>
-              <div class="col-12 d-flex justify-content-end">
-                <button 
-                  class="btn custom-red-btn btn-lg shadow-lg px-4" 
-                  type="submit" 
-                  style="font-weight: 600; transition: background-color 0.3s ease;">
-                  Aceptar
-                 </button>
-              </div>
-
-            </form>
-
+                <div class="col-12 d-flex justify-content-end">
+                  <button
+                    class="btn custom-red-btn btn-lg shadow-lg px-4"
+                    type="submit"
+                    style="
+                      font-weight: 600;
+                      transition: background-color 0.3s ease;
+                    "
+                  >
+                    Aceptar
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <script  src="/js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/login.js"></script>
   </body>
 </html>

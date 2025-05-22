@@ -1,6 +1,6 @@
 const { Usuario } = require("../models");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 const usuarioServices = {
   createUsuario: async function createUsuario(usuario) {
     //Usuario.create(usuario);
@@ -18,7 +18,10 @@ const usuarioServices = {
     const usuarioEncontrado = await this.findUsuarioByEmail(email);
 
     if (!usuarioEncontrado) {
-      throw new Error("Mail no encontrado"); //no se encontro el mail
+      //aca personalizo el error para despues agarrarlos
+      const err = new Error("Email no encontrado");
+      err.code = "EMAIL_NOT_FOUND";
+      throw err;
     } else {
       //se encontro el usuario, chequeamos la contrasena
       const validPassword = await bcrypt.compare(
@@ -30,18 +33,20 @@ const usuarioServices = {
         //login
         //creamos el token:
         token = jwt.sign(
-            {id: usuarioEncontrado.id, email: usuarioEncontrado.email}, //payload
-            "palabrasecreta", //se le pone una frase de encriptacion
-            {expiresIn: '1h'}
+          { id: usuarioEncontrado.id, email: usuarioEncontrado.email }, //payload
+          "palabrasecreta", //se le pone una frase de encriptacion
+          { expiresIn: "1h" }
         );
-    
+
         return {
           token: token,
-          user: usuarioEncontrado
-        }
-        
+          user: usuarioEncontrado,
+        };
       } else {
-        throw new Error("Password incorrecta");
+        //aca personalizo el error para despues agarrarlos
+        const err = new Error("Password incorrecta");
+        err.code = "INCORRECT_PASSWORD";
+        throw err;
       }
     }
   },

@@ -17,7 +17,23 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("token", res.token);
         alert(`Bienvenido, ${res.data.user.nombre}`);
       } catch (err) {
-        alert(`Error: ${err.response?.data?.error || err.message}`);
+        let textErrorPassword = document.getElementById("error-password");
+        let textErrorEmail = document.getElementById("error-email");
+        //al recargarse la pagina hay que asegurarse de que los errores revios ya no esten
+
+        textErrorEmail.innerHTML = '';
+        textErrorPassword.innerHTML = '';
+        if (err.response.data.code == "EMAIL_NOT_FOUND") {
+          textErrorEmail.innerHTML = `Error: ${err.response?.data?.error}`;
+        } else {
+          if (err.response.data.code == "INCORRECT_PASSWORD") {
+            //pass incorrecta
+            textErrorPassword.innerHTML = `${err.response?.data?.error}`;
+          } else {
+            //algun otro errr
+            textErrorEmail.innerHTML = `${err.message}`;
+          }
+        }
       }
     });
 });
