@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         //creo el token y lo guardo en el local storage
         localStorage.setItem("token", res.data.token);
-        alert(`Bienvenido, ${res.data.user.nombre}`);
+        window.location.href = "http://localhost:3000/";
       } catch (err) {
         let textErrorPassword = document.getElementById("error-password");
         let textErrorEmail = document.getElementById("error-email");

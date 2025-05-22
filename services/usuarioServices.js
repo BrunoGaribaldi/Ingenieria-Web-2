@@ -15,7 +15,7 @@ const usuarioServices = {
       const newUser = await Usuario.create(usuario);
       //creamos el token:
         token = jwt.sign(
-          { id: newUser.id, email: newUser.email }, //payload
+          { id: newUser.id, email: newUser.email, rol:newUser.rol }, //payload
           "palabrasecreta", //se le pone una frase de encriptacion
           { expiresIn: "1h" }
         );
@@ -45,7 +45,7 @@ const usuarioServices = {
         //login
         //creamos el token:
         token = jwt.sign(
-          { id: usuarioEncontrado.id, email: usuarioEncontrado.email }, //payload
+          { id: usuarioEncontrado.id, email: usuarioEncontrado.email, rol:usuarioEncontrado.rol }, //payload
           "palabrasecreta", //se le pone una frase de encriptacion
           { expiresIn: "1h" }
         );

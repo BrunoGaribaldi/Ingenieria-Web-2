@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
           email,
           password,
         });
-        localStorage.setItem("token", res.token);
-        alert(`Bienvenido, ${res.data.user.nombre}`);
+        localStorage.setItem("token", res.data.token);
+        window.location.href = "http://localhost:3000/";
       } catch (err) {
         let textErrorPassword = document.getElementById("error-password");
         let textErrorEmail = document.getElementById("error-email");

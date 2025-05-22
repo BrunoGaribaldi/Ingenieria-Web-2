@@ -19,7 +19,7 @@ const mainController = require("./controller/mainController")
 app.use("/user",userRouter)
 
 //aca vamos a mostrar la vista home
-app.get('/', mainController.home);
+app.get('/',mainController.home);
 
 //esto es solo para saber si se conecto correctamente a la bd
 const db = require('./models/index');
