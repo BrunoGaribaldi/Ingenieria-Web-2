@@ -2,9 +2,7 @@ const jwt = require("jsonwebtoken");
 const SECRET = "palabrasecreta";
 
 function authMiddleware(req, res, next) {
-    console.log('====================================');
-    console.log(req.headers);
-    console.log('====================================');
+  // Verifica si el token está presente en la cabecera Authorization
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).json({ error: 'Token requerido' });
