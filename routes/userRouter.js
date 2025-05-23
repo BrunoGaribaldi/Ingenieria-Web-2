@@ -8,14 +8,11 @@ const signupMiddleware = require("../middlewares/signupValidation")
 const authMiddleware = require("../middlewares/authMiddleware")
 //register
 router.get("/signup",userController.signup)
-router.post("/signup",userController.signupProcess)
+router.post("/signup", signupMiddleware,userController.signupProcess)
 
-router.get("/forgotpassword",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../Public/views/Login/passwordforgoten.html"))
-})
-router.post("/forgotpassword",authMiddleware,(req,res)=>{
-    res.send("se envio el mail")
-})
+//forgot password
+router.get("/forgotpassword",userController.forgotPassword)
+router.post("/forgotpassword",authMiddleware,userController.forgotPasswordProcess)
 
 //login
 router.get("/login",userController.login)

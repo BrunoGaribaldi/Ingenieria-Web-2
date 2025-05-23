@@ -25,7 +25,13 @@
               />
               <h3 class="card-title mb-4 text-center">Registro</h3>
 
-              <form class="row g-3 needs-validation" id="signup-form" method="post" action="/user/signup" novalidate>
+              <form
+                class="row g-3 needs-validation"
+                id="signup-form"
+                method="post"
+                action="/user/signup"
+                novalidate
+              >
                 <div class="col-md-6">
                   <label for="validationCustom01" class="form-label"
                     >Nombre</label
@@ -54,7 +60,7 @@
                     placeholder="Ingrese su Apellido"
                     required
                   />
-                   <!--Error de apellido-->
+                  <!--Error de apellido-->
                   <p id="error-apellido" class="text-danger"></p>
                 </div>
 
@@ -74,8 +80,8 @@
                       placeholder="Ingrese un email"
                       required
                     />
-                     <!--Error de email-->
-                  <p id="error-email" class="text-danger"></p>
+                    <!--Error de email-->
+                    <p id="error-email" class="text-danger"></p>
                   </div>
                 </div>
 
@@ -89,8 +95,8 @@
                   class="form-control"
                   aria-describedby="passwordHelpBlock"
                 />
-                 <!--Error de password-->
-                  <p id="error-password" class="text-danger"></p>
+                <!--Error de password-->
+                <p id="error-password" class="text-danger"></p>
                 <div id="passwordHelpBlock" class="form-text">
                   Su contraseña debe tener entre 8 y 20 caracteres, contener
                   letras y números, y no debe contener espacios, caracteres

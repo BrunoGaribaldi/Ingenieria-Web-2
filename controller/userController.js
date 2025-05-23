@@ -30,6 +30,14 @@ const userController = {
       });
     }
   },
+  forgotPassword: (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../Public/views/Login/passwordforgoten.html")
+    );
+  },
+  forgotPasswordProcess: (req, res) => {
+    res.send("se envio el mail");
+  },
   login: (req, res) => {
     res.sendFile(path.join(__dirname, "../Public/views/Login/login.html"));
   },
