@@ -15,9 +15,9 @@ const userController = {
     }
     try {
       const responseSignup = await usuarioServices.createUsuario(req.body);
-      console.log('====================================');
+      console.log("====================================");
       console.log(responseSignup);
-      console.log('====================================');
+      console.log("====================================");
       const token = responseSignup.token;
       res.status(201).json({
         user: responseSignup.user,
@@ -48,9 +48,17 @@ const userController = {
         req.body.password
       );
       const token = responseLogin.token;
+      const admin = responseLogin.admin;
+      req.session.userLogged = {
+        id: responseLogin.user.id,
+        rol: admin
+      };
+
+
       res.json({
         user: responseLogin.user,
         token: token,
+        admin: admin,
       });
     } catch (err) {
       res

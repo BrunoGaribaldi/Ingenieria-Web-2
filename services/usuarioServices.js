@@ -53,6 +53,7 @@ const usuarioServices = {
         return {
           token: token,
           user: usuarioEncontrado,
+          admin: usuarioEncontrado.rol == "admin"? 1:0
         };
       } else {
         //aca personalizo el error para despues agarrarlos

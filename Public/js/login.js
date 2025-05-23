@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
           password,
         });
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("admin", res.data.admin);
+    
         window.location.href = "http://localhost:3000/";
       } catch (err) {
         let textErrorPassword = document.getElementById("error-password");

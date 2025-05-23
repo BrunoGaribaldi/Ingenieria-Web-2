@@ -4,9 +4,9 @@ const router = express.Router()
 //importacion de controllers
 const adminController = require("../controller/adminController")
 
-const adminMiddleware = require("../middlewares/adminMiddleware")
+const adminMiddlewareAccess = require("../middlewares/adminMiddleware")
 //register
-router.get("/",adminMiddleware,adminController.home)
+router.get("/",adminMiddlewareAccess,adminController.home)
 
 
 module.exports=router

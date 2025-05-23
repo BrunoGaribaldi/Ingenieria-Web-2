@@ -1,13 +1,26 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//validacion de las rutas con session
+const session = require('express-session');
+
+app.use(session({
+  secret: 'clave_secreta',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // Usa true solo si tienes HTTPS
+}));
+
 // Servir archivos estáticos
 app.use(express.static("Public"));
-
+app.use(bodyParser.json());
 //para las rutas de usuario
 const userRouter = require("./routes/userRouter");
 const productRouter = require("./routes/productRouter");
