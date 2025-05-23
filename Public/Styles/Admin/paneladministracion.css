@@ -1,0 +1,15 @@
+.hover-bg-light:hover {
+  background-color: #e2e6ea; /* gris clarito */
+  text-decoration: none;
+}
+
+.card-hover {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1);
+    text-decoration: none;
+  }
