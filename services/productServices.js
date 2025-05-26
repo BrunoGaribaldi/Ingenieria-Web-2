@@ -14,5 +14,9 @@ const productServices = {
       productos: productos,
     };
   },
+  listProduct: async function listProduct(id){
+    const producto = await Producto.findByPk(id)
+    return producto
+  }
 };
 module.exports = productServices;

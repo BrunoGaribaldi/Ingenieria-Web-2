@@ -16,12 +16,11 @@
   </head>
 
   <body>
-   
     <div class="container" style="max-width: 1000px">
       <!--"encabezado del carrusel-->
       <div class="mt-5 mb-3">
-        <h3>Titulo del producto</h3>
-        <h5>$9999</h5>
+        <h3 id="titulo">Titulo del producto</h3>
+        <h5 id="precio">$9999</h5>
       </div>
 
       <div
@@ -35,20 +34,7 @@
               src="/Public/Images/adiadaslogo.jpg"
               class="d-block w-100"
               alt="Imagen 1"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="/Public/Images/adiadaslogo.jpg"
-              class="d-block w-100"
-              alt="Imagen 2"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="/Public/Images/adiadaslogo.jpg"
-              class="d-block w-100"
-              alt="Imagen 3"
+              id="imagen"
             />
           </div>
         </div>
@@ -112,7 +98,7 @@
 
       <section class="mt-5">
         <h4 class="mb-3">Descripción</h4>
-        <p class="text-muted fs-5">
+        <p id="descripcion" class="text-muted fs-5">
           Estas zapatillas urbanas combinan estilo y comodidad para acompañarte
           en tu día a día. Confeccionadas con materiales de alta calidad,
           ofrecen durabilidad y un calce perfecto. Ideales para uso diario o
@@ -487,6 +473,32 @@
       crossorigin="anonymous"
     ></script>
     <script src="/js/header.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const path = window.location.pathname;
+        const parts = path.split("/");
+        const id = parts[3];
+        console.log(id);
+
+        try {
+          const res = await axios.get(`/products/api/list/${id}`);
+          const producto = res.data;
+
+          //mostramos los elementos
+          console.log(producto);
+          const titleText = (document.getElementById("titulo").textContent =
+            producto.categoria + " " + producto.modelo);
+
+          const imagen = document.getElementById("imagen");
+          imagen.src = "/Uploads/" + producto.foto;
+          imagen.style.width = "100vw"; // o la altura que prefieras
+
+          // Ejemplo: document.getElementById("nombre-producto").textContent = producto.nombre;
+        } catch (error) {
+          console.error("Error al obtener el producto:", error);
+        }
+      });
+    </script>
   </body>
 </html>

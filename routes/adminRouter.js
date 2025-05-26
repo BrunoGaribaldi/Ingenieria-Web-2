@@ -6,18 +6,17 @@ const adminController = require("../controller/adminController");
 
 const adminMiddleware = require("../middlewares/adminMiddleware");
 const adminMiddlewareAccess = require("../middlewares/adminMiddleware");
-const {upload} = require("../index")
+const { upload } = require("../index");
 //register
 router.get("/", adminMiddlewareAccess, adminController.home);
 //para ver si existe la session
-router.get('/session', (req, res) => {
+router.get("/session", (req, res) => {
   if (req.session.userLogged) {
     res.json({ usuario: req.session.userLogged });
   } else {
-    res.status(401).json({ mensaje: 'Sesión expirada o no existe' });
+    res.status(401).json({ mensaje: "Sesión expirada o no existe" });
   }
 });
-
 
 router.get(
   "/create-product",

@@ -19,7 +19,7 @@
 
   <body>
     <!--Aca van a ir los productos que traes del listado, es el contenedor padre-->
-    <div class="d-flex mx-5" id="productos-contenedor"></div>
+    <div class="d-flex row mx-5" id="productos-contenedor"></div>
 
     <!--carrusel de calzado-->
     <div class="container" style="max-width: 800px">
@@ -475,7 +475,7 @@
             img.className = "card-img-top";
             img.alt = producto.modelo;
             img.src = `/Uploads/${producto.foto}`;
-            img.style.height = "40vh"; // o la altura que prefieras
+            img.style.height = "40vh";
             img.style.objectFit = "cover"; // para que la imagen no se deforme
 
             // Cuerpo de la tarjeta
@@ -501,11 +501,16 @@
             precio.className = "card-text fw-bold";
             precio.textContent = `$${producto.precio}`;
 
+            const boton = document.createElement("a");
+            boton.href = "http://localhost:3000/products/list/" + producto.id;
+            boton.textContent = "Ir a detalle";
+
             // Agrega los elementos al cardBody
             cardBody.appendChild(title);
             cardBody.appendChild(marca);
             cardBody.appendChild(genero);
             cardBody.appendChild(precio);
+            cardBody.appendChild(boton);
 
             // Agrega la imagen y el body a la tarjeta
             card.appendChild(img);
