@@ -12,4 +12,7 @@ router.get("/list/:id", productController.detail);
 router.get("/api/list", productController.listAll);
 router.get("/api/list/:id", productController.listProduct);
 
+
+
+
 module.exports = router;

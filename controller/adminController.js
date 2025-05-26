@@ -45,6 +45,18 @@ const adminController = {
       });
     }
   },
+
+  verpedidos: (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../Public/views/Admin/verpedidos.html")
+    );
+  },
+
+  administrarproductos: (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../Public/views/Admin/administrarproductos.html")
+    );
+  }
 };
 
 module.exports = adminController;
