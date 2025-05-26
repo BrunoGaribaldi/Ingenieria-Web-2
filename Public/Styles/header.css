@@ -1,0 +1,45 @@
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff416c; /* Color rosa fuerte */
+}
+.stat-label {
+    color: #7e7eaa; /* Color gris-lila claro */
+    font-size: 0.95rem;
+}
+
+/* brand-logo son justamente las marcas de ropa */
+.brand-logo {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  margin: 0 12px;
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.custom-red-btn {
+  background-color: #ff416c;
+  border-color: #ff416c;
+  color: white;
+}
+
+.custom-red-btn:hover {
+  background-color: #e63b60;
+  border-color: #e63b60;
+  color: white;
+}
+
+#agape-logo:hover{
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.invisible {
+  display: none;
+}

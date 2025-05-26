@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const usuarioServices = {
   createUsuario: async function createUsuario(usuario) {
-    //Usuario.create(usuario);
     const usuarioEncontrado = await this.findUsuarioByEmail(usuario.email);
 
     if (usuarioEncontrado) {
@@ -14,16 +13,16 @@ const usuarioServices = {
       usuario.password = await bcrypt.hash(usuario.password, 10);
       const newUser = await Usuario.create(usuario);
       //creamos el token:
-        token = jwt.sign(
-          { id: newUser.id, email: newUser.email, rol:newUser.rol }, //payload
-          "palabrasecreta", //se le pone una frase de encriptacion
-          { expiresIn: "1h" }
-        );
+      token = jwt.sign(
+        { id: newUser.id, email: newUser.email, rol: newUser.rol }, //payload
+        "palabrasecreta", //se le pone una frase de encriptacion
+        { expiresIn: "1h" }
+      );
 
-        return {
-          token: token,
-          user: newUser,
-        };
+      return {
+        token: token,
+        user: newUser,
+      };
     }
   },
   logUser: async function logUser(email, password) {
@@ -45,7 +44,11 @@ const usuarioServices = {
         //login
         //creamos el token:
         token = jwt.sign(
-          { id: usuarioEncontrado.id, email: usuarioEncontrado.email, rol:usuarioEncontrado.rol }, //payload
+          {
+            id: usuarioEncontrado.id,
+            email: usuarioEncontrado.email,
+            rol: usuarioEncontrado.rol,
+          }, //payload
           "palabrasecreta", //se le pone una frase de encriptacion
           { expiresIn: "1h" }
         );
@@ -53,7 +56,7 @@ const usuarioServices = {
         return {
           token: token,
           user: usuarioEncontrado,
-          admin: usuarioEncontrado.rol == "admin"? 1:0
+          admin: usuarioEncontrado.rol == "admin" ? 1 : 0,
         };
       } else {
         //aca personalizo el error para despues agarrarlos

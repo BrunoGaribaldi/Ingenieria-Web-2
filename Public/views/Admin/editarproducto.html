@@ -1,97 +1,161 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Dashboard Admin</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/Public/Styles/editarproducto.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-<div class="container mt-4">
-  <h3>Editar Producto</h3>
-  <form id="form-crear-producto" enctype="multipart/form-data">
-    <div class="mb-3">
-      <label for="nombre" class="form-label">Nombre del producto</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" value="nombre del producto qcio zapatillas deportivas nike ponele" required>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="/Styles/editarproducto.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Styles/header.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h3>Editar Producto</h3>
+      <form id="form-crear-producto" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre del producto</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nombre"
+            name="nombre"
+            value="nombre del producto qcio zapatillas deportivas nike ponele"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="stock" class="form-label">Stock restante</label>
+          <input
+            type="number"
+            class="form-control"
+            id="stock"
+            name="stock"
+            min="0"
+            value="10"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="categoria" class="form-label">Categoría</label>
+          <select class="form-select" id="categoria" name="categoria" required>
+            <option selected disabled value="">Seleccionar categoría</option>
+            <option value="zapatillas" selected>Zapatillas</option>
+            <option value="remeras">Remeras</option>
+            <option value="pantalones">Pantalones</option>
+            <option value="accesorios">Accesorios</option>
+            <!-- Podés agregar más -->
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="categoria" class="form-label">Genero</label>
+          <select class="form-select" id="categoria" name="categoria" required>
+            <option selected disabled value="">Seleccionar Genero</option>
+            <option value="zapatillas">Femenino</option>
+            <option value="remeras">Masculino</option>
+            <option value="pantalones" selected>Unisex</option>
+            <!-- Podés agregar más -->
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="precio" class="form-label">Precio</label>
+          <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input
+              type="number"
+              class="form-control"
+              id="precio"
+              name="precio"
+              step="0.01"
+              min="0"
+              value="100000"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label"
+            >Imágenes actuales. Presiona sobre la imagen para eliminarla.</label
+          >
+          <div class="d-flex gap-2 flex-wrap">
+            <!-- Imagen 1 como botón -->
+            <button
+              type="button"
+              class="border-0 p-0 position-relative eliminar-imagen"
+              style="background: none"
+            >
+              <img
+                src="/Public/Images/nikelogo.png"
+                class="img-thumbnail"
+                style="max-width: 150px"
+                alt="Imagen 1"
+              />
+            </button>
+
+            <!-- Imagen 2 -->
+            <button
+              type="button"
+              class="border-0 p-0 position-relative eliminar-imagen"
+              style="background: none"
+            >
+              <img
+                src="/Public/Images/nikelogo.png"
+                class="img-thumbnail"
+                style="max-width: 150px"
+                alt="Imagen 2"
+              />
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3 mt-3">
+          <label for="imagenes" class="form-label"
+            >Agregar nuevas imágenes</label
+          >
+          <input
+            type="file"
+            class="form-control"
+            id="imagenes"
+            name="imagenes[]"
+            accept="image/*"
+            multiple
+          />
+          <div class="form-text">
+            Podés subir nuevas imágenes. Las actuales seguirán si no las
+            eliminás.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción</label>
+          <textarea
+            class="form-control"
+            id="descripcion"
+            name="descripcion"
+            rows="4"
+            required
+          >
+Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste, quisquam! Commodi neque et tempora odit, expedita distinctio dolor necessitatibus vero vel officia aspernatur itaque! Cum facere molestiae earum laudantium deleniti.</textarea
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear producto</button>
+      </form>
     </div>
 
-    <div class="mb-3">
-      <label for="stock" class="form-label">Stock restante</label>
-      <input type="number" class="form-control" id="stock" name="stock" min="0" value="10"required>
-    </div>
+    <script src="/js/header.js"></script>
 
-    <div class="mb-3">
-      <label for="categoria" class="form-label">Categoría</label>
-      <select class="form-select" id="categoria" name="categoria" required>
-        <option selected disabled value="">Seleccionar categoría</option>
-        <option value="zapatillas" selected>Zapatillas</option>
-        <option value="remeras">Remeras</option>
-        <option value="pantalones">Pantalones</option>
-        <option value="accesorios">Accesorios</option>
-        <!-- Podés agregar más -->
-      </select>
-    </div>
-
-    <div class="mb-3">
-      <label for="categoria" class="form-label">Genero</label>
-      <select class="form-select" id="categoria" name="categoria" required>
-        <option selected disabled value="">Seleccionar Genero</option>
-        <option value="zapatillas">Femenino</option>
-        <option value="remeras">Masculino</option>
-        <option value="pantalones" selected>Unisex</option>
-        <!-- Podés agregar más -->
-      </select>
-    </div>
-
-    <div class="mb-3">
-  <label for="precio" class="form-label">Precio</label>
-  <div class="input-group">
-    <span class="input-group-text">$</span>
-    <input type="number" class="form-control" id="precio" name="precio" step="0.01" min="0" value="100000" required>
-  </div>
-</div>
-
-
-   <div class="mb-3">
-  <label class="form-label">Imágenes actuales. Presiona sobre la imagen para eliminarla.</label>
-  <div class="d-flex gap-2 flex-wrap">
-    <!-- Imagen 1 como botón -->
-    <button type="button" class="border-0 p-0 position-relative eliminar-imagen" style="background: none;">
-      <img src="/Public/Images/nikelogo.png" class="img-thumbnail" style="max-width: 150px;" alt="Imagen 1">
-    </button>
-
-    <!-- Imagen 2 -->
-    <button type="button" class="border-0 p-0 position-relative eliminar-imagen" style="background: none;">
-      <img src="/Public/Images/nikelogo.png" class="img-thumbnail" style="max-width: 150px;" alt="Imagen 2">
-    </button>
-  </div>
-</div>
-
-
-<div class="mb-3 mt-3">
-  <label for="imagenes" class="form-label">Agregar nuevas imágenes</label>
-  <input type="file" class="form-control" id="imagenes" name="imagenes[]" accept="image/*" multiple>
-  <div class="form-text">Podés subir nuevas imágenes. Las actuales seguirán si no las eliminás.</div>
-</div>
-
-
-    <div class="mb-3">
-      <label for="descripcion" class="form-label">Descripción</label>
-      <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste, quisquam! Commodi neque et tempora odit, expedita distinctio dolor necessitatibus vero vel officia aspernatur itaque! Cum facere molestiae earum laudantium deleniti.</textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Crear producto</button>
-  </form>
-</div>
-
-
-
-
-
-
-<!-- Script necesario -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
-</body>
+    <!-- Script necesario -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
