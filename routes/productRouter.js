@@ -9,4 +9,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 router.get("/", productController.home);
 router.get("/api/list", productController.listAll);
 
+
+
+
 module.exports = router;

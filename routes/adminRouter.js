@@ -31,4 +31,18 @@ router.post(
   adminController.createProductProcess
 );
 
+router.get(
+  "/pedidos",
+   adminMiddlewareAccess,
+   adminController.verpedidos
+);
+
+router.get(
+  "/administrarproductos",
+  adminMiddlewareAccess,
+   adminController.administrarproductos
+);
+
+
+
 module.exports = router;
