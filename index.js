@@ -3,14 +3,30 @@ const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
+
+//para imagenes
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'Public/Uploads/'); // Carpeta donde se guardan los archivos
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext); // nombre final del archivo
+  }
+});
+
+const upload = multer({ storage: storage });
+module.exports = { upload };
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //validacion de las rutas con session
 const session = require('express-session');
-
 app.use(session({
   secret: 'clave_secreta',
   resave: false,
@@ -21,6 +37,7 @@ app.use(session({
 // Servir archivos estáticos
 app.use(express.static("Public"));
 app.use(bodyParser.json());
+
 //para las rutas de usuario
 const userRouter = require("./routes/userRouter");
 const productRouter = require("./routes/productRouter");

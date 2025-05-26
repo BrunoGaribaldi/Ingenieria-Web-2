@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
 
       },  
-      nombre: {
+      marca: {
         type: DataTypes.STRING,
         allowNull: true,
       },
@@ -30,11 +30,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      cantidadDisponible: {
-        type: DataTypes.INTEGER,
+      
+       foto: {
+        type: DataTypes.STRING,
         allowNull: true,
       },
-       foto: {
+      categoria: {
         type: DataTypes.STRING,
         allowNull: true,
       },

@@ -65,7 +65,7 @@ function renderHeader() {
               <a class="nav-link" id="my-account" href="/my-account">Ver mi cuenta</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-danger" id="admin" href="/admin">Ver vista de administrador</a>
+              <button class="nav-link text-danger" id="admin">Ver vista de administrador</button>
             </li>
           </ul>
         </div>
@@ -110,6 +110,34 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     adminText.classList.add("invisible");
   }
+
+  document.getElementById("admin").addEventListener("click", function () {
+    //a veces como guardo en el local storage y en la session si es admin, la session se borra y sigue en el local storage
+    //por eso ahora, le voy a pasar por las dudas el admin del local storage para que no se descordine
+    const usuario = localStorage.getItem("admin");
+
+    if (usuario) {
+      axios
+        .get("http://localhost:3000/admin/session", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log("Sesión activa:", res.data.usuario);
+          window.location.href = "/admin";
+        })
+        .catch((err) => {
+          if (err.response?.status === 401) {
+            console.log("Sesión expirada, borrando localStorage...");
+            localStorage.removeItem("admin");
+            localStorage.removeItem("token");
+
+            //redirigimos al login
+            window.location.href = "/user/login";
+          }
+        });
+    }
+  });
+
   document.getElementById("logout").addEventListener("click", async () => {
     //removemos el token
     localStorage.removeItem("token");

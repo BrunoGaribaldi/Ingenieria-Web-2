@@ -6,6 +6,7 @@ const productController = require("../controller/productController");
 
 const authMiddleware = require("../middlewares/authMiddleware");
 
-router.get("/", productController.list);
+router.get("/", productController.home);
+router.get("/api/list", productController.listAll);
 
 module.exports = router;

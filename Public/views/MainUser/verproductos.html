@@ -18,6 +18,9 @@
   </head>
 
   <body>
+    <!--Aca van a ir los productos que traes del listado, es el contenedor padre-->
+    <div class="d-flex mx-5" id="productos-contenedor"></div>
+
     <!--carrusel de calzado-->
     <div class="container" style="max-width: 800px">
       <!--"encabezado del carrusel-->
@@ -449,5 +452,73 @@
       crossorigin="anonymous"
     ></script>
     <script src="/js/header.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const res = await axios.get("/products/api/list");
+          const productos = res.data.productos;
+          // Renderiza los productos en el DOM
+          console.log(productos);
+          const contenedor = document.getElementById("productos-contenedor");
+          productos.forEach((producto) => {
+            const cardParent = document.createElement("div");
+            cardParent.className = "col-3";
+            const card = document.createElement("div");
+            //estilos
+            card.className = "card m-2 p-3";
+            card.style.width = "100%";
+
+            // Imagen del producto
+            const img = document.createElement("img");
+            img.className = "card-img-top";
+            img.alt = producto.modelo;
+            img.src = `/Uploads/${producto.foto}`;
+            img.style.height = "40vh"; // o la altura que prefieras
+            img.style.objectFit = "cover"; // para que la imagen no se deforme
+
+            // Cuerpo de la tarjeta
+            const cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+
+            // Nombre del producto
+            const title = document.createElement("h5");
+            title.className = "card-title";
+            title.textContent = producto.categoria + " " + producto.modelo;
+
+            // genero
+            const marca = document.createElement("p");
+            marca.className = "card-text text-muted";
+            marca.textContent = producto.marca;
+            // genero
+            const genero = document.createElement("p");
+            genero.className = "card-text text-muted";
+            genero.textContent = producto.genero;
+
+            // Precio
+            const precio = document.createElement("p");
+            precio.className = "card-text fw-bold";
+            precio.textContent = `$${producto.precio}`;
+
+            // Agrega los elementos al cardBody
+            cardBody.appendChild(title);
+            cardBody.appendChild(marca);
+            cardBody.appendChild(genero);
+            cardBody.appendChild(precio);
+
+            // Agrega la imagen y el body a la tarjeta
+            card.appendChild(img);
+            card.appendChild(cardBody);
+
+            cardParent.appendChild(card);
+            // Agrega la tarjeta al contenedor
+            contenedor.appendChild(cardParent);
+          });
+        } catch (error) {
+          console.error("Error al obtener productos:", error);
+        }
+      });
+    </script>
   </body>
 </html>

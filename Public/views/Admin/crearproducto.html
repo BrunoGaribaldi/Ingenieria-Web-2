@@ -14,17 +14,60 @@
   <body>
     <div class="container mt-4">
       <h3>Crear nuevo producto</h3>
-      <form id="form-crear-producto" method="post" action="/admin/create-product" enctype="multipart/form-data">
+      <form
+        id="form-crear-producto"
+        method="post"
+        action="/admin/create-product"
+        enctype="multipart/form-data"
+      >
+
         <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre del producto</label>
+          <label for="categoria" class="form-label">Categoría</label>
+          <select class="form-select" id="categoria" name="categoria" required>
+            <option selected disabled value="">Seleccionar categoría</option>
+            <option value="zapatilla">Zapatilla</option>
+            <option value="remera">Remera</option>
+            <option value="pantalon">Pantalon</option>
+            <option value="accesorio">Accesorio</option>
+            <!-- Podés agregar más -->
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="marca" class="form-label">Marca del producto</label>
           <input
             type="text"
             class="form-control"
-            id="nombre"
-            name="nombre"
+            id="marca"
+            name="marca"
+            required
+            placeholder="This Week, INSIDE, etc"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="modelo" class="form-label">Modelo del producto</label>
+          <input
+            type="text"
+            class="form-control"
+            id="modelo"
+            name="modelo"
             required
           />
         </div>
+
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción adicional</label>
+          <textarea
+            class="form-control"
+            id="descripcion"
+            name="descripcion"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+
+        <!-- 
 
         <div class="mb-3">
           <label for="stock" class="form-label">Stock inicial</label>
@@ -36,31 +79,20 @@
             min="0"
             required
           />
-        </div>
+          comentamos por ahora
+        </div> -->
 
+        
         <div class="mb-3">
-          <label for="categoria" class="form-label">Categoría</label>
-          <select class="form-select" id="categoria" name="categoria" required>
-            <option selected disabled value="">Seleccionar categoría</option>
-            <option value="zapatillas">Zapatillas</option>
-            <option value="remeras">Remeras</option>
-            <option value="pantalones">Pantalones</option>
-            <option value="accesorios">Accesorios</option>
-            <!-- Podés agregar más -->
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label for="categoria" class="form-label">Genero</label>
-          <select class="form-select" id="categoria" name="categoria" required>
+          <label for="genero" class="form-label">Genero</label>
+          <select class="form-select" id="genero" name="genero" required>
             <option selected disabled value="">Seleccionar Genero</option>
-            <option value="zapatillas">Femenino</option>
-            <option value="remeras">Masculino</option>
-            <option value="pantalones">Unisex</option>
+            <option value="mujer">Mujer</option>
+            <option value="hombre">Hombre</option>
+            <option value="unisex">Unisex</option>
             <!-- Podés agregar más -->
           </select>
         </div>
-
         <div class="mb-3">
           <label for="precio" class="form-label">Precio</label>
           <input
@@ -70,42 +102,29 @@
             name="precio"
             step="0.01"
             min="0"
+            placeholder="$15 000"
             required
           />
         </div>
 
         <div class="mb-3">
-          <label for="imagen" class="form-label"
-            >Imágenes para carrusel</label
-          >
+          <label for="imagen" class="form-label">Imágenes para carrusel</label>
           <input
             type="file"
             class="form-control"
-            id="imagen"
-            name="imagen"
+            id="foto"
+            name="foto"
             accept="image/*"
             required
           />
-         <!--  <div class="form-text">
+          <!--  <div class="form-text">
             Podés subir varias imágenes (mínimo 1, máximo lo que quieras mostrar
             en el carrusel).
           </div> -->
-           <div class="form-text">
-            Subi 1 imagen
-          </div>
+          <div class="form-text">Subi 1 imagen</div>
         </div>
 
-        <div class="mb-3">
-          <label for="descripcion" class="form-label">Descripción</label>
-          <textarea
-            class="form-control"
-            id="descripcion"
-            name="descripcion"
-            rows="4"
-            required
-          ></textarea>
-        </div>
-
+        
         <button type="submit" class="btn btn-primary">Crear producto</button>
       </form>
     </div>

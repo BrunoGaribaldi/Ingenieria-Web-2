@@ -4,6 +4,9 @@ const { log } = require("console");
 
 const adminController = {
   home: (req, res) => {
+    console.log('====================================');
+    console.log(req.body);
+    console.log('====================================');
     res.sendFile(
       path.join(__dirname, "../Public/views/Admin/paneladministracion.html")
     );
@@ -24,21 +27,23 @@ const adminController = {
     console.log(req.file);
     
     console.log("====================================");
-    /*try {
+    try {
+      const productData = {
+        ...req.body,
+        foto: req.file ? req.file.filename : null // Guarda el nombre del archivo
+      };
       const responseCreateProduct = await productServices.createProduct(
-        req.body
+        productData
       );
       console.log("====================================");
       console.log(responseCreateProduct);
       console.log("====================================");
-      res.status(201).json({
-        user: responseCreateProduct.producto,
-      });
+      res.redirect("/")
     } catch (err) {
       res.status(400).json({
         error: err.message,
       });
-    }*/
+    }
   },
 };
 
