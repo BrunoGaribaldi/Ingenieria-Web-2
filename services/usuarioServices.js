@@ -78,6 +78,7 @@ const usuarioServices = {
       usuarios: usuariosEncontrados,
     };
   },
+  
 };
 
 module.exports = usuarioServices;

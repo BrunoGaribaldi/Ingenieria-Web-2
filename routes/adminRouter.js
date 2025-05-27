@@ -17,12 +17,28 @@ router.get("/session", (req, res) => {
   }
 });
 
+//creacion de producto
 router.get("/create-product", adminMiddleware, adminController.createProduct);
 router.post(
   "/create-product",
   adminMiddleware,
   upload.single("foto"), // por ahora vamos a hacer que sea una sola imagen
   adminController.createProductProcess
+);
+
+//edicion de producto
+router.get("/edit-product/:id", adminMiddleware, adminController.editProduct);
+router.post(
+  "/edit-product/:id",
+  adminMiddleware,
+  upload.single("foto"), // por ahora vamos a hacer que sea una sola imagen
+  adminController.editProductProcess
+);
+
+router.post(
+  "/delete-product/:id",
+  adminMiddleware,
+  adminController.deleteProductProcess
 );
 
 router.get("/pedidos", adminMiddleware, adminController.verpedidos);

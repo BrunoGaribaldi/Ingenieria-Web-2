@@ -387,14 +387,11 @@
         const path = window.location.pathname;
         const parts = path.split("/");
         const id = parts[3];
-        console.log(id);
 
         try {
           const res = await axios.get(`/products/api/list/${id}`);
           const producto = res.data;
-
-          //mostramos los elementos
-          console.log(producto);
+          
           const titleText = (document.getElementById("titulo").textContent =
             producto.categoria + " " + producto.modelo);
 

@@ -124,14 +124,29 @@
             const tdAcciones = document.createElement("td");
             tdAcciones.className = "text-center";
             tdAcciones.innerHTML = `
-          <button class="btn btn-sm btn-warning">Editar</button>
-          <button class="btn btn-sm btn-danger">Eliminar</button>
+          <a href="/products/list/${producto.id}"><button class="btn btn-sm btn-success">Ver detalle</button></a>
+           <a href="/admin/edit-product/${producto.id}"><button class="btn btn-sm btn-warning">Editar</button></a>
+          <button data-id="${producto.id}" class="eliminar-button btn btn-sm btn-danger">Eliminar</button>
         `;
             tr.appendChild(tdAcciones);
 
             tbody.appendChild(tr);
           });
         } catch (err) {}
+
+        // Después del forEach, agregamos los listeners:
+        document.querySelectorAll(".eliminar-button").forEach((btn) => {
+          btn.addEventListener("click", async function () {
+            const id = this.getAttribute("data-id");
+            try {
+              await axios.post(`/admin/delete-product/${id}`);
+              //recargar la tabla o eliminar la fila del DOM
+              this.closest("tr").remove();
+            } catch (err) {
+              alert("Error al eliminar el producto");
+            }
+          });
+        });
       });
     </script>
   </body>
