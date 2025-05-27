@@ -143,26 +143,17 @@
                 },
               },
 
-              series: [
-                categorias[0].total,
-                categorias[1].total,
-                categorias[2].total,
-                categorias[3].total,
-              ],
-              labels: [
-                categorias[0].categoria,
-                categorias[1].categoria,
-                categorias[2].categoria,
-                categorias[3].categoria,
-              ],
+              series: categorias.map((cat) => cat.total),
+              labels: categorias.map((cat) => cat.categoria),
               grid: {
-                strokeDashArray: 4,
+                strokeDashArray: 5,
               },
               colors: [
                 "rgba(255,99,132,0.8)",
                 "rgba(255,206,86,0.8)",
                 "rgba(75, 192, 192, 0.8)",
                 "rgba(250, 192, 192, 0.8)",
+                 "rgba(153, 102, 255, 0.8)"
               ],
               legend: {
                 show: true,
