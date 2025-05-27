@@ -15,14 +15,14 @@
     <div class="container mt-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Administrar Clientes</h3>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <input
             type="text"
             id="buscador-clientes"
             class="form-control"
             placeholder="Buscar cliente por nombre..."
           />
-        </div>
+        </div> -->
       </div>
 
       <table
@@ -31,63 +31,47 @@
       >
         <thead class="table-light">
           <tr>
-            <th>ID</th>
             <th>Nombre</th>
+            <th>Apellido</th>
             <th>Email</th>
-            <th class="text-center">Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- Ejemplo de cliente no activo -->
-          <tr data-activo="0">
-            <td>2</td>
-            <td>Maria López</td>
-            <td>marialopez@example.com</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-danger">
-                Ver Compras Realizadas
-              </button>
-              <button class="btn btn-sm btn-info">Ver Detalles</button>
-            </td>
-          </tr>
-          <tr data-activo="0">
-            <td>2</td>
-            <td>Maria López</td>
-            <td>marialopez@example.com</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-danger">
-                Ver Compras Realizadas
-              </button>
-              <button class="btn btn-sm btn-info">Ver Detalles</button>
-            </td>
-          </tr>
-          <tr data-activo="0">
-            <td>2</td>
-            <td>Maria López</td>
-            <td>marialopez@example.com</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-danger">
-                Ver Compras Realizadas
-              </button>
-              <button class="btn btn-sm btn-info">Ver Detalles</button>
-            </td>
-          </tr>
-          <tr data-activo="0">
-            <td>2</td>
-            <td>Maria López</td>
-            <td>marialopez@example.com</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-danger">
-                Ver Compras Realizadas
-              </button>
-              <button class="btn btn-sm btn-info">Ver Detalles</button>
-            </td>
-          </tr>
-
-          <!-- Agregá más clientes aquí -->
-        </tbody>
+        <tbody id="cuerpo-tabla"></tbody>
       </table>
     </div>
     <script src="/js/header.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          const res = await axios.get("/admin/api/clientes/list");
+          const usuarios = res.data.usuarios;
+          const tbody = document.getElementById("cuerpo-tabla");
+          // Renderiza los productos en el DOM
+          console.log(usuarios);
+
+          usuarios.forEach((usuario) => {
+            const tr = document.createElement("tr");
+
+            // Nombre
+            const tdNombre = document.createElement("td");
+            tdNombre.textContent = usuario.nombre;
+            tr.appendChild(tdNombre);
+
+            //apellido
+            const tdApellido = document.createElement("td");
+            tdApellido.textContent = usuario.apellido;
+            tr.appendChild(tdApellido);
+
+            const tdEmail = document.createElement("td");
+            tdEmail.textContent = usuario.email;
+            tr.appendChild(tdEmail);
+
+            tbody.appendChild(tr);
+          });
+        } catch (err) {}
+      });
+    </script>
   </body>
 </html>

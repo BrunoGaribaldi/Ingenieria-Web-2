@@ -66,26 +66,17 @@ const usuarioServices = {
       }
     }
   },
-  /*findUsuarioById: async function findUsuarioById(id) {
-    try {
-      const user = await Usuario.findByPk(id);
-
-      if (!user) {
-        console.log("User not found");
-        return null;
-      }
-
-      console.log("User found:", user.toJSON());
-      return user;
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
-  },*/
   findUsuarioByEmail: async function findUsuarioByEmail(emailRecibido) {
     const usuarioEncontrado = await Usuario.findOne({
       where: { email: emailRecibido },
     });
     return usuarioEncontrado;
+  },
+  findAllUsuarios: async function findAllUsuarios() {
+    const usuariosEncontrados = await Usuario.findAll();    
+    return {
+      usuarios: usuariosEncontrados,
+    };
   },
 };
 

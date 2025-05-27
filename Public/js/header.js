@@ -76,11 +76,110 @@ function renderHeader() {
   // Inserta el header al principio del body
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 }
+function renderFooter() {
+  const footerHTML = `
+    <!-- footer de la pagina-->
+    <footer class="bg-dark text-white mt-5 pt-5 pb-3">
+      <div class="container text-center">
+        <div class="row justify-content-center">
+          <!-- Contacto -->
+          <div class="col-12 col-md-4 mb-4">
+            <p class="mb-1">
+              Email:
+              <a
+                href="mailto:contacto@tuempresa.com"
+                class="text-white text-decoration-underline"
+                >contacto@tuempresa.com</a
+              >
+            </p>
+            <p class="mb-1">Tel: +54 11 1234 5678</p>
+            <p class="mb-1">
+              Ubicación: San Martín 342 H3700BJH Sáenz Peña Chaco
+            </p>
+          </div>
+
+          <!-- Enlaces útiles -->
+          <div class="col-12 col-md-4 mb-4">
+            <h5 class="fw-bold mb-3">Enlaces</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a
+                  href="#inicio"
+                  class="text-white text-decoration-none d-block mb-1"
+                  >Inicio</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#productos"
+                  class="text-white text-decoration-none d-block mb-1"
+                  >Productos</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#clientes"
+                  class="text-white text-decoration-none d-block mb-1"
+                  >Clientes</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#nosotros"
+                  class="text-white text-decoration-none d-block"
+                  >Nosotros</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Redes sociales -->
+          <div class="col-12 col-md-4 mb-4">
+            <h5 class="fw-bold mb-3">Seguinos</h5>
+            <div class="d-flex justify-content-center gap-3">
+              <a
+                href="https://facebook.com"
+                class="text-white fs-4"
+                aria-label="Facebook"
+              >
+                <i class="bi bi-facebook"></i>
+              </a>
+              <a
+                href="https://instagram.com"
+                class="text-white fs-4"
+                aria-label="Instagram"
+              >
+                <i class="bi bi-instagram"></i>
+              </a>
+              <a
+                href="https://twitter.com"
+                class="text-white fs-4"
+                aria-label="Twitter"
+              >
+                <i class="bi bi-twitter-x"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-light my-4" />
+
+        <div class="text-center">
+          <small class="text-secondary"
+            >© 2025 Tu Empresa. Todos los derechos reservados.</small
+          >
+        </div>
+      </div>
+    </footer>`;
+  // Inserta el footer al final del body
+  document.body.insertAdjacentHTML("beforeend", footerHTML);
+}
 
 //aca se muestra o esconde las opciones de inicio de sesion
 document.addEventListener("DOMContentLoaded", function () {
-  renderHeader(); // <-- Inserta el header dinámicamente
-
+  renderHeader(); 
+  renderFooter();
+  
   token = localStorage.getItem("token");
   admin = localStorage.getItem("admin");
 

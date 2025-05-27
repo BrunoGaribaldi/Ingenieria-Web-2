@@ -5,10 +5,9 @@ const router = express.Router();
 const adminController = require("../controller/adminController");
 
 const adminMiddleware = require("../middlewares/adminMiddleware");
-const adminMiddlewareAccess = require("../middlewares/adminMiddleware");
 const { upload } = require("../index");
 //register
-router.get("/", adminMiddlewareAccess, adminController.home);
+router.get("/", adminMiddleware, adminController.home);
 //para ver si existe la session
 router.get("/session", (req, res) => {
   if (req.session.userLogged) {
@@ -18,11 +17,7 @@ router.get("/session", (req, res) => {
   }
 });
 
-router.get(
-  "/create-product",
-  adminMiddlewareAccess,
-  adminController.createProduct
-);
+router.get("/create-product", adminMiddleware, adminController.createProduct);
 router.post(
   "/create-product",
   adminMiddleware,
@@ -30,18 +25,15 @@ router.post(
   adminController.createProductProcess
 );
 
-router.get(
-  "/pedidos",
-   adminMiddlewareAccess,
-   adminController.verpedidos
-);
+router.get("/pedidos", adminMiddleware, adminController.verpedidos);
 
 router.get(
   "/administrarproductos",
-  adminMiddlewareAccess,
-   adminController.administrarproductos
+  adminMiddleware,
+  adminController.administrarproductos
 );
 
-
+router.get("/clientes/list", adminController.listClients);
+router.get("/api/clientes/list", adminController.listClientsApi);
 
 module.exports = router;

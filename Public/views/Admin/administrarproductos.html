@@ -15,7 +15,7 @@
     <div class="container mt-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Administrar Productos</h3>
-        <div class="btn-group" role="group">
+        <!--  <div class="btn-group" role="group">
           <button
             type="button"
             class="btn btn-outline-primary active"
@@ -38,8 +38,8 @@
           >
             No Activos
           </button>
-        </div>
-        <div class="row mb-3">
+        </div> -->
+        <!-- <div class="row mb-3">
           <div class="col-md-3">
             <select id="tipo-busqueda" class="form-select">
               <option value="nombre">Buscar por nombre</option>
@@ -54,14 +54,14 @@
               placeholder="Buscar cliente..."
             />
           </div>
-        </div>
+        </div> -->
       </div>
       <div style="margin-bottom: 20px">
-        <a href = "/admin/create-product">
-        <button class="btn btn-success" id="btn-agregar-producto">
-          <i class="bi bi-plus-circle"></i> Agregar Producto
-        </button>
-      </a>
+        <a href="/admin/create-product">
+          <button class="btn btn-success" id="btn-agregar-producto">
+            <i class="bi bi-plus-circle"></i> Agregar Producto
+          </button>
+        </a>
       </div>
 
       <table
@@ -70,42 +70,69 @@
       >
         <thead class="table-light">
           <tr>
-            <th>ID</th>
-            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Modelo</th>
+            <th>Marca</th>
+            <th>Genero</th>
             <th>Precio</th>
-            <th>Stock</th>
-            <th>Estado</th>
             <th class="text-center">Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- Ejemplo de producto -->
-          <tr data-stock="5">
-            <td>1</td>
-            <td>Zapatillas Nike</td>
-            <td>$12.000</td>
-            <td>5</td>
-            <td><span class="badge bg-success">Activo</span></td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-warning">Editar</button>
-              <button class="btn btn-sm btn-danger">Eliminar</button>
-            </td>
-          </tr>
-          <tr data-stock="0">
-            <td>2</td>
-            <td>Remera Blanca</td>
-            <td>$4.200</td>
-            <td>0</td>
-            <td><span class="badge bg-secondary">No Activo</span></td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-warning">Editar</button>
-              <button class="btn btn-sm btn-danger">Eliminar</button>
-            </td>
-          </tr>
-          <!-- Más productos aquí -->
-        </tbody>
+        <tbody id="cuerpo-tabla"></tbody>
       </table>
     </div>
     <script src="/js/header.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          const res = await axios.get("/products/api/list");
+          const productos = res.data.productos;
+          const tbody = document.getElementById("cuerpo-tabla");
+          // Renderiza los productos en el DOM
+          console.log(productos);
+
+          productos.forEach((producto) => {
+            const tr = document.createElement("tr");
+
+            // Categoría
+            const tdCategoria = document.createElement("td");
+            tdCategoria.textContent = producto.categoria;
+            tr.appendChild(tdCategoria);
+
+            // Modelo
+            const tdModelo = document.createElement("td");
+            tdModelo.textContent = producto.modelo;
+            tr.appendChild(tdModelo);
+
+            // Marca
+            const tdMarca = document.createElement("td");
+            tdMarca.textContent = producto.marca;
+            tr.appendChild(tdMarca);
+
+            // Genero
+            const tdGenero = document.createElement("td");
+            tdGenero.textContent = producto.genero;
+            tr.appendChild(tdGenero);
+
+            // Precio
+            const tdPrecio = document.createElement("td");
+            tdPrecio.textContent = `$${producto.precio}`;
+            tr.appendChild(tdPrecio);
+
+            // Acciones
+            const tdAcciones = document.createElement("td");
+            tdAcciones.className = "text-center";
+            tdAcciones.innerHTML = `
+          <button class="btn btn-sm btn-warning">Editar</button>
+          <button class="btn btn-sm btn-danger">Eliminar</button>
+        `;
+            tr.appendChild(tdAcciones);
+
+            tbody.appendChild(tr);
+          });
+        } catch (err) {}
+      });
+    </script>
   </body>
 </html>
