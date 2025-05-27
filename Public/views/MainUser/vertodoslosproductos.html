@@ -1,210 +1,238 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Productos</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Productos</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-</head>
+  <body>
+    
+    <!-- Filtros -->
+    <div class="row mb-4 mx-5" style="margin-top: 50px">
+      <!-- Género -->
+      <div class="col-md-4">
+        <label
+          for="filtro-genero"
+          class="form-label fw-semibold text-center d-block"
+          >Filtrar por género</label
+        >
+        <select class="form-select" id="filtro-genero">
+          <option selected value="">Todos</option>
+        </select>
+      </div>
 
-<body>
- 
-<!-- Filtros -->
-<div class="row mb-4" style = 'margin-top: 50px;'>
-  <!-- Género -->
-  <div class="col-md-4">
-<label for="filtro-genero" class="form-label fw-semibold text-center d-block">Filtrar por género</label>
-    <select class="form-select" id="filtro-genero">
-      <option selected value="">Todos</option>
-    </select>
-  </div>
+      <!-- Categoría -->
+      <div class="col-md-4">
+        <label
+          for="filtro-genero"
+          class="form-label fw-semibold text-center d-block"
+          >Filtrar por categoria</label
+        >
+        <select class="form-select" id="filtro-categoria">
+          <option selected value="">Todas</option>
+        </select>
+      </div>
 
-  <!-- Categoría -->
-  <div class="col-md-4">
-<label for="filtro-genero" class="form-label fw-semibold text-center d-block">Filtrar por categoria</label>
-    <select class="form-select" id="filtro-categoria">
-      <option selected value="">Todas</option>
-    </select>
-  </div>
-
-  <!-- Precio -->
-  <div class="col-md-4">
-<label for="filtro-genero" class="form-label fw-semibold text-center d-block">Filtrar por precio</label>
-    <select class="form-select" id="filtro-precio">
-      <option selected value="">Todos</option>
-    </select>
-  </div>
-</div>
-
-
- <!-- Grilla de productos -->
-  <section class="py-4">
-    <div class="container">
-      <div id="productos-contenedor" class="row g-4">
-
-
+      <!-- Precio -->
+      <div class="col-md-4">
+        <label
+          for="filtro-genero"
+          class="form-label fw-semibold text-center d-block"
+          >Filtrar por precio</label
+        >
+        <select class="form-select" id="filtro-precio">
+          <option selected value="">Todos</option>
+        </select>
       </div>
     </div>
-  </section>
+    <!-- Grilla de productos -->
+    <section class="py-4">
+      <div class="container">
+        <div id="productos-contenedor" class="row g-4"></div>
+      </div>
+    </section>
 
+    <!-- Script necesario -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/header.js"></script>
 
-<!-- Script necesario -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      let todosLosProductos = [];
 
-<script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const res = await axios.get("/products/api/list");
+          todosLosProductos = res.data.productos;
 
-  let todosLosProductos = [];
+          renderizarProductos(todosLosProductos);
+          cargarFiltrosDinamicos(todosLosProductos);
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-    const res = await axios.get("/products/api/list");
-    todosLosProductos = res.data.productos;
-      
-    renderizarProductos(todosLosProductos);
-    cargarFiltrosDinamicos(todosLosProductos);
+          const { genero, categoria, precio } = getQueryParams();
 
-    const { genero, categoria, precio } = getQueryParams();
+          if (genero) document.getElementById("filtro-genero").value = genero;
+          if (categoria)
+            document.getElementById("filtro-categoria").value = categoria;
+          if (precio) document.getElementById("filtro-precio").value = precio;
 
-    if (genero) document.getElementById("filtro-genero").value = genero;
-    if (categoria) document.getElementById("filtro-categoria").value = categoria;
-    if (precio) document.getElementById("filtro-precio").value = precio;
+          aplicarFiltros(); // aplicar los filtros que llegaron
 
-    aplicarFiltros(); // aplicar los filtros que llegaron
+          document
+            .getElementById("filtro-genero")
+            .addEventListener("change", aplicarFiltros);
+          document
+            .getElementById("filtro-categoria")
+            .addEventListener("change", aplicarFiltros);
+          document
+            .getElementById("filtro-precio")
+            .addEventListener("change", aplicarFiltros);
+        } catch (error) {
+          console.error("Error al cargar productos:", error);
+        }
+      });
 
+      function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          genero: params.get("genero")?.toLowerCase() || "",
+          categoria: params.get("categoria")?.toLowerCase() || "",
+          precio: params.get("precio") || "",
+        };
+      }
 
-    document.getElementById("filtro-genero").addEventListener("change", aplicarFiltros);
-    document.getElementById("filtro-categoria").addEventListener("change", aplicarFiltros);
-    document.getElementById("filtro-precio").addEventListener("change", aplicarFiltros);
+      function cargarFiltrosDinamicos(productos) {
+        const generoSelect = document.getElementById("filtro-genero");
+        const categoriaSelect = document.getElementById("filtro-categoria");
+        const precioSelect = document.getElementById("filtro-precio"); // este igual lo dejamos fijo si querés
 
+        // Limpiamos excepto la primera opción "Todos"
+        generoSelect.innerHTML = '<option value="">Todos</option>';
+        categoriaSelect.innerHTML = '<option value="">Todas</option>';
 
+        // Géneros únicos
+        const generos = obtenerValoresUnicos(productos, "genero");
+        generos.forEach((g) => {
+          const opcion = document.createElement("option");
+          opcion.value = g;
+          opcion.textContent = capitalize(g);
+          generoSelect.appendChild(opcion);
+        });
 
+        // Categorías únicas
+        const categorias = obtenerValoresUnicos(productos, "categoria");
+        categorias.forEach((c) => {
+          const opcion = document.createElement("option");
+          opcion.value = c;
+          opcion.textContent = capitalize(c);
+          categoriaSelect.appendChild(opcion);
+        });
 
-  } catch (error) {
-    console.error("Error al cargar productos:", error);
-  }
-});
+        // Precio lo dejamos estático o podés hacer algo similar si querés.
+      }
 
-function getQueryParams() {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    genero: params.get("genero")?.toLowerCase() || "",
-    categoria: params.get("categoria")?.toLowerCase() || "",
-    precio: params.get("precio") || ""
-  };
-}
+      function obtenerValoresUnicos(productos, campo) {
+        const valores = productos
+          .map((p) => p[campo]?.toLowerCase())
+          .filter(Boolean);
+        return [...new Set(valores)];
+      }
 
+      function capitalize(text) {
+        if (!text) return "";
+        return text.charAt(0).toUpperCase() + text.slice(1);
+      }
 
-function cargarFiltrosDinamicos(productos) {
-  const generoSelect = document.getElementById("filtro-genero");
-  const categoriaSelect = document.getElementById("filtro-categoria");
-  const precioSelect = document.getElementById("filtro-precio"); // este igual lo dejamos fijo si querés
+      function renderizarProductos(productos) {
+        const contenedor = document.getElementById("productos-contenedor");
+        contenedor.innerHTML = "";
 
-  // Limpiamos excepto la primera opción "Todos"
-  generoSelect.innerHTML = '<option value="">Todos</option>';
-  categoriaSelect.innerHTML = '<option value="">Todas</option>';
+        if (productos.length === 0) {
+          contenedor.innerHTML =
+            "<p class='text-center'>No se encontraron productos.</p>";
+          return;
+        }
+        productos.forEach((producto) => {
+          const card = document.createElement("div");
+          card.className = "col-12 col-sm-6 col-md-4 col-lg-3";
 
-  // Géneros únicos
-  const generos = obtenerValoresUnicos(productos, "genero");
-  generos.forEach(g => {
-    const opcion = document.createElement("option");
-    opcion.value = g;
-    opcion.textContent = capitalize(g);
-    generoSelect.appendChild(opcion);
-  });
-
-  // Categorías únicas
-  const categorias = obtenerValoresUnicos(productos, "categoria");
-  categorias.forEach(c => {
-    const opcion = document.createElement("option");
-    opcion.value = c;
-    opcion.textContent = capitalize(c);
-    categoriaSelect.appendChild(opcion);
-  });
-
-  // Precio lo dejamos estático o podés hacer algo similar si querés.
-}
-
-function obtenerValoresUnicos(productos, campo) {
-  const valores = productos.map(p => p[campo]?.toLowerCase()).filter(Boolean);
-  return [...new Set(valores)];
-}
-
-
-function capitalize(text) {
-  if (!text) return "";
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-
-function renderizarProductos(productos) {
-  const contenedor = document.getElementById("productos-contenedor");
-  contenedor.innerHTML = "";
-
-  if (productos.length === 0) {
-    contenedor.innerHTML = "<p class='text-center'>No se encontraron productos.</p>";
-    return;
-  }
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.className = "col-12 col-sm-6 col-md-4 col-lg-3";
-
-    card.innerHTML = `
-      <a href="/products/list/${producto.id}" class="text-decoration-none text-dark">
+          card.innerHTML = `
+      <a href="/products/list/${
+        producto.id
+      }" class="text-decoration-none text-dark">
         <div class="card product-card shadow-sm position-relative h-100">
           <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle">
             <i class="bi bi-heart"></i>
           </button>
-          <img src="/Uploads/${producto.foto}" class="card-img-top" alt="${producto.modelo}" style="height: 40vh; object-fit: cover;">
+          <img src="/Uploads/${producto.foto}" class="card-img-top" alt="${
+            producto.modelo
+          }" style="height: 40vh; object-fit: cover;">
           <div class="card-body">
             <h5 class="card-title mb-1">${producto.modelo}</h5>
             <p class="text-muted mb-1">Categoría: ${producto.categoria}</p>
             <p class="text-muted mb-1">Género: ${producto.genero}</p>
-            <p class="fw-bold">${Number(producto.precio).toLocaleString("es-AR", {
-              style: "currency",
-              currency: "ARS",
-              minimumFractionDigits: 2,
-            })}</p>
+            <p class="fw-bold">${Number(producto.precio).toLocaleString(
+              "es-AR",
+              {
+                style: "currency",
+                currency: "ARS",
+                minimumFractionDigits: 2,
+              }
+            )}</p>
           </div>
         </div>
       </a>
     `;
 
-    contenedor.appendChild(card);
-  });
-}
+          contenedor.appendChild(card);
+        });
+      }
 
-function aplicarFiltros() {
-  const genero = document.getElementById("filtro-genero").value.toLowerCase();
-  const categoria = document.getElementById("filtro-categoria").value.toLowerCase();
-  const precio = document.getElementById("filtro-precio").value;
+      function aplicarFiltros() {
+        const genero = document
+          .getElementById("filtro-genero")
+          .value.toLowerCase();
+        const categoria = document
+          .getElementById("filtro-categoria")
+          .value.toLowerCase();
+        const precio = document.getElementById("filtro-precio").value;
 
-  let filtrados = todosLosProductos;
+        let filtrados = todosLosProductos;
 
-  if (genero) {
-    filtrados = filtrados.filter(p => p.genero.toLowerCase() === genero);
-  }
+        if (genero) {
+          filtrados = filtrados.filter(
+            (p) => p.genero.toLowerCase() === genero
+          );
+        }
 
-  if (categoria) {
-    filtrados = filtrados.filter(p => p.categoria.toLowerCase().includes(categoria));
-  }
+        if (categoria) {
+          filtrados = filtrados.filter((p) =>
+            p.categoria.toLowerCase().includes(categoria)
+          );
+        }
 
-  if (precio) {
-    const [min, max] = precio.split("-").map(Number);
-    filtrados = filtrados.filter(p => {
-      const precioNum = Number(p.precio);
-      return precioNum >= min && precioNum <= max;
-    });
-  }
+        if (precio) {
+          const [min, max] = precio.split("-").map(Number);
+          filtrados = filtrados.filter((p) => {
+            const precioNum = Number(p.precio);
+            return precioNum >= min && precioNum <= max;
+          });
+        }
 
-  renderizarProductos(filtrados);
-}
-
-</script>
-
-
-</body>
+        renderizarProductos(filtrados);
+      }
+    </script>
+  </body>
 </html>

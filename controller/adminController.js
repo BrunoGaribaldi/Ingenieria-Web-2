@@ -29,7 +29,7 @@ const adminController = {
       const responseCreateProduct = await productServices.createProduct(
         productData
       );
-      res.redirect("/");
+      res.redirect("/admin/administrarproductos");
     } catch (err) {
       res.status(400).json({
         error: err.message,

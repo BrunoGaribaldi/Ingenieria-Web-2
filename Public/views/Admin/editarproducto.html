@@ -14,11 +14,7 @@
   <body>
     <div class="container mt-4">
       <h3>Crear nuevo producto</h3>
-      <form
-        id="form-edit-producto"
-        method="post"
-        enctype="multipart/form-data"
-      >
+      <form id="form-edit-producto" method="post" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="categoria" class="form-label">Categoría</label>
           <select class="form-select" id="categoria" name="categoria" required>
@@ -27,6 +23,7 @@
             <option value="remera">Remera</option>
             <option value="pantalon">Pantalon</option>
             <option value="accesorio">Accesorio</option>
+            <option value="abrigo">Abrigo</option>
             <!-- Podés agregar más -->
           </select>
         </div>
@@ -85,9 +82,9 @@
         <div class="mb-3">
           <label for="genero" class="form-label">Genero</label>
           <select class="form-select" id="genero" name="genero" required>
-            <option  disabled value="">Seleccionar Genero</option>
+            <option disabled value="">Seleccionar Genero</option>
             <option value="mujer">Mujer</option>
-            <option  value="hombre">Hombre</option>
+            <option value="hombre">Hombre</option>
             <option value="unisex">Unisex</option>
             <!-- Podés agregar más -->
           </select>
@@ -142,13 +139,12 @@
         const descripcion = document.getElementById("descripcion");
         const genero = document.getElementById("genero");
         const categoria = document.getElementById("categoria");
-        
-        
 
         try {
           const res = await axios.get(`/products/api/list/${id}`);
           const producto = res.data;
-          const form = document.getElementById("form-edit-producto").action = "/admin/edit-product/" + producto.id
+          const form = (document.getElementById("form-edit-producto").action =
+            "/admin/edit-product/" + producto.id);
 
           console.log(producto);
 
