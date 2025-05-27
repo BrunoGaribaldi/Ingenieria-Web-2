@@ -19,6 +19,7 @@
   "homepage": "https://github.com/BrunoGaribaldi/Ingenieria-Web-2#readme",
   "description": "",
   "dependencies": {
+    "apexcharts": "^4.7.0",
     "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",

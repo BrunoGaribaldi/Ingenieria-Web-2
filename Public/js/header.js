@@ -60,10 +60,6 @@ function renderHeader() {
                 >Cerrar Sesión</a
               >
             </li>
-            <!-- la idea es que ver mi cuenta solo aparezca cuando ya hemos iniciado sesión, sino no.-->
-            <li class="nav-item">
-              <a class="nav-link" id="my-account" href="/my-account">Ver mi cuenta</a>
-            </li>
             <li class="nav-item">
               <button class="nav-link text-danger" id="admin">Ver vista de administrador</button>
             </li>
@@ -177,27 +173,24 @@ function renderFooter() {
 
 //aca se muestra o esconde las opciones de inicio de sesion
 document.addEventListener("DOMContentLoaded", function () {
-  renderHeader(); 
+  renderHeader();
   renderFooter();
-  
+
   token = localStorage.getItem("token");
   admin = localStorage.getItem("admin");
 
   let login = document.getElementById("login");
   let signup = document.getElementById("signup");
   let adminText = document.getElementById("admin");
-  let myAccount = document.getElementById("my-account");
 
   if (token) {
     login.classList.add("invisible");
     signup.classList.add("invisible");
 
-    myAccount.classList.remove("invisible");
     logout.classList.remove("invisible");
   } else {
     //usuario logueado
     logout.classList.add("invisible");
-    myAccount.classList.add("invisible");
 
     login.classList.remove("invisible");
     signup.classList.remove("invisible");

@@ -10,11 +10,37 @@
     <link rel="stylesheet" href="/Styles/header.css" />
     <link href="/Styles/asdasdasd.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
   </head>
   <body>
     <div class="container mt-4">
+      <h1 class="my-5">Dashboard de productos</h1>
+      <!--grafico de torta-->
+      <div class="card">
+        <div class="card-body py-4">
+          <h1 class="text-center p-3" style="color: #888">
+            Categoria de productos
+          </h1>
+          <div id="chart-demo-pie" class="position-relative pb-5"></div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-body py-5">
+          <h1 class="text-center p-3" style="color: #888">
+            Genero de productos
+          </h1>
+          <div class="d-flex">
+            <div id="chart-hombre" class="position-relative col-4"></div>
+            <div id="chart-mujer" class="position-relative col-4"></div>
+            <div id="chart-unisex" class="position-relative col-4"></div>
+          </div>
+        </div>
+      </div>
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Administrar Productos</h3>
         <!--  <div class="btn-group" role="group">
           <button
             type="button"
@@ -58,24 +84,28 @@
       </div>
       <div style="margin-bottom: 20px">
         <a href="/admin/create-product">
-          <button class="btn btn-success" id="btn-agregar-producto">
+          <button
+            class="btn text-white"
+            style="background-color: rgba(75, 192, 192, 0.8)"
+            id="btn-agregar-producto"
+          >
             <i class="bi bi-plus-circle"></i> Agregar Producto
           </button>
         </a>
       </div>
 
       <table
-        class="table table-bordered table-hover align-middle"
+        class="table table-striped table-hover align-middle shadow rounded my-5"
         id="tabla-productos"
       >
         <thead class="table-light">
           <tr>
-            <th>Categoría</th>
-            <th>Modelo</th>
-            <th>Marca</th>
-            <th>Genero</th>
-            <th>Precio</th>
-            <th class="text-center">Acciones</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Precio</th>
+            <th scope="col" class="text-center">Acciones</th>
           </tr>
         </thead>
         <tbody id="cuerpo-tabla"></tbody>
@@ -83,9 +113,222 @@
     </div>
     <script src="/js/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
         try {
+          //graficos
+          const resCategorias = await axios.get(
+            "/admin/api/productos/count-categories"
+          );
+          const categorias = resCategorias.data;
+
+          window.ApexCharts &&
+            new ApexCharts(document.getElementById("chart-demo-pie"), {
+              chart: {
+                type: "donut",
+                fontFamily: "inherit",
+                height: 400,
+                sparkline: {
+                  enabled: true,
+                },
+                animations: {
+                  enabled: true,
+                },
+              },
+              dataLabels: {
+                enabled: true,
+                formatter: function (val) {
+                  return val.toFixed(2) + "%";
+                },
+              },
+
+              series: [
+                categorias[0].total,
+                categorias[1].total,
+                categorias[2].total,
+                categorias[3].total,
+              ],
+              labels: [
+                categorias[0].categoria,
+                categorias[1].categoria,
+                categorias[2].categoria,
+                categorias[3].categoria,
+              ],
+              grid: {
+                strokeDashArray: 4,
+              },
+              colors: [
+                "rgba(255,99,132,0.8)",
+                "rgba(255,206,86,0.8)",
+                "rgba(75, 192, 192, 0.8)",
+                "rgba(250, 192, 192, 0.8)",
+              ],
+              legend: {
+                show: true,
+                position: "bottom",
+                fontFamily: "inherit",
+                offsetY: 12,
+                markers: {
+                  width: 10,
+                  height: 10,
+                  radius: 100,
+                },
+                itemMargin: {
+                  horizontal: 8,
+                  vertical: 8,
+                },
+                labels: {
+                  colors: "black",
+                },
+              },
+              tooltip: {
+                fillSeriesColor: false,
+              },
+            }).render();
+
+          //genero de productos
+
+          const resGeneros = await axios.get(
+            "/admin/api/productos/count-genders"
+          );
+
+          const generos = resGeneros.data.resultado;
+          const totalProductos = resGeneros.data.total;
+
+          window.ApexCharts &&
+            new ApexCharts(document.getElementById("chart-hombre"), {
+              chart: {
+                type: "radialBar",
+                fontFamily: "inherit",
+                height: 400,
+                animations: {
+                  enabled: true,
+                },
+              },
+              series: [(generos[0].total / totalProductos) * 100],
+              plotOptions: {
+                radialBar: {
+                  hollow: {
+                    margin: 15,
+                    size: "80%",
+                  },
+
+                  dataLabels: {
+                    showOn: "always",
+                    name: {
+                      offsetY: -10,
+                      show: true,
+                      color: "#888",
+                      fontSize: "16px",
+                    },
+                    value: {
+                      color: "#888",
+                      fontSize: "30px",
+                      show: true,
+                      formatter: function (val) {
+                        return val.toFixed(2) + "%";
+                      },
+                    },
+                  },
+                },
+              },
+              stroke: {
+                lineCap: "round",
+              },
+              colors: ["rgba(75, 192, 192, 0.8)"],
+              labels: [generos[0].genero],
+            }).render();
+
+          window.ApexCharts &&
+            new ApexCharts(document.getElementById("chart-mujer"), {
+              chart: {
+                type: "radialBar",
+                fontFamily: "inherit",
+                height: 400,
+                animations: {
+                  enabled: true,
+                },
+              },
+              series: [(generos[1].total / totalProductos) * 100],
+              plotOptions: {
+                radialBar: {
+                  hollow: {
+                    margin: 15,
+                    size: "80%",
+                  },
+
+                  dataLabels: {
+                    showOn: "always",
+                    name: {
+                      offsetY: -10,
+                      show: true,
+                      color: "#888",
+                      fontSize: "16px",
+                    },
+                    value: {
+                      color: "#888",
+                      fontSize: "30px",
+                      show: true,
+                      formatter: function (val) {
+                        return val.toFixed(2) + "%";
+                      },
+                    },
+                  },
+                },
+              },
+              stroke: {
+                lineCap: "round",
+              },
+              colors: ["rgba(255,99,132,0.8)"],
+              labels: [generos[1].genero],
+            }).render();
+
+          window.ApexCharts &&
+            new ApexCharts(document.getElementById("chart-unisex"), {
+              chart: {
+                type: "radialBar",
+                fontFamily: "inherit",
+                height: 400,
+                animations: {
+                  enabled: true,
+                },
+              },
+              series: [(generos[2].total / totalProductos) * 100],
+              plotOptions: {
+                radialBar: {
+                  hollow: {
+                    margin: 15,
+                    size: "80%",
+                  },
+
+                  dataLabels: {
+                    showOn: "always",
+                    name: {
+                      offsetY: -10,
+                      show: true,
+                      color: "#888",
+                      fontSize: "16px",
+                    },
+                    value: {
+                      color: "#888",
+                      fontSize: "30px",
+                      show: true,
+                      formatter: function (val) {
+                        return val.toFixed(2) + "%";
+                      },
+                    },
+                  },
+                },
+              },
+              stroke: {
+                lineCap: "round",
+              },
+              colors: ["rgba(255,206,86,0.8)"],
+              labels: [generos[2].genero],
+            }).render();
+
+          //lista de productos
           const res = await axios.get("/products/api/list");
           const productos = res.data.productos;
           const tbody = document.getElementById("cuerpo-tabla");
@@ -117,16 +360,23 @@
 
             // Precio
             const tdPrecio = document.createElement("td");
-            tdPrecio.textContent = `$${producto.precio}`;
+            tdPrecio.textContent = Number(producto.precio).toLocaleString(
+              "es-AR",
+              {
+                style: "currency",
+                currency: "ARS",
+                minimumFractionDigits: 2,
+              }
+            );
             tr.appendChild(tdPrecio);
 
             // Acciones
             const tdAcciones = document.createElement("td");
             tdAcciones.className = "text-center";
             tdAcciones.innerHTML = `
-          <a href="/products/list/${producto.id}"><button class="btn btn-sm btn-success">Ver detalle</button></a>
-           <a href="/admin/edit-product/${producto.id}"><button class="btn btn-sm btn-warning">Editar</button></a>
-          <button data-id="${producto.id}" class="eliminar-button btn btn-sm btn-danger">Eliminar</button>
+          <a href="/products/list/${producto.id}"><button class="btn btn-sm text-white" style="background-color:rgba(75, 192, 192, 0.8)">Ver detalle</button></a>
+           <a href="/admin/edit-product/${producto.id}"><button class="btn btn-sm text-white" style="background-color:rgba(255,206,86,0.8)">Editar</button></a>
+          <button data-id="${producto.id}"  class="eliminar-button btn btn-sm btn-danger">Eliminar</button>
         `;
             tr.appendChild(tdAcciones);
 

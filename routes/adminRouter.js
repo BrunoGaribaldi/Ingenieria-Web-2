@@ -35,21 +35,29 @@ router.post(
   adminController.editProductProcess
 );
 
+
+//delete
 router.post(
   "/delete-product/:id",
   adminMiddleware,
   adminController.deleteProductProcess
 );
 
-router.get("/pedidos", adminMiddleware, adminController.verpedidos);
+//router.get("/pedidos", adminMiddleware, adminController.verpedidos);
 
+
+//vistas de admin
 router.get(
   "/administrarproductos",
   adminMiddleware,
   adminController.administrarproductos
 );
-
 router.get("/clientes/list", adminController.listClients);
+
+//apis
 router.get("/api/clientes/list", adminController.listClientsApi);
+router.get("/api/productos/count-categories", adminController.countCategoriesApi);
+router.get("/api/productos/count-genders", adminController.countGendersApi);
+
 
 module.exports = router;

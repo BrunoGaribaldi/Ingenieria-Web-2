@@ -172,7 +172,11 @@ function renderCarrusel(productos, categoria, idContenedor) {
             <div class="card-body">
               <h5 class="card-title mb-1">${producto.modelo}</h5>
               <p class="text-muted mb-1">Categoría: ${producto.categoria}</p>
-              <p class="fw-bold">$${producto.precio}</p>
+              <p class="fw-bold">${Number(producto.precio).toLocaleString("es-AR", {
+              style: "currency",
+              currency: "ARS",
+              minimumFractionDigits: 2,
+            })}</p>
             </div>
           </div>
         </a>
