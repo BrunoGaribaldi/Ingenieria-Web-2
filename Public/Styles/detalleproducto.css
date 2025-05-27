@@ -1,56 +1,11 @@
-#carouselFullWidth img {
-  height: 500px; /* o 100vh para pantalla completa */
-  object-fit: cover;
+#titulo {
+  font-size: 2.5rem; /* tamaño grande */
+  font-weight: 800;  /* muy negrita */
 }
 
- .btn-talle {
-    min-width: 60px;
-    padding: 15px 25px; 
-    border-radius: 8px;
-    font-weight: 600;        
-    background-color: transparent;
-    border: 2px solid;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-  }
-
-  .btn-talle:hover {
-    background-color: #ff416c;  /* Fondo rojo al hover */
-    color: white;               /* Texto blanco al hover */
-  }
-
-  .btn-talle.selected {
-    background-color: #ff416c; /* Fondo rojo cuando está seleccionado */
-    color: white;              /* Texto blanco cuando está seleccionado */
-    box-shadow: 0 0 8px #ff416c;
-  }
-
-   /* Botón no disponible */
-  .btn-talle.disabled {
-    background-color: #d3d3d3; /* gris claro */
-    color: #7a7a7a;           /* gris oscuro */
-    border-color: #7a7a7a;
-    cursor: not-allowed;
-    text-decoration: line-through; /* texto tachado */
-  }
-
-  /* Evitar hover para botones deshabilitados */
-  .btn-talle.disabled:hover {
-    background-color: #d3d3d3;
-    color: #7a7a7a;
-  }
-
-  .btn-border-red {
-  font-size: 1.2rem;
-  border: 2px solid #ff416c;
-  color: #ff416c;
-  background-color: white;
-  transition: color 0.3s ease;
-  font-weight: bold;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.btn-border-red:hover {
-  color: #6c757d; /* Gris Bootstrap */
+#precio {
+  color: #6c757d; /* gris Bootstrap */
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
 }

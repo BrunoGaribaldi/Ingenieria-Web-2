@@ -21,7 +21,12 @@ const productController = {
   listProduct: async (req,res) =>{
     const responseListProduct = await productServices.listProduct(req.params.id)
     res.json(responseListProduct)
-  }
+  },
+  verTodosLosProductos: (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../Public/views/MainUser/vertodoslosproductos.html")
+  );
+}
 };
 
 module.exports = productController;
