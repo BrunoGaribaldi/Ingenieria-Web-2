@@ -43,3 +43,28 @@
 .invisible {
   display: none;
 }
+
+
+.btn-categoria {
+    background-color: #ff416c;
+    color: white;
+    width: 180px;
+    height: 80px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    transition: transform 0.2s;
+  }
+
+  .btn-categoria:hover {
+    background-color: #e03a60;
+    transform: scale(1.05);
+    color: white;
+  }
+
+  .categorias-container {
+    gap: 70px;
+  }
