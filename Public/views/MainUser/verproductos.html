@@ -1,210 +1,464 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Productos</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/Styles/productos.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Productos</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/Styles/productos.css" />
+    <link rel="stylesheet" href="/Styles/home.css" />
 
-<body>  
-<!-- Carrusel de calzado -->
-<div class="container" style="max-width: 1000px;">
-  <!-- Encabezado -->
-  <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
-    <h3>Calzado</h3>
-    <a href="/products/vertodoslosproductos?categoria=zapatilla" class="btn btn-sm custom-red-btn shadow-sm" style="font-weight: 600; text-transform: uppercase;">
-      Ver más
-    </a>
-  </div>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
 
-  <!-- Contenedor con botones y carrusel -->
-  <div class="d-flex align-items-center justify-content-between">
+  <body>
+    <!-- Carrusel de Remeras -->
+    <div class="container" style="max-width: 1000px">
+      <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
+        <h3>Remeras</h3>
+        <a
+          href="/products/vertodoslosproductos?categoria=remera"
+          class="btn btn-sm custom-red-btn shadow-sm"
+          style="font-weight: 600; text-transform: uppercase"
+        >
+          Ver más
+        </a>
+      </div>
 
-    <!-- Botón izquierda -->
-    <button class="btn btn-outline-dark me-2" type="button" data-bs-target="#carouselCalzado" data-bs-slide="prev">
-      <i class="bi bi-chevron-left fs-4"></i>
-    </button>
+      <div class="d-flex align-items-center justify-content-between">
+        <button
+          class="btn btn-outline-dark me-2"
+          type="button"
+          data-bs-target="#carouselRemera"
+          data-bs-slide="prev"
+        >
+          <i class="bi bi-chevron-left fs-4"></i>
+        </button>
 
-    <!-- Carrusel -->
-    <div id="carouselCalzado" class="carousel slide w-100" data-bs-ride="carousel">
-      <div class="carousel-inner" id="carousel-inner-calzado">
-        <!-- JS inyectará los .carousel-item aquí -->
+        <div
+          id="carouselRemera"
+          class="carousel slide w-100"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner" id="carousel-inner-remera">
+            <!-- JS inyectará las remeras acá -->
+          </div>
+        </div>
+
+        <button
+          class="btn btn-outline-dark ms-2"
+          type="button"
+          data-bs-target="#carouselRemera"
+          data-bs-slide="next"
+        >
+          <i class="bi bi-chevron-right fs-4"></i>
+        </button>
       </div>
     </div>
 
-    <!-- Botón derecha -->
-    <button class="btn btn-outline-dark ms-2" type="button" data-bs-target="#carouselCalzado" data-bs-slide="next">
-      <i class="bi bi-chevron-right fs-4"></i>
-    </button>
+    <!-- Carrusel de Accesorios -->
+    <div class="container" style="max-width: 1000px">
+      <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
+        <h3>Accesorios</h3>
+        <a
+          href="/products/vertodoslosproductos?categoria=accesorios"
+          class="btn btn-sm custom-red-btn shadow-sm"
+          style="font-weight: 600; text-transform: uppercase"
+        >
+          Ver más
+        </a>
+      </div>
 
-  </div>
-</div>
+      <div class="d-flex align-items-center justify-content-between">
+        <button
+          class="btn btn-outline-dark me-2"
+          type="button"
+          data-bs-target="#carouselAccesorios"
+          data-bs-slide="prev"
+        >
+          <i class="bi bi-chevron-left fs-4"></i>
+        </button>
 
-<!-- Carrusel de Remeras -->
-<div class="container" style="max-width: 1000px;">
-  <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
-    <h3>Remeras</h3>
-    <a href="/products/vertodoslosproductos?categoria=remera" class="btn btn-sm custom-red-btn shadow-sm" style="font-weight: 600; text-transform: uppercase;">
-      Ver más
-    </a>
-  </div>
+        <div
+          id="carouselAccesorios"
+          class="carousel slide w-100"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner" id="carousel-inner-accesorios"></div>
+        </div>
 
-  <div class="d-flex align-items-center justify-content-between">
-    <button class="btn btn-outline-dark me-2" type="button" data-bs-target="#carouselRemera" data-bs-slide="prev">
-      <i class="bi bi-chevron-left fs-4"></i>
-    </button>
-
-    <div id="carouselRemera" class="carousel slide w-100" data-bs-ride="carousel">
-      <div class="carousel-inner" id="carousel-inner-remera">
-        <!-- JS inyectará las remeras acá -->
+        <button
+          class="btn btn-outline-dark ms-2"
+          type="button"
+          data-bs-target="#carouselAccesorios"
+          data-bs-slide="next"
+        >
+          <i class="bi bi-chevron-right fs-4"></i>
+        </button>
       </div>
     </div>
 
-    <button class="btn btn-outline-dark ms-2" type="button" data-bs-target="#carouselRemera" data-bs-slide="next">
-      <i class="bi bi-chevron-right fs-4"></i>
-    </button>
-  </div>
-</div>
+    <!-- Carrusel de abrigos -->
+    <div class="container" style="max-width: 1000px">
+      <!-- Encabezado -->
+      <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
+        <h3>Abrigo</h3>
+        <a
+          href="/products/vertodoslosproductos?categoria=abrigo"
+          class="btn btn-sm custom-red-btn shadow-sm"
+          style="font-weight: 600; text-transform: uppercase"
+        >
+          Ver más
+        </a>
+      </div>
 
-<!-- Carrusel de Accesorios -->
-<div class="container" style="max-width: 1000px;">
-  <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
-    <h3>Accesorios</h3>
-    <a href="/products/vertodoslosproductos?categoria=accesorios" class="btn btn-sm custom-red-btn shadow-sm" style="font-weight: 600; text-transform: uppercase;">
-      Ver más
-    </a>
-  </div>
+      <!-- Contenedor con botones y carrusel -->
+      <div class="d-flex align-items-center justify-content-between">
+        <!-- Botón izquierda -->
+        <button
+          class="btn btn-outline-dark me-2"
+          type="button"
+          data-bs-target="#carouselAbrigo"
+          data-bs-slide="prev"
+        >
+          <i class="bi bi-chevron-left fs-4"></i>
+        </button>
 
-  <div class="d-flex align-items-center justify-content-between">
-    <button class="btn btn-outline-dark me-2" type="button" data-bs-target="#carouselAccesorios" data-bs-slide="prev">
-      <i class="bi bi-chevron-left fs-4"></i>
-    </button>
+        <!-- Carrusel -->
+        <div
+          id="carouselAbrigo"
+          class="carousel slide w-100"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner" id="carousel-inner-abrigo">
+            <!-- JS inyectará los .carousel-item aquí -->
+          </div>
+        </div>
 
-    <div id="carouselAccesorios" class="carousel slide w-100" data-bs-ride="carousel">
-      <div class="carousel-inner" id="carousel-inner-accesorios">
-
+        <!-- Botón derecha -->
+        <button
+          class="btn btn-outline-dark ms-2"
+          type="button"
+          data-bs-target="#carouselAbrigo"
+          data-bs-slide="next"
+        >
+          <i class="bi bi-chevron-right fs-4"></i>
+        </button>
       </div>
     </div>
 
-    <button class="btn btn-outline-dark ms-2" type="button" data-bs-target="#carouselAccesorios" data-bs-slide="next">
-      <i class="bi bi-chevron-right fs-4"></i>
-    </button>
-  </div>
-</div>
+    <!-- Carrusel de pantalones -->
+    <div class="container" style="max-width: 1000px">
+      <!-- Encabezado -->
+      <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
+        <h3>Pantalones</h3>
+        <a
+          href="/products/vertodoslosproductos?categoria=pantalon"
+          class="btn btn-sm custom-red-btn shadow-sm"
+          style="font-weight: 600; text-transform: uppercase"
+        >
+          Ver más
+        </a>
+      </div>
 
-<section class="py-5 bg-light text-center">
-  <div class="container">
-    <h2 class="mb-4">Productos</h2>
+      <!-- Contenedor con botones y carrusel -->
+      <div class="d-flex align-items-center justify-content-between">
+        <!-- Botón izquierda -->
+        <button
+          class="btn btn-outline-dark me-2"
+          type="button"
+          data-bs-target="#carouselPantalon"
+          data-bs-slide="prev"
+        >
+          <i class="bi bi-chevron-left fs-4"></i>
+        </button>
 
-    <!-- Acá irían tus productos, por ejemplo tarjetas -->
+        <!-- Carrusel -->
+        <div
+          id="carouselPantalon"
+          class="carousel slide w-100"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner" id="carousel-inner-pantalon">
+            <!-- JS inyectará los .carousel-item aquí -->
+          </div>
+        </div>
 
-    <!-- Botón -->
-    <a href="/products/vertodoslosproductos" class="btn custom-red-btn btn-lg px-4" style="font-weight: 600;">
-      Ver todos los productos
-    </a>
-  </div>
-</section>
+        <!-- Botón derecha -->
+        <button
+          class="btn btn-outline-dark ms-2"
+          type="button"
+          data-bs-target="#carouselPantalon"
+          data-bs-slide="next"
+        >
+          <i class="bi bi-chevron-right fs-4"></i>
+        </button>
+      </div>
+    </div>
 
-<section class="container my-5">
-  <h2 class="mb-4 text-center">Nuestros Productos</h2>
-  
-  <div class="row text-center">
+    <!-- Carrusel de calzado -->
+    <div class="container" style="max-width: 1000px">
+      <!-- Encabezado -->
+      <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
+        <h3>Calzado</h3>
+        <a
+          href="/products/vertodoslosproductos?categoria=zapatilla"
+          class="btn btn-sm custom-red-btn shadow-sm"
+          style="font-weight: 600; text-transform: uppercase"
+        >
+          Ver más
+        </a>
+      </div>
 
-    <div class="col-12 col-md-4 mb-4">
-  <a href="/products/vertodoslosproductos?categoria=zapatilla" class="h5 d-block text-decoration-none text-dark">
-    Calzado
-  </a>
-  <p>Los mejores modelos para tu estilo y confort.</p>
-</div>
+      <!-- Contenedor con botones y carrusel -->
+      <div class="d-flex align-items-center justify-content-between">
+        <!-- Botón izquierda -->
+        <button
+          class="btn btn-outline-dark me-2"
+          type="button"
+          data-bs-target="#carouselCalzado"
+          data-bs-slide="prev"
+        >
+          <i class="bi bi-chevron-left fs-4"></i>
+        </button>
 
-<div class="col-12 col-md-4 mb-4">
-  <a href="/products/vertodoslosproductos" class="h5 d-block text-decoration-none text-dark">
-    Ropa
-  </a>
-  <p>Variedad en remeras, jeans y más para cada ocasión.</p>
-</div>
+        <!-- Carrusel -->
+        <div
+          id="carouselCalzado"
+          class="carousel slide w-100"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner" id="carousel-inner-calzado">
+            <!-- JS inyectará los .carousel-item aquí -->
+          </div>
+        </div>
 
-<div class="col-12 col-md-4 mb-4">
-  <a href="/products/vertodoslosproductos?categoria=accesorio" class="h5 d-block text-decoration-none text-dark">
-    Accesorios
-  </a>
-  <p>Complementos ideales para tu look completo.</p>
-</div>
-    
-  </div>
-</section>
+        <!-- Botón derecha -->
+        <button
+          class="btn btn-outline-dark ms-2"
+          type="button"
+          data-bs-target="#carouselCalzado"
+          data-bs-slide="next"
+        >
+          <i class="bi bi-chevron-right fs-4"></i>
+        </button>
+      </div>
+    </div>
 
+    <section class="py-5 bg-light text-center">
+      <div class="container">
+        <h2 class="mb-4">Productos</h2>
 
+        <!-- Acá irían tus productos, por ejemplo tarjetas -->
 
-<!-- Script necesario -->
- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <!-- Botón -->
+        <a
+          href="/products/vertodoslosproductos"
+          class="btn custom-red-btn btn-lg px-4"
+          style="font-weight: 600"
+        >
+          Ver todos los productos
+        </a>
+      </div>
+    </section>
+<!-- 
+    <section class="container my-5">
+      <h2 class="mb-4 text-center">Nuestros Productos</h2>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+      <div class="row text-center">
+        <div class="col-12 col-md-4 mb-4">
+          <a
+            href="/products/vertodoslosproductos?categoria=zapatilla"
+            class="h5 d-block text-decoration-none text-dark"
+          >
+            Calzado
+          </a>
+          <p>Los mejores modelos para tu estilo y confort.</p>
+        </div>
 
-<script>
-function renderCarrusel(productos, categoria, idContenedor) {
-  const filtrados = productos.filter(p => p.categoria.toLowerCase().trim() === categoria.trim().toLowerCase());
-  const contenedor = document.getElementById(idContenedor);
+        <div class="col-12 col-md-4 mb-4">
+          <a
+            href="/products/vertodoslosproductos"
+            class="h5 d-block text-decoration-none text-dark"
+          >
+            Ropa
+          </a>
+          <p>Variedad en remeras, jeans y más para cada ocasión.</p>
+        </div>
 
-  for (let i = 0; i < filtrados.length; i += 4) {
-    const grupo = filtrados.slice(i, i + 4);
+        <div class="col-12 col-md-4 mb-4">
+          <a
+            href="/products/vertodoslosproductos?categoria=accesorio"
+            class="h5 d-block text-decoration-none text-dark"
+          >
+            Accesorios
+          </a>
+          <p>Complementos ideales para tu look completo.</p>
+        </div>
+      </div>
+    </section> -->
 
-    const item = document.createElement("div");
-    item.className = `carousel-item ${i === 0 ? "active" : ""}`;
+    <section class="container d-flex my-5">
+      <a
+        href="/products/vertodoslosproductos?categoria=zapatilla"
+        class="col-4 mx-2 d-flex justify-content-center align-items-center position-relative"
+        style="
+          height: 40vh;
+          background: url('/Images/negocioBackground.jpg') center center/cover
+            no-repeat;
+          border-radius: 0.5rem;
+          overflow: hidden;
+          text-decoration: none;
+          color: inherit;
+        "
+      >
+        <div
+          style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7)"
+        ></div>
+        <div
+          class="text-center position-relative text-white fs-4 fw-bold"
+          style="z-index: 1"
+        >
+          Calzado
+        </div>
+      </a>
+      <a
+        href="/products/vertodoslosproductos"
+        class="col-4 mx-2 d-flex justify-content-center align-items-center position-relative"
+        style="
+          height: 40vh;
+          background: url('/Images/jeansBackground.jpg') center center/cover
+            no-repeat;
+          border-radius: 0.5rem;
+          overflow: hidden;
+          text-decoration: none;
+          color: inherit;
+        "
+      >
+        <div
+          style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7)"
+        ></div>
+        <div
+          class="text-center position-relative text-white fs-4 fw-bold"
+          style="z-index: 1"
+        >
+          Ropa
+        </div>
+      </a>
+      <a
+        href="/products/vertodoslosproductos?categoria=accesorio"
+        class="col-4 mx-2 d-flex justify-content-center align-items-center position-relative"
+        style="
+          height: 40vh;
+          background: url('/Images/gorra2.jpeg') center center/cover no-repeat;
+          border-radius: 0.5rem;
+          overflow: hidden;
+          text-decoration: none;
+          color: inherit;
+        "
+      >
+        <div
+          style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7)"
+        ></div>
+        <div
+          class="text-center position-relative text-white fs-4 fw-bold"
+          style="z-index: 1"
+        >
+          Accesorios
+        </div>
+      </a>
+    </section>
 
-    const row = document.createElement("div");
-    row.className = "row";
+    <!-- Script necesario -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    grupo.forEach(producto => {
-      const col = document.createElement("div");
-      col.className = "col-12 col-sm-6 col-md-4 col-lg-3";
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
 
-      col.innerHTML = `
-        <a href="/products/list/${producto.id}" class="text-decoration-none text-dark">
+    <script>
+      function renderCarrusel(productos, categoria, idContenedor) {
+        const filtrados = productos.filter(
+          (p) =>
+            p.categoria.toLowerCase().trim() === categoria.trim().toLowerCase()
+        );
+        const contenedor = document.getElementById(idContenedor);
+
+        for (let i = 0; i < filtrados.length; i += 4) {
+          const grupo = filtrados.slice(i, i + 4);
+
+          const item = document.createElement("div");
+          item.className = `carousel-item ${i === 0 ? "active" : ""}`;
+
+          const row = document.createElement("div");
+          row.className = "row";
+
+          grupo.forEach((producto) => {
+            const col = document.createElement("div");
+            col.className = "col-12 col-sm-6 col-md-4 col-lg-3";
+
+            col.innerHTML = `
+        <a href="/products/list/${
+          producto.id
+        }" class="text-decoration-none text-dark">
           <div class="card product-card shadow-sm position-relative h-100">
             <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle">
               <i class="bi bi-heart"></i>
             </button>
-            <img src="/Uploads/${producto.foto}" class="card-img-top" alt="${producto.modelo}" style="height: 40vh; object-fit: cover;">
+            <img src="/Uploads/${producto.foto}" class="card-img-top" alt="${
+              producto.modelo
+            }" style="height: 40vh; object-fit: cover;">
             <div class="card-body">
               <h5 class="card-title mb-1">${producto.modelo}</h5>
               <p class="text-muted mb-1">Categoría: ${producto.categoria}</p>
-              <p class="fw-bold">${Number(producto.precio).toLocaleString("es-AR", {
-              style: "currency",
-              currency: "ARS",
-              minimumFractionDigits: 2,
-            })}</p>
+              <p class="fw-bold">${Number(producto.precio).toLocaleString(
+                "es-AR",
+                {
+                  style: "currency",
+                  currency: "ARS",
+                  minimumFractionDigits: 2,
+                }
+              )}</p>
             </div>
           </div>
         </a>
       `;
-      row.appendChild(col);
-    });
+            row.appendChild(col);
+          });
 
-    item.appendChild(row);
-    contenedor.appendChild(item);
-  }
-}
+          item.appendChild(row);
+          contenedor.appendChild(item);
+        }
+      }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const res = await axios.get("/products/api/list");
-    const productos = Array.isArray(res.data) ? res.data : res.data.productos;
-    console.log("Categorías existentes:", productos.map(p => p.categoria));
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const res = await axios.get("/products/api/list");
+          const productos = Array.isArray(res.data)
+            ? res.data
+            : res.data.productos;
+          console.log(
+            "Categorías existentes:",
+            productos.map((p) => p.categoria)
+          );
 
-    renderCarrusel(productos, "zapatilla", "carousel-inner-calzado");
-    renderCarrusel(productos, "remera", "carousel-inner-remera");
-    renderCarrusel(productos, "accesorio", "carousel-inner-accesorios");
-  } catch (error) {
-    console.error("Error cargando productos para carrusel:", error);
-  }
-});
-
-</script>
-<script src="/js/header.js"></script>
-
-</body>
+          renderCarrusel(productos, "remera", "carousel-inner-remera");
+          renderCarrusel(productos, "zapatilla", "carousel-inner-calzado");
+          renderCarrusel(productos, "accesorio", "carousel-inner-accesorios");
+          renderCarrusel(productos, "abrigo", "carousel-inner-abrigo");
+          renderCarrusel(productos, "pantalon", "carousel-inner-pantalon");
+        } catch (error) {
+          console.error("Error cargando productos para carrusel:", error);
+        }
+      });
+    </script>
+    <script src="/js/header.js"></script>
+  </body>
 </html>

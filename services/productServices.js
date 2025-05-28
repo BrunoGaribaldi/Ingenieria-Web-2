@@ -50,10 +50,7 @@ const productServices = {
   },
   updateProduct: async function updateProduct(id, data) {
     const [updatedRows] = await Producto.update(data, { where: { id } });
-    console.log("====================================");
-    console.log(updatedRows);
-    console.log("====================================");
-    return updatedRows; // cantidad de filas actualizadas (0 o 1)
+    return updatedRows; 
   },
 };
 module.exports = productServices;

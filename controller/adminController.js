@@ -47,9 +47,7 @@ const adminController = {
     try {
       const id = req.params.id;
       const data = req.body;
-      console.log("====================================");
-      console.log(data);
-      console.log("====================================");
+     
       // Si usas multer para imagen:
       if (req.file) {
         data.foto = req.file.filename;
