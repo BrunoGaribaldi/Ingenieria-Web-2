@@ -6,9 +6,6 @@ const usuarioServices = require("../services/usuarioServices");
 const adminController = {
   //home de admin
   home: (req, res) => {
-    console.log("====================================");
-    console.log(req.body);
-    console.log("====================================");
     res.sendFile(
       path.join(__dirname, "../Public/views/Admin/paneladministracion.html")
     );
