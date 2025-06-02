@@ -41,46 +41,6 @@
         </div>
       </div>
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <!--  <div class="btn-group" role="group">
-          <button
-            type="button"
-            class="btn btn-outline-primary active"
-            href="/admin/pedidos"
-            id="btn-todos"
-          >
-            Todos
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-success"
-            id="btn-activos"
-          >
-            Activos
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            id="btn-no-activos"
-          >
-            No Activos
-          </button>
-        </div> -->
-        <!-- <div class="row mb-3">
-          <div class="col-md-3">
-            <select id="tipo-busqueda" class="form-select">
-              <option value="nombre">Buscar por nombre</option>
-              <option value="id">Buscar por ID</option>
-            </select>
-          </div>
-          <div class="col-md-9">
-            <input
-              type="text"
-              id="buscador-clientes"
-              class="form-control"
-              placeholder="Buscar cliente..."
-            />
-          </div>
-        </div> -->
       </div>
       <div style="margin-bottom: 20px">
         <a href="/admin/create-product">
@@ -89,7 +49,8 @@
             style="background-color: rgba(75, 192, 192, 0.8)"
             id="btn-agregar-producto"
           >
-            <i class="bi bi-plus-circle"></i> Agregar Producto
+          <!--bi bi-plus-circle es el icono +-->
+            <i class="bi bi-plus-circle"></i> Agregar Producto 
           </button>
         </a>
       </div>
@@ -114,14 +75,15 @@
     <script src="/js/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
         try {
           //graficos
           const resCategorias = await axios.get(
-            "/admin/api/productos/count-categories"
+            "/admin/api/productos/count-categories" //peticion http get al endpoint 
           );
-          const categorias = resCategorias.data;
+          const categorias = resCategorias.data; //array
 
           window.ApexCharts &&
             new ApexCharts(document.getElementById("chart-demo-pie"), {
@@ -143,8 +105,8 @@
                 },
               },
 
-              series: categorias.map((cat) => cat.total),
-              labels: categorias.map((cat) => cat.categoria),
+              series: categorias.map((cat) => cat.total), //solo nos quedamos con los valores de total
+              labels: categorias.map((cat) => cat.categoria), // ycategoria
               grid: {
                 strokeDashArray: 5,
               },
@@ -197,7 +159,7 @@
                   enabled: true,
                 },
               },
-              series: [(generos[0].total / totalProductos) * 100],
+              series: [(generos[0].total / totalProductos) * 100], //sacas porcentaje
               plotOptions: {
                 radialBar: {
                   hollow: {
@@ -321,7 +283,7 @@
 
           //lista de productos
           const res = await axios.get("/products/api/list");
-          const productos = res.data.productos;
+          const productos = res.data.productos; //obtenes los productos desde el axios.
           const tbody = document.getElementById("cuerpo-tabla");
           // Renderiza los productos en el DOM
           console.log(productos);
@@ -376,13 +338,14 @@
         } catch (err) {}
 
         // Después del forEach, agregamos los listeners:
+        // querySelectorAll --> buscamos todos los botones en el DOM
         document.querySelectorAll(".eliminar-button").forEach((btn) => {
           btn.addEventListener("click", async function () {
             const id = this.getAttribute("data-id");
             try {
-              await axios.post(`/admin/delete-product/${id}`);
+              await axios.post(`/admin/delete-product/${id}`); // post para eliminar producto
               //recargar la tabla o eliminar la fila del DOM
-              this.closest("tr").remove();
+              this.closest("tr").remove(); // encuentra la fila <tr> y la elimina del dom
             } catch (err) {
               alert("Error al eliminar el producto");
             }

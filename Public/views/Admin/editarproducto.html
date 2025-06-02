@@ -8,7 +8,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/Styles/header.css" />
-    <link href="/Styles/asdasdasd.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
@@ -64,20 +63,6 @@
           ></textarea>
         </div>
 
-        <!-- 
-
-        <div class="mb-3">
-          <label for="stock" class="form-label">Stock inicial</label>
-          <input
-            type="number"
-            class="form-control"
-            id="stock"
-            name="stock"
-            min="0"
-            required
-          />
-          comentamos por ahora
-        </div> -->
 
         <div class="mb-3">
           <label for="genero" class="form-label">Genero</label>
@@ -86,7 +71,6 @@
             <option value="mujer">Mujer</option>
             <option value="hombre">Hombre</option>
             <option value="unisex">Unisex</option>
-            <!-- Podés agregar más -->
           </select>
         </div>
         <div class="mb-3">
@@ -112,10 +96,6 @@
             name="foto"
             accept="image/*"
           />
-          <!--  <div class="form-text">
-            Podés subir varias imágenes (mínimo 1, máximo lo que quieras mostrar
-            en el carrusel).
-          </div> -->
           <div class="form-text">Subi 1 imagen</div>
         </div>
 
@@ -128,8 +108,8 @@
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
         const path = window.location.pathname;
-        const parts = path.split("/");
-        const id = parts[3];
+        const parts = path.split("/"); //queda en un array
+        const id = parts[3]; //obtenemos id del producto obtenido desde la url.
         console.log(id);
 
         const modelo = document.getElementById("modelo");
@@ -141,13 +121,14 @@
         const categoria = document.getElementById("categoria");
 
         try {
-          const res = await axios.get(`/products/api/list/${id}`);
+          const res = await axios.get(`/products/api/list/${id}`); //obtenes la info del producto
           const producto = res.data;
           const form = (document.getElementById("form-edit-producto").action =
-            "/admin/edit-product/" + producto.id);
+            "/admin/edit-product/" + producto.id); // le cambias el atributo action al formulario pasandole el endpoint
 
           console.log(producto);
 
+          //precargo en los campos con los valores del producto.
           modelo.value = producto.modelo;
           marca.value = producto.marca;
           descripcion.value = producto.descripcion;

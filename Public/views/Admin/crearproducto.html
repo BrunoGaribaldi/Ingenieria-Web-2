@@ -14,12 +14,14 @@
   <body>
     <div class="container mt-4">
       <h3>Crear nuevo producto</h3>
+      <!--formulario-->
       <form
         id="form-crear-producto"
         method="post"
         action="/admin/create-product"
         enctype="multipart/form-data"
       >
+      <!--esto serian las categorias-->
         <div class="mb-3">
           <label for="categoria" class="form-label">Categoría</label>
           <select class="form-select" id="categoria" name="categoria" required>
@@ -29,7 +31,6 @@
             <option value="pantalon">Pantalon</option>
             <option value="accesorio">Accesorio</option>
             <option value="abrigo">Abrigo</option>
-            <!-- Podés agregar más -->
           </select>
         </div>
 
@@ -68,21 +69,6 @@
           ></textarea>
         </div>
 
-        <!-- 
-
-        <div class="mb-3">
-          <label for="stock" class="form-label">Stock inicial</label>
-          <input
-            type="number"
-            class="form-control"
-            id="stock"
-            name="stock"
-            min="0"
-            required
-          />
-          comentamos por ahora
-        </div> -->
-
         <div class="mb-3">
           <label for="genero" class="form-label">Genero</label>
           <select class="form-select" id="genero" name="genero" required>
@@ -90,9 +76,9 @@
             <option value="mujer">Mujer</option>
             <option value="hombre">Hombre</option>
             <option value="unisex">Unisex</option>
-            <!-- Podés agregar más -->
           </select>
         </div>
+
         <div class="mb-3">
           <label for="precio" class="form-label">Precio</label>
           <input
@@ -108,7 +94,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="imagen" class="form-label">Imágenes para carrusel</label>
+          <label for="imagen" class="form-label">Imagen</label>
           <input
             type="file"
             class="form-control"
@@ -117,10 +103,6 @@
             accept="image/*"
             required
           />
-          <!--  <div class="form-text">
-            Podés subir varias imágenes (mínimo 1, máximo lo que quieras mostrar
-            en el carrusel).
-          </div> -->
           <div class="form-text">Subi 1 imagen</div>
         </div>
 

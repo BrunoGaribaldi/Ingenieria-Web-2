@@ -31,6 +31,7 @@
         </a>
       </div>
 
+      <!--boton izquierda-->
       <div class="d-flex align-items-center justify-content-between">
         <button
           class="btn btn-outline-dark me-2"
@@ -47,10 +48,11 @@
           data-bs-ride="carousel"
         >
           <div class="carousel-inner" id="carousel-inner-remera">
-            <!-- JS inyectará las remeras acá -->
+            <!-- aca es donde se van a poner las remeras. lo hacemos con js abajo. -->
           </div>
         </div>
 
+        <!--boton derecha-->
         <button
           class="btn btn-outline-dark ms-2"
           type="button"
@@ -267,42 +269,6 @@
         </a>
       </div>
     </section>
-<!-- 
-    <section class="container my-5">
-      <h2 class="mb-4 text-center">Nuestros Productos</h2>
-
-      <div class="row text-center">
-        <div class="col-12 col-md-4 mb-4">
-          <a
-            href="/products/vertodoslosproductos?categoria=zapatilla"
-            class="h5 d-block text-decoration-none text-dark"
-          >
-            Calzado
-          </a>
-          <p>Los mejores modelos para tu estilo y confort.</p>
-        </div>
-
-        <div class="col-12 col-md-4 mb-4">
-          <a
-            href="/products/vertodoslosproductos"
-            class="h5 d-block text-decoration-none text-dark"
-          >
-            Ropa
-          </a>
-          <p>Variedad en remeras, jeans y más para cada ocasión.</p>
-        </div>
-
-        <div class="col-12 col-md-4 mb-4">
-          <a
-            href="/products/vertodoslosproductos?categoria=accesorio"
-            class="h5 d-block text-decoration-none text-dark"
-          >
-            Accesorios
-          </a>
-          <p>Complementos ideales para tu look completo.</p>
-        </div>
-      </div>
-    </section> -->
 
     <section class="container d-flex my-5">
       <a
@@ -384,18 +350,40 @@
     ></script>
 
     <script>
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const res = await axios.get("/products/api/list"); //obtenemos la lista de productos
+          const productos = res.data.productos; //obtenemos los productos
+
+          console.log(
+            "Categorías existentes:",
+            productos.map((p) => p.categoria)
+          );
+
+          renderCarrusel(productos, "remera", "carousel-inner-remera");
+          renderCarrusel(productos, "zapatilla", "carousel-inner-calzado");
+          renderCarrusel(productos, "accesorio", "carousel-inner-accesorios");
+          renderCarrusel(productos, "abrigo", "carousel-inner-abrigo");
+          renderCarrusel(productos, "pantalon", "carousel-inner-pantalon");
+        } catch (error) {
+          console.error("Error cargando productos para carrusel:", error);
+        }
+      });
+
       function renderCarrusel(productos, categoria, idContenedor) {
         const filtrados = productos.filter(
           (p) =>
             p.categoria.toLowerCase().trim() === categoria.trim().toLowerCase()
-        );
+        ); // me quedo con los productos de la categoria ingresada.
+
         const contenedor = document.getElementById(idContenedor);
 
-        for (let i = 0; i < filtrados.length; i += 4) {
-          const grupo = filtrados.slice(i, i + 4);
+        for (let i = 0; i < filtrados.length; i += 4) { // =+ 4 porque quiero que por slide se muestren 4 items en el carrusel.
+          const grupo = filtrados.slice(i, i + 4); // obtengo con slice grupos de 4 elementos.
 
           const item = document.createElement("div");
-          item.className = `carousel-item ${i === 0 ? "active" : ""}`;
+          item.className = `carousel-item ${i === 0 ? "active" : ""}`;// creamos un item para el carrusel. si es la primera iteracion (i = 0) active se utiliza para indicar qué diapositiva (slide) está visible actualmente.
 
           const row = document.createElement("div");
           row.className = "row";
@@ -430,34 +418,16 @@
           </div>
         </a>
       `;
-            row.appendChild(col);
+            row.appendChild(col); // agregamos la card
           });
-
-          item.appendChild(row);
-          contenedor.appendChild(item);
+          // agregamos el grupo de 4 cards al item.
+          item.appendChild(row); 
+          //agregamos el item al carrusel correspondiente (el de remeras el de accesorios cualqueira.)
+          contenedor.appendChild(item);  
         }
       }
 
-      document.addEventListener("DOMContentLoaded", async () => {
-        try {
-          const res = await axios.get("/products/api/list");
-          const productos = Array.isArray(res.data)
-            ? res.data
-            : res.data.productos;
-          console.log(
-            "Categorías existentes:",
-            productos.map((p) => p.categoria)
-          );
 
-          renderCarrusel(productos, "remera", "carousel-inner-remera");
-          renderCarrusel(productos, "zapatilla", "carousel-inner-calzado");
-          renderCarrusel(productos, "accesorio", "carousel-inner-accesorios");
-          renderCarrusel(productos, "abrigo", "carousel-inner-abrigo");
-          renderCarrusel(productos, "pantalon", "carousel-inner-pantalon");
-        } catch (error) {
-          console.error("Error cargando productos para carrusel:", error);
-        }
-      });
     </script>
     <script src="/js/header.js"></script>
   </body>

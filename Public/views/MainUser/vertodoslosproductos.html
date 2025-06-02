@@ -84,10 +84,11 @@
           todosLosProductos = res.data.productos;
 
           renderizarProductos(todosLosProductos);
-          cargarFiltrosDinamicos(todosLosProductos);
+          cargarFiltrosDinamicos(todosLosProductos); // para cargar los select.
 
           const { genero, categoria, precio } = getQueryParams();
 
+          //con esto pongo los filtros en el valor que me trae la url.
           if (genero) document.getElementById("filtro-genero").value = genero;
           if (categoria)
             document.getElementById("filtro-categoria").value = categoria;
@@ -95,6 +96,7 @@
 
           aplicarFiltros(); // aplicar los filtros que llegaron
 
+          //agrego los listeners para los cambios en los filtros.
           document
             .getElementById("filtro-genero")
             .addEventListener("change", aplicarFiltros);
@@ -110,25 +112,28 @@
       });
 
       function getQueryParams() {
-        const params = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(window.location.search); //devuelve el string de la URL que viene despues del ? y URLSearchParams lo transforma en un objeto para obtener params.get().
         return {
           genero: params.get("genero")?.toLowerCase() || "",
           categoria: params.get("categoria")?.toLowerCase() || "",
-          precio: params.get("precio") || "",
+          precio: params.get("precio") || "", // acordate que // es el operador logico.
         };
       }
 
+      //funcion para cargar los select dinamicamente segun los productos existentes.
       function cargarFiltrosDinamicos(productos) {
+        //obtenemos los select.
         const generoSelect = document.getElementById("filtro-genero");
         const categoriaSelect = document.getElementById("filtro-categoria");
-        const precioSelect = document.getElementById("filtro-precio"); // este igual lo dejamos fijo si querés
+        const precioSelect = document.getElementById("filtro-precio"); 
 
-        // Limpiamos excepto la primera opción "Todos"
+        // Limpiamos excepto la primera opción "Todos", opcion por defecto.
         generoSelect.innerHTML = '<option value="">Todos</option>';
         categoriaSelect.innerHTML = '<option value="">Todas</option>';
 
         // Géneros únicos
-        const generos = obtenerValoresUnicos(productos, "genero");
+        const generos = obtenerValoresUnicos(productos, "genero"); //le paso productos, y el campo que quiero ver. La cosa es que en los select solo aparezcan los generos de los productos creados. No otros.
+        //cargo los campos con los generos.
         generos.forEach((g) => {
           const opcion = document.createElement("option");
           opcion.value = g;
@@ -145,33 +150,33 @@
           categoriaSelect.appendChild(opcion);
         });
 
-        // Precio lo dejamos estático o podés hacer algo similar si querés.
+        // FALTA HACER LO MISMO PERO CON PRECIO.
       }
 
       function obtenerValoresUnicos(productos, campo) {
         const valores = productos
           .map((p) => p[campo]?.toLowerCase())
-          .filter(Boolean);
-        return [...new Set(valores)];
+          .filter(Boolean); // elimina null, undefined, '', "", etc.
+        return [...new Set(valores)]; // elimina duplicados ya que paso desde un arreglo a un set (no admite duplicados)
       }
 
       function capitalize(text) {
         if (!text) return "";
-        return text.charAt(0).toUpperCase() + text.slice(1);
+        return text.charAt(0).toUpperCase() + text.slice(1); //Convierte la primera letra a mayúscula
       }
 
       function renderizarProductos(productos) {
         const contenedor = document.getElementById("productos-contenedor");
-        contenedor.innerHTML = "";
+        contenedor.innerHTML = ""; // limpiamos el contenedor donde se van a mostrar los productos.
 
-        if (productos.length === 0) {
+        if (productos.length === 0) { // si el arreglo de productos esta vacio.
           contenedor.innerHTML =
             "<p class='text-center'>No se encontraron productos.</p>";
           return;
         }
         productos.forEach((producto) => {
           const card = document.createElement("div");
-          card.className = "col-12 col-sm-6 col-md-4 col-lg-3";
+          card.className = "col-12 col-sm-6 col-md-4 col-lg-3"; // responsive.
 
           card.innerHTML = `
       <a href="/products/list/${
@@ -206,6 +211,7 @@
       }
 
       function aplicarFiltros() {
+        //obtengo los valores de los campos.
         const genero = document
           .getElementById("filtro-genero")
           .value.toLowerCase();
@@ -218,7 +224,7 @@
 
         if (genero) {
           filtrados = filtrados.filter(
-            (p) => p.genero.toLowerCase() === genero
+            (p) => p.genero.toLowerCase() === genero // comparamos el genero de cada producto con el genero del select, osea de los campos.
           );
         }
 
@@ -229,10 +235,10 @@
         }
 
         if (precio) {
-          const [min, max] = precio.split("-").map(Number);
+          const [min, max] = precio.split("-").map(Number); //convierto el string a numero.
           filtrados = filtrados.filter((p) => {
             const precioNum = Number(p.precio);
-            return precioNum >= min && precioNum <= max;
+            return precioNum >= min && precioNum <= max; // verificamos que el precio del producto este entre los valores min y max.
           });
         }
 
