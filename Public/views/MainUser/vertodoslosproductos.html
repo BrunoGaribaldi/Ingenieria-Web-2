@@ -71,19 +71,22 @@
       </div>
     </section>
 
+    <div id = "contenedor-paginador"></div>
+
+
     <!-- Script necesario -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/header.js"></script>
+    <script src="/js/verTodosLosProductos.js"></script>
 
-    <script>
+    <!-- <script>
       let todosLosProductos = [];
 
       document.addEventListener("DOMContentLoaded", async () => {
         try {
-          const res = await axios.get("/products/api/list");
-          todosLosProductos = res.data.productos;
 
-          renderizarProductos(todosLosProductos);
+          cargarProductos(1);
+
           cargarFiltrosDinamicos(todosLosProductos); // para cargar los select.
 
           const { genero, categoria, precio } = getQueryParams();
@@ -110,6 +113,57 @@
           console.error("Error al cargar productos:", error);
         }
       });
+
+      async function cargarProductos(pagina) {
+        const limit = 12; // la cantidad de productos por página
+
+  try {
+    const res = await axios.get(`/products/api/list?page=${pagina}&limit=${limit}`);
+    const data = res.data;
+
+    // Renderizar los productos de esta página
+    renderizarProductos(data.productos);
+
+    // Actualizar el paginador
+    renderizarPaginador(data.page, data.totalPages);
+  } catch (error) {
+    console.error("Error al cargar productos de la página:", error);
+  }
+}
+
+      function renderizarPaginador (paginaActual, totalPaginas){
+        const contenedor = document.getElementById("contenedor-paginador");
+        contenedor.innerHTML = ""; 
+        const nav = document.createElement("nav");
+        nav.setAttribute("aria-label", "Page navigation");
+        const ul = document.createElement("ul");
+        ul.className = "pagination justify-content-center";
+
+
+        
+        const liAnterior = document.createElement("li");
+        liAnterior.className = `page-item ${paginaActual === 1 ? "disabled" : ""}`;
+        liAnterior.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${paginaActual - 1})">Anterior</a>`;
+        ul.appendChild(liAnterior);
+
+      
+        for (let i = 1; i <= totalPaginas; i++) {
+          const li = document.createElement("li");
+          li.className = `page-item ${i === paginaActual ? "active" : ""}`;
+          li.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${i})">${i}</a>`;
+          ul.appendChild(li);
+        }
+
+ 
+        const liSiguiente = document.createElement("li");
+        liSiguiente.className = `page-item ${paginaActual === totalPaginas ? "disabled" : ""}`;
+        liSiguiente.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${paginaActual + 1})">Siguiente</a>`;
+        ul.appendChild(liSiguiente);
+
+        nav.appendChild(ul);
+        contenedor.appendChild(nav);
+
+      }
 
       function getQueryParams() {
         const params = new URLSearchParams(window.location.search); //devuelve el string de la URL que viene despues del ? y URLSearchParams lo transforma en un objeto para obtener params.get().
@@ -244,6 +298,6 @@
 
         renderizarProductos(filtrados);
       }
-    </script>
+    </script> -->
   </body>
 </html>

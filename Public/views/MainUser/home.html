@@ -242,15 +242,19 @@
     <script>
   document.addEventListener("DOMContentLoaded", async () => {
     try {
-      const res = await axios.get("/products/api/list");
+
+
+      const limit = 8; // la cantidad de productos por carousel
+      const pagina = 1;
+
+      //acordate que la pagia x defecto es 1
+      const res = await axios.get(`/products/api/list?page=${pagina}&limit=${limit}`);
       const productos = res.data.productos;
 
-      // Tomamos 8 productos aleatorios
-      const productosAleatorios = productos.sort(() => 0.5 - Math.random()).slice(0, 8); // con el slice tomamos los priemros 8 elementos
       const carouselInner = document.getElementById("carousel-inner-accesorios");
 
-      for (let i = 0; i < productosAleatorios.length; i += 4) {
-        const grupo = productosAleatorios.slice(i, i + 4);
+      for (let i = 0; i < productos.length; i += 4) {
+        const grupo = productos.slice(i, i + 4);
 
         const item = document.createElement("div");
         item.className = `carousel-item ${i === 0 ? "active" : ""}`;

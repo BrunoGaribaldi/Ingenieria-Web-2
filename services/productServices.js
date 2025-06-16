@@ -9,12 +9,18 @@ const productServices = {
       producto: newProduct,
     };
   },
-  listProducts: async function listProducts() {
-    const productos = await Producto.findAll();
-    return {
-      productos: productos,
-    };
-  },
+ listProducts: async function listProducts(limit = 10, offset = 0) {
+
+  const { count, rows: productos } = await Producto.findAndCountAll({
+    limit,
+    offset,
+  });
+
+  return {
+    productos,
+    total: count, //total de productos sin paginar
+  };
+},
   listProduct: async function listProduct(id) {
     const producto = await Producto.findByPk(id);
     return producto;
