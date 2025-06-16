@@ -1,0 +1,6 @@
+servicio del backend, se agrega el paginado, del lado del front y del back, no traer todos
+traer los ultimos 10
+
+un .get por cada categoria 
+hacerla las filtros en el lado del front
+enum a nivel bd, pantalla de pedido, achicar los graficos en el admin
