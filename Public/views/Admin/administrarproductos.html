@@ -284,26 +284,26 @@
               labels: [generos[2].genero],
             }).render();
 
-            cargarProductos(1);
-
+          cargarProductos(1);
         } catch (err) {}
-
       });
 
-async function cargarProductos(pagina = 1) {
-  const limit = 10;
+      async function cargarProductos(pagina = 1) {
+        const limit = 10;
 
-  try {
-    const res = await axios.get(`/products/api/list?page=${pagina}&limit=${limit}`);
-    const productos = res.data.productos;
-    const tbody = document.getElementById("cuerpo-tabla");
+        try {
+          const res = await axios.get(
+            `/products/api/list?page=${pagina}&limit=${limit}`
+          );
+          const productos = res.data.productos;
+          const tbody = document.getElementById("cuerpo-tabla");
 
-    tbody.innerHTML = ""; 
+          tbody.innerHTML = "";
 
-    productos.forEach((producto) => {
-      const tr = document.createElement("tr");
+          productos.forEach((producto) => {
+            const tr = document.createElement("tr");
 
-      tr.innerHTML = `
+            tr.innerHTML = `
         <td>${producto.categoria}</td>
         <td>${producto.modelo}</td>
         <td>${producto.marca}</td>
@@ -320,70 +320,70 @@ async function cargarProductos(pagina = 1) {
           <a href="/admin/edit-product/${producto.id}">
             <button class="btn btn-sm text-white" style="background-color:rgba(255,206,86,0.8)">Editar</button>
           </a>
-          <button data-id="${producto.id}" class="eliminar-button btn btn-sm btn-danger">Eliminar</button>
+          <button data-id="${
+            producto.id
+          }" class="eliminar-button btn btn-sm btn-danger">Eliminar</button>
         </td>
       `;
 
-      tbody.appendChild(tr);
-    });
+            tbody.appendChild(tr);
+          });
 
-    // Agregar listeners de eliminar
-    document.querySelectorAll(".eliminar-button").forEach((btn) => {
-      btn.addEventListener("click", async function () {
-        const id = this.getAttribute("data-id");
-        try {
-          await axios.post(`/admin/delete-product/${id}`);
-          this.closest("tr").remove();
-        } catch {
-          alert("Error al eliminar el producto");
+          // Agregar listeners de eliminar
+          document.querySelectorAll(".eliminar-button").forEach((btn) => {
+            btn.addEventListener("click", async function () {
+              const id = this.getAttribute("data-id");
+              try {
+                await axios.post(`/admin/delete-product/${id}`);
+                this.closest("tr").remove();
+              } catch {
+                alert("Error al eliminar el producto");
+              }
+            });
+          });
+
+          renderizarPaginador(res.data.page, res.data.totalPages);
+        } catch (err) {
+          console.error("Error al cargar productos:", err);
         }
-      });
-    });
+      }
 
-  
-    renderizarPaginador(res.data.page, res.data.totalPages);
+      function renderizarPaginador(paginaActual, totalPaginas) {
+        const contenedor = document.getElementById("contenedor-paginador");
+        contenedor.innerHTML = "";
+        const nav = document.createElement("nav");
+        nav.setAttribute("aria-label", "Page navigation");
+        const ul = document.createElement("ul");
+        ul.className = "pagination justify-content-center";
 
-  } catch (err) {
-    console.error("Error al cargar productos:", err);
-  }
-}
+        const liAnterior = document.createElement("li");
+        liAnterior.className = `page-item ${
+          paginaActual === 1 ? "disabled" : ""
+        }`;
+        liAnterior.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${
+          paginaActual - 1
+        })">Anterior</a>`;
+        ul.appendChild(liAnterior);
 
+        for (let i = 1; i <= totalPaginas; i++) {
+          const li = document.createElement("li");
+          li.className = `page-item ${i === paginaActual ? "active" : ""}`;
+          li.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${i})">${i}</a>`;
+          ul.appendChild(li);
+        }
 
-    function renderizarPaginador (paginaActual, totalPaginas){
+        const liSiguiente = document.createElement("li");
+        liSiguiente.className = `page-item ${
+          paginaActual === totalPaginas ? "disabled" : ""
+        }`;
+        liSiguiente.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${
+          paginaActual + 1
+        })">Siguiente</a>`;
+        ul.appendChild(liSiguiente);
 
-    const contenedor = document.getElementById("contenedor-paginador");
-    contenedor.innerHTML = ""; 
-    const nav = document.createElement("nav");
-    nav.setAttribute("aria-label", "Page navigation");
-    const ul = document.createElement("ul");
-    ul.className = "pagination justify-content-center";
-
-
-    
-    const liAnterior = document.createElement("li");
-    liAnterior.className = `page-item ${paginaActual === 1 ? "disabled" : ""}`;
-    liAnterior.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${paginaActual - 1})">Anterior</a>`;
-    ul.appendChild(liAnterior);
-
-    
-    for (let i = 1; i <= totalPaginas; i++) {
-        const li = document.createElement("li");
-        li.className = `page-item ${i === paginaActual ? "active" : ""}`;
-        li.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${i})">${i}</a>`;
-        ul.appendChild(li);
-    }
-
-
-    const liSiguiente = document.createElement("li");
-    liSiguiente.className = `page-item ${paginaActual === totalPaginas ? "disabled" : ""}`;
-    liSiguiente.innerHTML = `<a class="page-link" href="#" onclick="cargarProductos(${paginaActual + 1})">Siguiente</a>`;
-    ul.appendChild(liSiguiente);
-
-    nav.appendChild(ul);
-    contenedor.appendChild(nav);
-
-}
+        nav.appendChild(ul);
+        contenedor.appendChild(nav);
+      }
     </script>
   </body>
 </html>
-

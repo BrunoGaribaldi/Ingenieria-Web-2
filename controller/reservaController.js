@@ -15,12 +15,15 @@ const reservaController = {
     }
   },
 
-  list: async (req, res) => {
+  list: (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../Public/views/Reservas/misreservas.html")
+    );
+  },
+  listApi: async (req, res) => {
     idUsuario = req.params.idUsuario;
-    const response = await reservaServices.listReserva(idUsuario)
-    console.log('====================================');
-    console.log(response);
-    console.log('====================================');
+    const response = await reservaServices.listReserva(idUsuario);
+    res.json({reservas: response});
   },
 };
 

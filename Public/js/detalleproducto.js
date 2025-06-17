@@ -95,19 +95,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   //enable del boton
+
   const token = localStorage.getItem("token");
   const botonReserva = document.getElementById("boton-reserva");
   token
     ? botonReserva.classList.remove("disabled")
     : botonReserva.classList.add("disabled");
 
-
-//creacion de reserva
-  botonReserva.addEventListener("click", function () {
+  //creacion de reserva
+  botonReserva.addEventListener("click",async function () {
     const path = window.location.pathname;
     const parts = path.split("/"); //queda en un array
     const id = parts[3]; //obtenemos id del producto obtenido desde la url.
-    const res = axios.post(
+    const res = await axios.post(
       `/reserva/crear-reserva/${id}`,
       {}, // body vacío, o pon los datos que necesites enviar
       {
@@ -117,9 +117,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     );
     try {
-      
-    } catch(err) {
-        document.writeln(err)
+      const idUsuario = localStorage.getItem("id");
+      window.location.href = `/reserva/list-reserva/${idUsuario}`;
+    } catch (err) {
+      document.writeln(err);
     }
   });
 });

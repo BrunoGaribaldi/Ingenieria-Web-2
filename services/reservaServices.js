@@ -16,7 +16,7 @@ const reservaServices = {
   listReserva: async function listReserva() {
     const reservas = await Reserva.findAll({
       where: { id_usuario: idUsuario },
-      include: [{ association: "producto" }, { association: "usuario" }],
+      include: { association: "producto" },
     });
     return reservas;
   },
