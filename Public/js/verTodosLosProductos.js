@@ -2,8 +2,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try{
 
-
+    
+        await cargarOpcionesDeFiltros();
+        
         cargarProductos(1); //por defecto cargamos la primer pagina.
+
+        document.getElementById("filtro-genero").addEventListener("change", () => cargarProductos(1));
+        document.getElementById("filtro-categoria").addEventListener("change", () => cargarProductos(1));
+        document.getElementById("filtro-precio").addEventListener("change", () => cargarProductos(1));
 
 
     }
@@ -13,12 +19,78 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
+async function cargarOpcionesDeFiltros() {
+
+    const res = await axios.get('/products/api/filters');
+    const { categorias, generos } = res.data;
+
+    const selectCategoria = document.getElementById("filtro-categoria");
+    const selectGenero = document.getElementById("filtro-genero");
+
+    // Llenar categorías
+    selectCategoria.innerHTML = `<option value="">Todas</option>`;
+    categorias.forEach(cat => {
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat;
+        selectCategoria.appendChild(option);
+    });
+
+    // Llenar géneros
+    selectGenero.innerHTML = `<option value="">Todos</option>`;
+    generos.forEach(gen => {
+      const option = document.createElement("option");
+      option.value = gen;
+      option.textContent = gen;
+      selectGenero.appendChild(option);
+    });
+
+    //Leer filtros desde la URL y aplicarlos a los select
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoria = urlParams.get("categoria");
+    const genero = urlParams.get("genero");
+    const precio = urlParams.get("precio");
+
+    if (categoria) selectCategoria.value = categoria;
+    if (genero) selectGenero.value = genero;
+    if (precio) {
+        const selectPrecio = document.getElementById("filtro-precio");
+        if (selectPrecio) selectPrecio.value = precio;
+    }
+
+
+
+}
 
 async function cargarProductos (pagina){
 
     const limit = 12; // la cantidad de productos por página
 
-    const res = await axios.get(`/products/api/list?page=${pagina}&limit=${limit}`);
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    //obtenemos los filtros ya sea de la url o de los select
+    const genero = document.getElementById("filtro-genero").value || urlParams.get("genero");
+    const categoria = document.getElementById("filtro-categoria").value || urlParams.get("categoria");
+    const precio = document.getElementById("filtro-precio").value || urlParams.get("precio");
+
+
+    const params = new URLSearchParams({ //crea un objeto como esto: ?page=1&limit=10
+    page: pagina,
+    limit,
+    });
+
+    if (genero) params.append("genero", genero); // esto agrega los filtros a la url.
+    if (categoria) params.append("categoria", categoria);
+
+    if (precio) {
+        const [minPrecio, maxPrecio] = precio.split("-");
+        params.append("precioMin", minPrecio);
+        params.append("precioMax", maxPrecio);
+        
+    }
+
+    const res = await axios.get(`/products/api/list?${params.toString()}`);
     const data = res.data;
 
     // Renderizar los productos de esta página
@@ -111,3 +183,5 @@ function renderizarPaginador (paginaActual, totalPaginas){
     contenedor.appendChild(nav);
 
 }
+
+

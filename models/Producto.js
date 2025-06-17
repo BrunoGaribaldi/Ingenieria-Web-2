@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       precio: {
-        type: DataTypes.STRING,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
     },

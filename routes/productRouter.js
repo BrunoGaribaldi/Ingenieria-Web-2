@@ -14,6 +14,7 @@ router.get("/vertodoslosproductos", productController.verTodosLosProductos)
 router.get("/api/list", productController.listAll);
 router.get("/api/list/:id", productController.listProduct);
 
+router.get("/api/filters", productController.getFiltersApi);
 
 
 

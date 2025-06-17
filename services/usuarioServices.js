@@ -72,12 +72,18 @@ const usuarioServices = {
     });
     return usuarioEncontrado;
   },
-  findAllUsuarios: async function findAllUsuarios() {
-    const usuariosEncontrados = await Usuario.findAll();    
-    return {
-      usuarios: usuariosEncontrados,
-    };
-  },
+  findAllUsuarios: async function findAllUsuarios(limit, offset) {
+  const { rows: usuarios, count: total } = await Usuario.findAndCountAll({
+    limit,
+    offset,
+    order: [["id", "ASC"]], // para que los devuelva en orden
+  });
+
+  return {
+    usuarios,
+    total,
+  };
+},
   
 };
 
