@@ -42,6 +42,7 @@ app.use(bodyParser.json());
 const userRouter = require("./routes/userRouter");
 const productRouter = require("./routes/productRouter");
 const adminRouter = require("./routes/adminRouter");
+const reservaRouter = require("./routes/reservaRouter");
 
 //este es el controller de main
 const mainController = require("./controller/mainController");
@@ -50,6 +51,7 @@ const mainController = require("./controller/mainController");
 app.use("/user", userRouter);
 app.use("/products", productRouter);
 app.use("/admin", adminRouter);
+app.use("/reserva", reservaRouter);
 
 //aca vamos a mostrar la vistas principales
 

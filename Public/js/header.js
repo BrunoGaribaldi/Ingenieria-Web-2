@@ -61,6 +61,11 @@ function renderHeader() {
               >
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="reservas" 
+                >Ver reservas</a
+              >
+            </li>
+            <li class="nav-item">
               <button class="nav-link text-danger" id="admin">Ver vista de administrador</button>
             </li>
           </ul>
@@ -168,15 +173,18 @@ document.addEventListener("DOMContentLoaded", function () {
   let login = document.getElementById("login");
   let signup = document.getElementById("signup");
   let adminText = document.getElementById("admin");
+  let reserva = document.getElementById("reservas");
 
   if (token) {
     login.classList.add("invisible");
     signup.classList.add("invisible");
-
+    
+    reserva.classList.remove("invisible");
     logout.classList.remove("invisible");
   } else {
     //usuario logueado
     logout.classList.add("invisible");
+    reserva.classList.add("invisible");
 
     login.classList.remove("invisible");
     signup.classList.remove("invisible");
@@ -189,6 +197,38 @@ document.addEventListener("DOMContentLoaded", function () {
     adminText.classList.add("invisible");
   }
 
+  reserva.addEventListener("click", function () {
+  const userId = localStorage.getItem("id");
+  if (userId) {
+    window.location.href = `/reserva/list-reserva/${userId}`;
+  } else {
+    window.location.href = "/user/login";
+  }
+});
+  /*reserva.addEventListener("click", function(){
+    const usuario = localStorage.getItem("admin");
+
+    if (usuario) {
+      axios
+        .get("/", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log("Sesión activa:", res.data.usuario);
+          window.location.href = "/admin";
+        })
+        .catch((err) => {
+          if (err.response?.status === 401) {
+            console.log("Sesión expirada, borrando localStorage...");
+            localStorage.removeItem("admin");
+            localStorage.removeItem("token");
+
+            //redirigimos al login
+            window.location.href = "/user/login";
+          }
+        });
+    }
+  })*/
   document.getElementById("admin").addEventListener("click", function () {
     //a veces como guardo en el local storage y en la session si es admin, la session se borra y sigue en el local storage
     //por eso ahora, le voy a pasar por las dudas el admin del local storage para que no se descordine

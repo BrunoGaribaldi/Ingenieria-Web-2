@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+/*const jwt = require("jsonwebtoken");
 const SECRET = "palabrasecreta";
 
 function authMiddleware(req, res, next) {
@@ -17,4 +17,4 @@ function authMiddleware(req, res, next) {
   }
 }
 
-module.exports = authMiddleware;
+module.exports = authMiddleware;*/

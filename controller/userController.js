@@ -15,12 +15,11 @@ const userController = {
     }
     try {
       const responseSignup = await usuarioServices.createUsuario(req.body);
-      console.log("====================================");
-      console.log(responseSignup);
-      console.log("====================================");
       const token = responseSignup.token;
+
       res.status(201).json({
         user: responseSignup.user,
+        id: responseSignup.user.id,
         token: token,
       });
     } catch (err) {
@@ -51,12 +50,12 @@ const userController = {
       const admin = responseLogin.admin;
       req.session.userLogged = {
         id: responseLogin.user.id,
-        rol: admin
+        rol: admin,
       };
-
 
       res.json({
         user: responseLogin.user,
+        id: responseLogin.user.id,
         token: token,
         admin: admin,
       });
