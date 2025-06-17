@@ -69,7 +69,7 @@
       <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
         <h3>Accesorios</h3>
         <a
-          href="/products/vertodoslosproductos?categoria=accesorios"
+          href="/products/vertodoslosproductos?categoria=accesorio"
           class="btn btn-sm custom-red-btn shadow-sm"
           style="font-weight: 600; text-transform: uppercase"
         >
@@ -353,29 +353,34 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
         try {
-          const res = await axios.get("/products/api/list"); //obtenemos la lista de productos
-          const productos = res.data.productos; //obtenemos los productos
 
-          console.log(
-            "Categorías existentes:",
-            productos.map((p) => p.categoria)
-          );
+            const limit = 8;
 
-          renderCarrusel(productos, "remera", "carousel-inner-remera");
-          renderCarrusel(productos, "zapatilla", "carousel-inner-calzado");
-          renderCarrusel(productos, "accesorio", "carousel-inner-accesorios");
-          renderCarrusel(productos, "abrigo", "carousel-inner-abrigo");
-          renderCarrusel(productos, "pantalon", "carousel-inner-pantalon");
+            const params = new URLSearchParams({ //crea un objeto como esto: ?page=1&limit=10
+            page: 1,
+            limit,
+            });
+
+            renderCarrusel(params, "remera", "carousel-inner-remera");
+            renderCarrusel(params, "zapatilla", "carousel-inner-calzado");
+            renderCarrusel(params, "accesorio", "carousel-inner-accesorios");
+            renderCarrusel(params, "abrigo", "carousel-inner-abrigo");
+            renderCarrusel(params, "pantalon", "carousel-inner-pantalon");
+            
         } catch (error) {
           console.error("Error cargando productos para carrusel:", error);
         }
       });
 
-      function renderCarrusel(productos, categoria, idContenedor) {
-        const filtrados = productos.filter(
-          (p) =>
-            p.categoria.toLowerCase().trim() === categoria.trim().toLowerCase()
-        ); // me quedo con los productos de la categoria ingresada.
+      async function renderCarrusel(params, categoria, idContenedor) {
+
+        const queryParams = new URLSearchParams(params); 
+        queryParams.set("categoria", categoria);  
+
+        const res = await axios.get(`/products/api/list?${queryParams.toString()}`);
+        const productos = res.data.productos;
+
+        const filtrados = productos;
 
         const contenedor = document.getElementById(idContenedor);
 

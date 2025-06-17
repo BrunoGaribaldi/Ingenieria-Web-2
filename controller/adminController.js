@@ -83,18 +83,33 @@ const adminController = {
 
   //apis
   listClientsApi: async (req, res) => {
-    const responseListAllUsers = await usuarioServices.findAllUsuarios();
-    res.json(responseListAllUsers);
+
+  const limit = parseInt(req.query.limit) || 10;
+  const page = parseInt(req.query.page) || 1;
+  const offset = (page - 1) * limit; 
+
+  const response = await usuarioServices.findAllUsuarios(limit, offset);
+
+      res.json({
+        clientes: response.usuarios,
+        total: response.total, // cantidad total de clientes en la bd
+        page, // numero de pagina solicitada
+        totalPages: Math.ceil(response.total / limit), // cantidad total de paginas.
+      });
+
   },
 
   countCategoriesApi: async function (req, res) {
     const resopnseCountCategoriesApi = await productServices.countCategories();
     res.json(resopnseCountCategoriesApi);
   },
+
   countGendersApi: async function (req, res) {
     const resopnseCountGendersApi = await productServices.countGenders();
     res.json(resopnseCountGendersApi);
-  },
+  }
+
+
 };
 
 module.exports = adminController;
