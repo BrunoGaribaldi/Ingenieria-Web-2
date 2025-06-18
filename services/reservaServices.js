@@ -1,8 +1,9 @@
 const { where } = require("sequelize");
 const { Reserva } = require("../models");
+const { Usuario } = require("../models");
 const jwt = require("jsonwebtoken");
 const SECRET = "palabrasecreta";
-
+const sequelize = require("sequelize");
 const reservaServices = {
   createReserva: async function createReserva(idProducto, token) {
     const decoded = jwt.verify(token, SECRET);
@@ -37,6 +38,49 @@ const reservaServices = {
     });
 
     return reserva;
+  },
+  stats: async function stats() {
+    const barColumn = await Reserva.findAll({
+      attributes: [
+        [sequelize.fn("DAYNAME", sequelize.col("created_at")), "dia"],
+        [sequelize.fn("DAYOFWEEK", sequelize.col("created_at")), "numero_dia"],
+        [sequelize.fn("COUNT", sequelize.col("id")), "numero"],
+      ],
+      group: [
+        sequelize.fn("DAYNAME", sequelize.col("created_at")),
+        sequelize.fn("DAYOFWEEK", sequelize.col("created_at")),
+      ],
+      order: [["numero_dia", "ASC"]],
+      raw: true,
+    });
+
+    const bar = await Reserva.findAll({
+      attributes: [
+        [
+          sequelize.fn(
+            "CONCAT_WS",
+            " ",
+            sequelize.col("usuario.nombre"),
+            sequelize.col("usuario.apellido")
+          ),
+          "nom",
+        ],
+        [sequelize.fn("COUNT", sequelize.col("Reserva.id")), "numero"],
+      ],
+      include: [
+        {
+          model: Usuario,
+          as: "usuario",
+          attributes: [],
+        },
+      ],
+      group: ["nom"],
+      order: [["numero", "DESC"]],
+      limit: 3,
+      raw: true,
+    });
+
+    return { barColumn, bar };
   },
   findAllReservas: async function findAllReservas(limit, offset) {
     const { rows: reservas, count: total } = await Reserva.findAndCountAll({

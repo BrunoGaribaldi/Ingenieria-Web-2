@@ -13,11 +13,21 @@
     />
     <link rel="stylesheet" href="/Styles/header.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
   <body>
     <div class="container my-4" id="container">
-      <h1 class="mb-4">Reservas de clientes</h1>
-      <div id = "container-reservas"></div>
+      <h1 class="mb-5">Reservas</h1>
+      <div class="d-flex">
+        <div id="div-column-chart" class="col-6">
+          <h4 class="text-center pt-2"  style="font-size: 1rem;">Cantidad historica de reservas por dia de la semana</h4>
+        </div>
+        <div id="div-column-chart-2" class="col-6">
+          <h4 class="text-center pt-2" style="font-size: 1rem;">Top 3 personas con mas reservas</h4>
+        </div>
+      </div>
+      <h3 class="mt-5 mb-3">Listado de reservas</h3>
+      <div id="container-reservas"></div>
     </div>
     <div id="contenedor-paginador"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

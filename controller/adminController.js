@@ -112,6 +112,15 @@ const adminController = {
     });
   },
 
+  statsReservasApi: async (req,res) =>{
+        const response = await reservaServices.stats();
+        console.log('====================================');
+        console.log(response);
+        console.log('====================================');
+        res.json(response)
+
+  },
+
   countCategoriesApi: async function (req, res) {
     const resopnseCountCategoriesApi = await productServices.countCategories();
     res.json(resopnseCountCategoriesApi);
