@@ -6,16 +6,16 @@ Este proyecto es una aplicación web para la visualización y gestión de produc
 # Funcionalidades Principales
 
 ## Cliente
---> Visualizar productos
---> Agregar productos a carrito de compras
---> Agregar productos a favoritos
---> Filtrar productos por genero, categoria, precio.
---> Login/Signup/Logout
+- Visualizar productos
+- Agregar productos a carrito de compras
+- Agregar productos a favoritos
+- Filtrar productos por genero, categoria, precio.
+- Login/Signup/Logout
 ## Administrador
---> Visualizar metricas
---> Agregar/eliminar/editar productos
---> Visualizar clientes
---> Visualizar pedidos
+- Visualizar metricas
+- Agregar/eliminar/editar productos
+- Visualizar clientes
+- Visualizar pedidos
 
 # Requisitos para instalacion
 
@@ -60,7 +60,7 @@ node index.js
 9. Abrí tu navegador y accedé a: http://localhost:3000
 
 
-Estructura basica del proyecto 
+# Estructura basica del proyecto 
 .
 ├── controllers/        # Lógica de negocio
 ├── models/             # Definiciones de modelos Sequelize
