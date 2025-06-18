@@ -62,6 +62,8 @@ router.get("/api/clientes/list", adminController.listClientsApi);
 
 //reservas
 router.get("/api/reservas/list", adminController.listReservasApi);
+router.get("/api/reservas/stats", adminController.statsReservasApi);
+
 router.get("/api/productos/count-categories", adminController.countCategoriesApi);
 router.get("/api/productos/count-genders", adminController.countGendersApi);
 

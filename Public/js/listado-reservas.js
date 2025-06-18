@@ -1,4 +1,81 @@
 document.addEventListener("DOMContentLoaded", async function () {
+  //graficos
+  const stats = await axios.get("/admin/api/reservas/stats");
+
+  const dias = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  console.log("====================================");
+  console.log(stats);
+  console.log("====================================");
+  const reservasRes = stats.data.barColumn;
+
+  const completo = dias.map((dia, idx) => {
+    const encontrado = reservasRes.find((d) => d.dia === dia);
+    return {
+      dia, // nombre del día
+      numero_dia: idx + 1, // 1-7 según DAYOFWEEK
+      numero: encontrado ? encontrado.numero : 0,
+    };
+  });
+  var options = {
+    chart: {
+      type: "bar",
+      height: 200,
+    },
+    series: [
+      {
+        name: "Reservas",
+        data: completo.map((x) => x.numero),
+      },
+    ],
+    xaxis: {
+      categories: dias,
+    },
+  };
+
+  var chart = new ApexCharts(
+    document.querySelector("#div-column-chart"),
+    options
+  );
+  chart.render();
+
+  //grafico de barra
+  const reservasRes2 = stats.data.bar;
+  var options2 = {
+    chart: {
+      type: "bar",
+      height: 200,
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+    colors: ["#00E396"],
+    series: [
+      {
+        name: "Cantidad de reservas",
+        data: reservasRes2.map((item) => ({
+          x: item.nom,
+          y: Number(item.numero),
+        })),
+      },
+    ],
+  };
+
+  var chart2 = new ApexCharts(
+    document.querySelector("#div-column-chart-2"),
+    options2
+  );
+  chart2.render();
+
   cargarReservas(1);
 
   document.getElementById("btn-buscar").addEventListener("click", () => {
@@ -66,7 +143,7 @@ function renderizarPaginador(paginaActual, totalPaginas, cliente = "") {
 
 function renderizarReservas(reservas) {
   const divPadre = document.getElementById("container-reservas");
-  divPadre.innerHTML = ""
+  divPadre.innerHTML = "";
   if (reservas.length == 0) {
     const divFoto = document.createElement("div");
     divFoto.classList.add(
@@ -164,13 +241,11 @@ function renderizarReservas(reservas) {
       "Cliente: " + reserva.usuario.nombre + " " + reserva.usuario.apellido;
     cliente.classList.add("mb-1");
 
-
     const contacto = document.createElement("p");
-    contacto.innerHTML =
-      "Contacto: " + reserva.usuario.email;
+    contacto.innerHTML = "Contacto: " + reserva.usuario.email;
     contacto.classList.add("mb-2");
 
-    divTexto.append(titulo, precio,cliente,contacto, fecha);
+    divTexto.append(titulo, precio, cliente, contacto, fecha);
 
     //appends de divs
     divCard.append(divImagen, divTexto);
