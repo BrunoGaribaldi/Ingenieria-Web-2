@@ -3,20 +3,21 @@
 
 Este proyecto es una aplicación web para la visualización y gestión de productos, desarrollada con **Node.js**, **Express**, **Sequelize** y **MySQL**. 
 
-## Funcionalidades Principales
-# Cliente
+# Funcionalidades Principales
+
+## Cliente
 --> Visualizar productos
 --> Agregar productos a carrito de compras
 --> Agregar productos a favoritos
 --> Filtrar productos por genero, categoria, precio.
 --> Login/Signup/Logout
-# Administrador
+## Administrador
 --> Visualizar metricas
 --> Agregar/eliminar/editar productos
 --> Visualizar clientes
 --> Visualizar pedidos
 
-## Requisitos
+# Requisitos para instalacion
 
 Antes de comenzar, asegurate de tener instalado lo siguiente:
 
