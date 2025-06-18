@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Habilitar/deshabilitar botón de reserva según token
   const token = localStorage.getItem("token");
   const botonReserva = document.getElementById("boton-reserva");
+  const textLog = document.getElementById("logeate")
   const botonCancelarReserva = document.getElementById(
     "boton-cancelar-reserva"
   );
@@ -98,6 +99,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (botonReserva) {
     if (token) {
       //usuario registrado, decido que boton mostrar
+      textLog.classList.add("invisible")
       if (reservado) {
         botonCancelarReserva.classList.remove("invisible");
         botonCancelarReserva.classList.remove("disabled");
@@ -108,6 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         botonReserva.removeAttribute("disabled");
       }
     } else {
+      textLog.classList.remove("invisible")
       botonReserva.classList.add("disabled");
       botonReserva.setAttribute("disabled", "disabled");
     }
