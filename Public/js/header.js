@@ -60,10 +60,8 @@ function renderHeader() {
                 >Cerrar Sesión</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" id="reservas" 
-                >Ver reservas</a
-              >
+            <a class="nav-link" id="reservas" style="cursor: pointer;">Ver reservas</a>
+
             </li>
             <li class="nav-item">
               <button class="nav-link text-danger" id="admin">Ver vista de administrador</button>

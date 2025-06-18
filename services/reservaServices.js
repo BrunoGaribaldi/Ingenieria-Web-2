@@ -1,6 +1,7 @@
 const { where } = require("sequelize");
 const { Reserva } = require("../models");
 const jwt = require("jsonwebtoken");
+const { Op, fn, col } = require("sequelize");
 const SECRET = "palabrasecreta";
 
 const reservaServices = {
@@ -38,17 +39,35 @@ const reservaServices = {
 
     return reserva;
   },
-  findAllReservas: async function findAllReservas(limit, offset) {
-    const { rows: reservas, count: total } = await Reserva.findAndCountAll({
-      limit,
-      offset,
-      order: [["created_at", "DESC"]],
-      include: [{ association: "producto" }, { association: "usuario" }],
-    });
-    return {
-      reservas,
-      total,
-    };
-  },
+
+findAllReservas: async function findAllReservas(limit, offset, cliente = "") {
+  const whereUsuario = cliente
+    ? where(
+        fn("concat", col("usuario.nombre"), " ", col("usuario.apellido")),
+        {
+          [Op.like]: `%${cliente}%`,
+        }
+      )
+    : undefined;
+
+  const { rows: reservas, count: total } = await Reserva.findAndCountAll({
+    limit,
+    offset,
+    order: [["created_at", "DESC"]],
+    include: [
+      { association: "producto" },
+      {
+        association: "usuario",
+        where: whereUsuario, // ahora busca por nombre completo concatenado
+      },
+    ],
+  });
+
+  return {
+    reservas,
+    total,
+  };
+}
+
 };
 module.exports = reservaServices;

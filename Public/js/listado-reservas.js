@@ -1,30 +1,37 @@
 document.addEventListener("DOMContentLoaded", async function () {
   cargarReservas(1);
+
+  document.getElementById("btn-buscar").addEventListener("click", () => {
+  const valorBusqueda = document.getElementById("busqueda-cliente").value.trim();
+  cargarReservas(1, valorBusqueda); // Cargar desde página 1 con búsqueda
+  });
+
 });
 
-async function cargarReservas(pagina) {
+async function cargarReservas(pagina, cliente = '') {
   const limit = 10;
+  console.log('/////////////////////////////////////////');
+  console.log(cliente);
+  console.log('/////////////////////////////////////////');
 
   const params = new URLSearchParams({
     //crea un objeto como esto: ?page=1&limit=10
     page: pagina,
     limit,
+    cliente,
   });
 
   const res = await axios.get(`/admin/api/reservas/list?${params.toString()}`);
-  console.log("====================================");
-  console.log(res);
-  console.log("====================================");
   const data = res.data;
 
   reservas = data.reservas;
   renderizarReservas(reservas);
 
   // Actualizar el paginador
-  renderizarPaginador(data.page, data.totalPages);
+  renderizarPaginador(data.page, data.totalPages, cliente);
 }
 
-function renderizarPaginador(paginaActual, totalPaginas) {
+function renderizarPaginador(paginaActual, totalPaginas, cliente = "") {
   const contenedor = document.getElementById("contenedor-paginador");
   contenedor.innerHTML = "";
   const nav = document.createElement("nav");
@@ -34,30 +41,28 @@ function renderizarPaginador(paginaActual, totalPaginas) {
 
   const liAnterior = document.createElement("li");
   liAnterior.className = `page-item ${paginaActual === 1 ? "disabled" : ""}`;
-  liAnterior.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${
-    paginaActual - 1
-  })">Anterior</a>`;
+  liAnterior.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${paginaActual - 1}, '${cliente}')">Anterior</a>`;
   ul.appendChild(liAnterior);
 
   for (let i = 1; i <= totalPaginas; i++) {
     const li = document.createElement("li");
     li.className = `page-item ${i === paginaActual ? "active" : ""}`;
-    li.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${i})">${i}</a>`;
+    li.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${i}, '${cliente}')">${i}</a>`;
     ul.appendChild(li);
   }
 
   const liSiguiente = document.createElement("li");
-  liSiguiente.className = `page-item ${
-    paginaActual === totalPaginas ? "disabled" : ""
-  }`;
-  liSiguiente.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${
-    paginaActual + 1
-  })">Siguiente</a>`;
+  liSiguiente.className = `page-item ${paginaActual === totalPaginas ? "disabled" : ""}`;
+  liSiguiente.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${paginaActual + 1}, '${cliente}')">Siguiente</a>`;
   ul.appendChild(liSiguiente);
 
   nav.appendChild(ul);
   contenedor.appendChild(nav);
 }
+
+
+
+//////////
 
 function renderizarReservas(reservas) {
   const divPadre = document.getElementById("container-reservas");

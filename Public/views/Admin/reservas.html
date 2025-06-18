@@ -17,8 +17,18 @@
   <body>
     <div class="container my-4" id="container">
       <h1 class="mb-4">Reservas de clientes</h1>
+          <div class="input-group mb-3">
+  <input
+    type="text"
+    id="busqueda-cliente"
+    class="form-control"
+    placeholder="Buscar por cliente"
+  />
+  <button class="btn btn-primary" id="btn-buscar">Buscar</button>
+</div>
       <div id = "container-reservas"></div>
     </div>
+
     <div id="contenedor-paginador"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/header.js"></script>

@@ -101,8 +101,9 @@ const adminController = {
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
     const offset = (page - 1) * limit;
+    const cliente = req.query.cliente || ""; //leo el cliente
 
-    const response = await reservaServices.findAllReservas(limit, offset);
+    const response = await reservaServices.findAllReservas(limit, offset, cliente);
 
     res.json({
       reservas: response.reservas,
