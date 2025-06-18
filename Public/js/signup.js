@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         //creo el token y lo guardo en el local storage
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("admin", res.data.admin);
+        localStorage.setItem("id", res.data.id);
+
         window.location.href = "http://localhost:3000/";
       } catch (err) {
         let textErrorPassword = document.getElementById("error-password");
@@ -30,28 +33,30 @@ document.addEventListener("DOMContentLoaded", () => {
         textErrorNombre.innerHTML = "";
         textErrorApellido.innerHTML = "";
 
-       // Si el backend responde con errores de express-validator
+        // Si el backend responde con errores de express-validator
         if (err.response && Array.isArray(err.response.data.errors)) {
-            err.response.data.errors.forEach(error => {
-                if (error.path === "email") {
-                    textErrorEmail.innerHTML = error.msg;
-                }
-                if (error.path === "password") {
-                    textErrorPassword.innerHTML = error.msg;
-                }
-                if (error.path === "nombre") {
-                    textErrorNombre.innerHTML = error.msg;
-                }
-                if (error.path === "apellido") {
-                    textErrorApellido.innerHTML = error.msg;
-                }
-            });
-        } else if (err.response && err.response.data.code == "EMAIL_ALREADY_REGISTERED") {
-            textErrorEmail.innerHTML = `${err.response?.data?.error}`;
+          err.response.data.errors.forEach((error) => {
+            if (error.path === "email") {
+              textErrorEmail.innerHTML = error.msg;
+            }
+            if (error.path === "password") {
+              textErrorPassword.innerHTML = error.msg;
+            }
+            if (error.path === "nombre") {
+              textErrorNombre.innerHTML = error.msg;
+            }
+            if (error.path === "apellido") {
+              textErrorApellido.innerHTML = error.msg;
+            }
+          });
+        } else if (
+          err.response &&
+          err.response.data.code == "EMAIL_ALREADY_REGISTERED"
+        ) {
+          textErrorEmail.innerHTML = `${err.response?.data?.error}`;
         } else {
-            textErrorEmail.innerHTML = `${err.message}`;
+          textErrorEmail.innerHTML = `${err.message}`;
         }
-        
       }
     });
 });

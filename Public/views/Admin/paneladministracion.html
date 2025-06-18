@@ -1,5 +1,4 @@
-<!--Este es el panel clientes - productos-->
-
+<!--Este es el panel clientes - productos - reservas -->
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -29,7 +28,7 @@
   <!-- Productos Activos -->
   <a
     href="/admin/administrarproductos" 
-    class="col-6 mx-2 d-flex justify-content-center align-items-center position-relative"
+    class="col-4 mx-2 d-flex justify-content-center align-items-center position-relative"
     style="
       height: 40vh;
       background: url('/Images/jeansBackground.jpg') center center/cover no-repeat;
@@ -51,7 +50,7 @@
   <!-- Clientes -->
   <a
     href="/admin/clientes/list"
-    class="col-6 mx-2 d-flex justify-content-center align-items-center position-relative"
+    class="col-4 mx-2 d-flex justify-content-center align-items-center position-relative"
     style="
       height: 40vh;
       background: url('/Images/negocioBackground.jpg') center center/cover no-repeat;
@@ -67,6 +66,27 @@
       style="z-index: 1;"
     >
       Clientes
+    </div>
+
+     <!-- Clientes -->
+  <a
+    href="/admin/reservas/list"
+    class="col-4 mx-2 d-flex justify-content-center align-items-center position-relative"
+    style="
+      height: 40vh;
+      background: url('/Images/cat.png') center center/cover no-repeat;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    "
+  >
+    <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7)"></div>
+    <div
+      class="text-center position-relative text-white fs-4 fw-bold"
+      style="z-index: 1;"
+    >
+      Reservas
     </div>
   </a>
 </div>

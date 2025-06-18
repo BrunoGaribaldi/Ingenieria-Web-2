@@ -1,6 +1,6 @@
 const path = require("path");
 const productServices = require("../services/productServices");
-const userServices = require("../services/usuarioServices");
+const reservaServices = require("../services/reservaServices");
 const usuarioServices = require("../services/usuarioServices");
 
 const adminController = {
@@ -23,7 +23,7 @@ const adminController = {
         ...req.body,
         foto: req.file ? req.file.filename : null, // Guarda el nombre del archivo
       };
-      const responseCreateProduct = await productServices.createProduct(
+      await productServices.createProduct(
         productData
       );
       res.redirect("/admin/administrarproductos");
@@ -44,7 +44,7 @@ const adminController = {
     try {
       const id = req.params.id;
       const data = req.body;
-     
+
       // Si usas multer para imagen:
       if (req.file) {
         data.foto = req.file.filename;
@@ -64,11 +64,7 @@ const adminController = {
     res.json(responseDeleteProduct);
   },
 
-  /*
-  verpedidos: (req, res) => {
-    res.sendFile(path.join(__dirname, "../Public/views/Admin/verpedidos.html"));
-  },
-*/
+ 
   //vista de productos
   administrarproductos: (req, res) => {
     res.sendFile(
@@ -76,27 +72,44 @@ const adminController = {
     );
   },
 
-  //vista de usuarios
+  //lista de clientes
   listClients: (req, res) => {
     res.sendFile(path.join(__dirname, "../Public/views/Admin/clientes.html"));
   },
 
+  //lista de reservas
+  listReservas: (req, res) => {
+    res.sendFile(path.join(__dirname, "../Public/views/Admin/reservas.html"));
+  },
+
   //apis
   listClientsApi: async (req, res) => {
+    const limit = parseInt(req.query.limit) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const offset = (page - 1) * limit;
 
-  const limit = parseInt(req.query.limit) || 10;
-  const page = parseInt(req.query.page) || 1;
-  const offset = (page - 1) * limit; 
+    const response = await usuarioServices.findAllUsuarios(limit, offset);
 
-  const response = await usuarioServices.findAllUsuarios(limit, offset);
+    res.json({
+      clientes: response.usuarios,
+      total: response.total, // cantidad total de clientes en la bd
+      page, // numero de pagina solicitada
+      totalPages: Math.ceil(response.total / limit), // cantidad total de paginas.
+    });
+  },
+  listReservasApi: async (req, res) => {
+    const limit = parseInt(req.query.limit) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const offset = (page - 1) * limit;
 
-      res.json({
-        clientes: response.usuarios,
-        total: response.total, // cantidad total de clientes en la bd
-        page, // numero de pagina solicitada
-        totalPages: Math.ceil(response.total / limit), // cantidad total de paginas.
-      });
+    const response = await reservaServices.findAllReservas(limit, offset);
 
+    res.json({
+      reservas: response.reservas,
+      total: response.total, // cantidad total de clientes en la bd
+      page, // numero de pagina solicitada
+      totalPages: Math.ceil(response.total / limit), // cantidad total de paginas.
+    });
   },
 
   countCategoriesApi: async function (req, res) {
@@ -107,9 +120,7 @@ const adminController = {
   countGendersApi: async function (req, res) {
     const resopnseCountGendersApi = await productServices.countGenders();
     res.json(resopnseCountGendersApi);
-  }
-
-
+  },
 };
 
 module.exports = adminController;

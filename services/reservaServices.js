@@ -12,7 +12,7 @@ const reservaServices = {
       id_producto: idProducto,
     };
     const newReserva = await Reserva.create(nuevaReserva);
-    return {newReserva, id:decoded.id};
+    return { newReserva, id: decoded.id };
   },
   deleteReserva: async function deleteReserva(idProducto, token) {
     const decoded = jwt.verify(token, SECRET);
@@ -22,7 +22,7 @@ const reservaServices = {
         id_producto: idProducto,
       },
     });
-    return {deletedReserva, id:decoded.id};
+    return { deletedReserva, id: decoded.id };
   },
   listReserva: async function listReserva() {
     const reservas = await Reserva.findAll({
@@ -35,8 +35,20 @@ const reservaServices = {
     const reserva = await Reserva.findOne({
       where: [{ id_usuario: idUsuario }, { id_producto: idProducto }],
     });
-    
+
     return reserva;
+  },
+  findAllReservas: async function findAllReservas(limit, offset) {
+    const { rows: reservas, count: total } = await Reserva.findAndCountAll({
+      limit,
+      offset,
+      order: [["created_at", "DESC"]],
+      include: [{ association: "producto" }, { association: "usuario" }],
+    });
+    return {
+      reservas,
+      total,
+    };
   },
 };
 module.exports = reservaServices;

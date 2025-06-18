@@ -17,6 +17,12 @@ const userController = {
       const responseSignup = await usuarioServices.createUsuario(req.body);
       const token = responseSignup.token;
 
+      const admin = responseSignup.admin;
+      req.session.userLogged = {
+        id: responseSignup.user.id,
+        rol: admin,
+      };
+
       res.status(201).json({
         user: responseSignup.user,
         id: responseSignup.user.id,

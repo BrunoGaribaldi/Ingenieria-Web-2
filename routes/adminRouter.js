@@ -6,6 +6,7 @@ const adminController = require("../controller/adminController");
 
 const adminMiddleware = require("../middlewares/adminMiddleware");
 const { upload } = require("../index");
+
 //register
 router.get("/", adminMiddleware, adminController.home);
 //para ver si existe la session
@@ -53,9 +54,11 @@ router.get(
   adminController.administrarproductos
 );
 router.get("/clientes/list", adminController.listClients);
+router.get("/reservas/list", adminController.listReservas);
 
 //apis
 router.get("/api/clientes/list", adminController.listClientsApi);
+router.get("/api/reservas/list", adminController.listReservasApi);
 router.get("/api/productos/count-categories", adminController.countCategoriesApi);
 router.get("/api/productos/count-genders", adminController.countGendersApi);
 

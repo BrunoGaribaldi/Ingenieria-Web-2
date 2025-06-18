@@ -1,0 +1,174 @@
+document.addEventListener("DOMContentLoaded", async function () {
+  cargarReservas(1);
+});
+
+async function cargarReservas(pagina) {
+  const limit = 10;
+
+  const params = new URLSearchParams({
+    //crea un objeto como esto: ?page=1&limit=10
+    page: pagina,
+    limit,
+  });
+
+  const res = await axios.get(`/admin/api/reservas/list?${params.toString()}`);
+  console.log("====================================");
+  console.log(res);
+  console.log("====================================");
+  const data = res.data;
+
+  reservas = data.reservas;
+  renderizarReservas(reservas);
+
+  // Actualizar el paginador
+  renderizarPaginador(data.page, data.totalPages);
+}
+
+function renderizarPaginador(paginaActual, totalPaginas) {
+  const contenedor = document.getElementById("contenedor-paginador");
+  contenedor.innerHTML = "";
+  const nav = document.createElement("nav");
+  nav.setAttribute("aria-label", "Page navigation");
+  const ul = document.createElement("ul");
+  ul.className = "pagination justify-content-center";
+
+  const liAnterior = document.createElement("li");
+  liAnterior.className = `page-item ${paginaActual === 1 ? "disabled" : ""}`;
+  liAnterior.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${
+    paginaActual - 1
+  })">Anterior</a>`;
+  ul.appendChild(liAnterior);
+
+  for (let i = 1; i <= totalPaginas; i++) {
+    const li = document.createElement("li");
+    li.className = `page-item ${i === paginaActual ? "active" : ""}`;
+    li.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${i})">${i}</a>`;
+    ul.appendChild(li);
+  }
+
+  const liSiguiente = document.createElement("li");
+  liSiguiente.className = `page-item ${
+    paginaActual === totalPaginas ? "disabled" : ""
+  }`;
+  liSiguiente.innerHTML = `<a class="page-link" href="#" onclick="cargarReservas(${
+    paginaActual + 1
+  })">Siguiente</a>`;
+  ul.appendChild(liSiguiente);
+
+  nav.appendChild(ul);
+  contenedor.appendChild(nav);
+}
+
+function renderizarReservas(reservas) {
+  const divPadre = document.getElementById("container-reservas");
+  divPadre.innerHTML = ""
+  if (reservas.length == 0) {
+    const divFoto = document.createElement("div");
+    divFoto.classList.add(
+      "d-flex",
+      "justify-content-center",
+      "align-items-center",
+      "flex-column",
+      "position-relative"
+    );
+    divFoto.style.height = "300px"; // ajusta el alto según tu diseño
+
+    // Texto arriba de la imagen
+    const texto = document.createElement("span");
+    texto.textContent = "No hay reservas :(";
+    texto.classList.add(
+      "position-absolute",
+      "top-50",
+      "start-50",
+      "translate-middle",
+      "fs-4",
+      "fw-bold",
+      "text-dark"
+    );
+    texto.style.zIndex = "2";
+
+    // Imagen con opacidad
+    const fotoGatito = document.createElement("img");
+    fotoGatito.src = "/Images/cat.png";
+    fotoGatito.style.opacity = "0.4";
+    fotoGatito.style.maxHeight = "250px";
+    fotoGatito.style.objectFit = "contain";
+    fotoGatito.classList.add("w-auto");
+
+    divFoto.append(fotoGatito, texto);
+    divPadre.append(divFoto);
+  }
+  reservas.forEach((reserva) => {
+    //carta general
+    const divCard = document.createElement("div");
+    divCard.classList.add("d-flex", "border", "border-secondary", "my-3");
+    divCard.style.height = "33vh";
+    divCard.style.maxHeight = "200px";
+    divCard.style.borderRadius = "15px";
+
+    //parte imagen
+    const divImagen = document.createElement("div");
+    divImagen.classList.add("col-2");
+
+    const imagen = document.createElement("img");
+    imagen.src = "/Uploads/" + reserva.producto.foto;
+    imagen.style.width = "100%";
+    imagen.style.height = "100%";
+    imagen.style.objectFit = "cover";
+    imagen.style.borderRadius = "10px";
+    divImagen.appendChild(imagen);
+
+    //parte texto
+    const divTexto = document.createElement("div");
+    divTexto.classList.add(
+      "col-10",
+      "d-flex",
+      "flex-column",
+      "justify-content-center",
+      "px-4",
+      "py-1",
+      "ml-4"
+    );
+
+    const titulo = document.createElement("h4");
+    titulo.innerHTML = reserva.producto.modelo;
+    titulo.style.fontFamily = "Montserrat, sans-serif";
+
+    const precio = document.createElement("p");
+    precio.innerHTML =
+      "Monto: " +
+      Number(reserva.producto.precio).toLocaleString("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        minimumFractionDigits: 2,
+      });
+    precio.classList.add("mb-1");
+
+    const fecha = document.createElement("p");
+    fecha.classList.add("fw-light");
+    fecha.innerHTML = new Date(reserva.createdAt).toLocaleDateString("es-AR", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    //cliente
+    const cliente = document.createElement("p");
+    cliente.innerHTML =
+      "Cliente: " + reserva.usuario.nombre + " " + reserva.usuario.apellido;
+    cliente.classList.add("mb-1");
+
+
+    const contacto = document.createElement("p");
+    contacto.innerHTML =
+      "Contacto: " + reserva.usuario.email;
+    contacto.classList.add("mb-2");
+
+    divTexto.append(titulo, precio,cliente,contacto, fecha);
+
+    //appends de divs
+    divCard.append(divImagen, divTexto);
+    divPadre.appendChild(divCard);
+  });
+}
