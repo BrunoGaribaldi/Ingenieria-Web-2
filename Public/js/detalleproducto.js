@@ -3,43 +3,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   const parts = path.split("/");
   const id = parts[3];
 
+  // Cargar datos del producto
   try {
     const res = await axios.get(`/products/api/list/${id}`);
     const producto = res.data;
 
-    const titleText = (document.getElementById("titulo").textContent =
-      producto.categoria + " " + producto.modelo);
-
+    document.getElementById(
+      "titulo"
+    ).textContent = `${producto.categoria} ${producto.modelo}`;
     const imagen = document.getElementById("imagen");
     imagen.src = "/Uploads/" + producto.foto;
     imagen.style.width = "100vw";
-
-    const descripcion = (document.getElementById("descripcion").textContent =
-      producto.descripcion);
-
-    const precio = (document.getElementById("precio").textContent = `${Number(
+    document.getElementById("descripcion").textContent = producto.descripcion;
+    document.getElementById("precio").textContent = Number(
       producto.precio
     ).toLocaleString("es-AR", {
       style: "currency",
       currency: "ARS",
       minimumFractionDigits: 2,
-    })}`);
-
-    const genero = (document.getElementById("genero").textContent =
-      producto.genero);
-
-    const marca = (document.getElementById("marca").textContent =
-      producto.marca);
+    });
+    document.getElementById("genero").textContent = producto.genero;
+    document.getElementById("marca").textContent = producto.marca;
   } catch (error) {
     console.error("Error al obtener el producto:", error);
   }
 
-  // CARRUSEL DE ACCESORIOS CON 8 PRODUCTOS ALEATORIOS
+  // Cargar productos para el carrusel
   try {
     const res = await axios.get("/products/api/list");
     const productos = res.data.productos;
-
-    // Tomamos 8 productos aleatorios
     const productosAleatorios = productos
       .sort(() => 0.5 - Math.random())
       .slice(0, 8);
@@ -47,17 +39,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     for (let i = 0; i < productosAleatorios.length; i += 4) {
       const grupo = productosAleatorios.slice(i, i + 4);
-
       const item = document.createElement("div");
       item.className = `carousel-item ${i === 0 ? "active" : ""}`;
-
       const row = document.createElement("div");
       row.className = "row";
 
       grupo.forEach((producto) => {
         const col = document.createElement("div");
         col.className = "col-12 col-sm-6 col-md-4 col-lg-3";
-
         col.innerHTML = `
           <a href="/products/list/${
             producto.id
@@ -94,33 +83,81 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error cargando productos para el carrusel:", error);
   }
 
-  //enable del boton
-
+  // Habilitar/deshabilitar botón de reserva según token
   const token = localStorage.getItem("token");
   const botonReserva = document.getElementById("boton-reserva");
-  token
-    ? botonReserva.classList.remove("disabled")
-    : botonReserva.classList.add("disabled");
+  const botonCancelarReserva = document.getElementById(
+    "boton-cancelar-reserva"
+  );
 
-  //creacion de reserva
-  botonReserva.addEventListener("click",async function () {
-    const path = window.location.pathname;
-    const parts = path.split("/"); //queda en un array
-    const id = parts[3]; //obtenemos id del producto obtenido desde la url.
-    const res = await axios.post(
-      `/reserva/crear-reserva/${id}`,
-      {}, // body vacío, o pon los datos que necesites enviar
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+  //que boton mostrar
+  const idUsuario = localStorage.getItem("id");
+  const responseReservado = await axios.get(
+    "/reserva/api/check-reserva/" + id + "/" + idUsuario
+  );
+  const reservado = responseReservado.data;
+
+  if (botonReserva) {
+    if (token) {
+      //usuario registrado, decido que boton mostrar
+      if (reservado) {
+        botonCancelarReserva.classList.remove("invisible");
+        botonCancelarReserva.classList.remove("disabled");
+
+        botonReserva.classList.add("invisible");
+      } else {
+        botonReserva.classList.remove("disabled");
+        botonReserva.removeAttribute("disabled");
       }
-    );
-    try {
-      const idUsuario = localStorage.getItem("id");
-      window.location.href = `/reserva/list-reserva/${idUsuario}`;
-    } catch (err) {
-      document.writeln(err);
+    } else {
+      botonReserva.classList.add("disabled");
+      botonReserva.setAttribute("disabled", "disabled");
     }
-  });
+
+    //Evento de cancelar reserva
+    botonCancelarReserva.addEventListener("click", async function () {
+      try {
+        await axios.post(
+          `/reserva/delete-reserva/${id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const idUsuario = localStorage.getItem("id");
+        window.location.href = `/reserva/list-reserva/${idUsuario}`;
+      } catch (err) {
+        //token expiro
+        console.log('====================================');
+        console.log(err);
+        console.log('====================================');
+       
+      }
+    });
+    // Evento de reserva
+    botonReserva.addEventListener("click", async function () {
+      try {
+        await axios.post(
+          `/reserva/crear-reserva/${id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const idUsuario = localStorage.getItem("id");
+        window.location.href = `/reserva/list-reserva/${idUsuario}`;
+      } catch (err) {
+        //token expiro
+        localStorage.removeItem("token");
+        localStorage.removeItem("id");
+        localStorage.removeItem("admin");
+
+        window.location.href = "/user/login";
+      }
+    });
+  }
 });

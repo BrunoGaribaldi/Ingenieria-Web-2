@@ -7,10 +7,46 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const reservas = response.data.reservas;
     const divPadre = document.getElementById("container-cards");
+
+    //si no tiene resercas
+
+    if (reservas.length == 0) {
+      const divFoto = document.createElement("div");
+      divFoto.classList.add(
+        "d-flex",
+        "justify-content-center",
+        "align-items-center",
+        "flex-column",
+        "position-relative"
+      );
+      divFoto.style.height = "300px"; // ajusta el alto según tu diseño
+
+      // Texto arriba de la imagen
+      const texto = document.createElement("span");
+      texto.textContent = "No tienes reservas :(";
+      texto.classList.add(
+        "position-absolute",
+        "top-50",
+        "start-50",
+        "translate-middle",
+        "fs-4",
+        "fw-bold",
+        "text-dark"
+      );
+      texto.style.zIndex = "2";
+
+      // Imagen con opacidad
+      const fotoGatito = document.createElement("img");
+      fotoGatito.src = "/Images/cat.png";
+      fotoGatito.style.opacity = "0.4";
+      fotoGatito.style.maxHeight = "250px";
+      fotoGatito.style.objectFit = "contain";
+      fotoGatito.classList.add("w-auto");
+
+      divFoto.append(fotoGatito, texto);
+      divPadre.append(divFoto);
+    }
     reservas.forEach((reserva) => {
-      console.log("====================================");
-      console.log(reserva);
-      console.log("====================================");
       //carta general
       const divCard = document.createElement("div");
       divCard.classList.add("d-flex", "border", "border-secondary", "my-3");
@@ -36,8 +72,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         "col-10",
         "d-flex",
         "flex-column",
+        "justify-content-center",
         "px-4",
-        "py-5",
+        "py-3",
         "ml-4"
       );
 
@@ -46,15 +83,58 @@ document.addEventListener("DOMContentLoaded", async () => {
       titulo.style.fontFamily = "Montserrat, sans-serif";
 
       const precio = document.createElement("p");
-      precio.innerHTML = "Monto: $" + reserva.producto.precio;
+      precio.innerHTML =
+        "Monto: " +
+        Number(reserva.producto.precio).toLocaleString("es-AR", {
+          style: "currency",
+          currency: "ARS",
+          minimumFractionDigits: 2,
+        });
       precio.style.fontFamily = "Montserrat, sans-serif";
       precio.classList.add("mb-1");
-      const fecha = document.createElement("p");
 
-      fecha.innerHTML =
-        "Fecha: " + new Date(reserva.createdAt).toLocaleDateString("es-AR");
+      const fecha = document.createElement("p");
+      fecha.classList.add("fw-light");
+      fecha.innerHTML = new Date(reserva.createdAt).toLocaleDateString(
+        "es-AR",
+        {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }
+      );
       fecha.style.fontFamily = "Montserrat, sans-serif";
-      divTexto.append(titulo, precio, fecha);
+
+      const boton = document.createElement("button");
+      boton.classList.add("btn", "btn-danger", "w-25");
+
+      const i = document.createElement("i");
+      i.classList.add("bi", "bi-cart-dash", "px-1");
+      boton.append(i, "Cancelar reserva");
+
+      //logica de boton
+      boton.addEventListener("click", async function () {
+        try {
+          await axios.post(
+            `/reserva/delete-reserva/${reserva.producto.id}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const idUsuario = localStorage.getItem("id");
+          window.location.href = `/reserva/list-reserva/${idUsuario}`;
+        } catch (err) {
+          //token expiro
+          console.log("====================================");
+          console.log(err);
+          console.log("====================================");
+        }
+      });
+      divTexto.append(titulo, precio, fecha, boton);
 
       //appends de divs
       divCard.append(divImagen, divTexto);

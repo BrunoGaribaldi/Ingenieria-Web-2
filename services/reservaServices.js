@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { Reserva } = require("../models");
 const jwt = require("jsonwebtoken");
 const SECRET = "palabrasecreta";
@@ -11,7 +12,17 @@ const reservaServices = {
       id_producto: idProducto,
     };
     const newReserva = await Reserva.create(nuevaReserva);
-    return newReserva;
+    return {newReserva, id:decoded.id};
+  },
+  deleteReserva: async function deleteReserva(idProducto, token) {
+    const decoded = jwt.verify(token, SECRET);
+    const deletedReserva = await Reserva.destroy({
+      where: {
+        id_usuario: decoded.id,
+        id_producto: idProducto,
+      },
+    });
+    return {deletedReserva, id:decoded.id};
   },
   listReserva: async function listReserva() {
     const reservas = await Reserva.findAll({
@@ -19,6 +30,13 @@ const reservaServices = {
       include: { association: "producto" },
     });
     return reservas;
+  },
+  checkReserva: async function checkReserva(idProducto, idUsuario) {
+    const reserva = await Reserva.findOne({
+      where: [{ id_usuario: idUsuario }, { id_producto: idProducto }],
+    });
+    
+    return reserva;
   },
 };
 module.exports = reservaServices;
