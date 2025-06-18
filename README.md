@@ -38,9 +38,9 @@ cd tu-repo
 ```bash
 npm install
 ```
-4. Crear la base de datos utilizando los archivos ubicados en Registros para BD de Prueba.
+3. Crear la base de datos utilizando los archivos ubicados en Registros para BD de Prueba.
 
-5. Configurar el archivo config.json
+4. Configurar el archivo config.json
 ```bash
 {
   "development": {
@@ -52,12 +52,12 @@ npm install
   },
 ```
 
-7. Iniciar la Aplicacion.
+5. Iniciar la Aplicacion.
 ```bash
 node index.js
 ```
 
-9. Abrí tu navegador y accedé a: http://localhost:3000
+6. Abrí tu navegador y accedé a: http://localhost:3000
 
 
 # Estructura basica del proyecto 
