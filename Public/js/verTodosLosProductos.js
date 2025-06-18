@@ -62,44 +62,40 @@ async function cargarOpcionesDeFiltros() {
 
 }
 
-async function cargarProductos (pagina){
+async function cargarProductos(pagina) {
+  const limit = 12;
 
-    const limit = 12; // la cantidad de productos por página
+  const generoSelectValue = document.getElementById("filtro-genero").value;
+  const categoriaSelectValue = document.getElementById("filtro-categoria").value;
+  const precioSelectValue = document.getElementById("filtro-precio").value;
 
-
-    const urlParams = new URLSearchParams(window.location.search);
-
-    //obtenemos los filtros ya sea de la url o de los select
-    const genero = document.getElementById("filtro-genero").value || urlParams.get("genero");
-    const categoria = document.getElementById("filtro-categoria").value || urlParams.get("categoria");
-    const precio = document.getElementById("filtro-precio").value || urlParams.get("precio");
-
-
-    const params = new URLSearchParams({ //crea un objeto como esto: ?page=1&limit=10
+  const params = new URLSearchParams({
     page: pagina,
     limit,
-    });
+  });
 
-    if (genero) params.append("genero", genero); // esto agrega los filtros a la url.
-    if (categoria) params.append("categoria", categoria);
+  if (generoSelectValue && generoSelectValue !== "") {
+    params.append("genero", generoSelectValue);
+  }
 
-    if (precio) {
-        const [minPrecio, maxPrecio] = precio.split("-");
-        params.append("precioMin", minPrecio);
-        params.append("precioMax", maxPrecio);
-        
-    }
+  if (categoriaSelectValue && categoriaSelectValue !== "") {
+    params.append("categoria", categoriaSelectValue);
+  }
 
-    const res = await axios.get(`/products/api/list?${params.toString()}`);
-    const data = res.data;
+  if (precioSelectValue && precioSelectValue !== "") {
+    const [minPrecio, maxPrecio] = precioSelectValue.split("-");
+    params.append("precioMin", minPrecio);
+    params.append("precioMax", maxPrecio);
+  }
 
-    // Renderizar los productos de esta página
-    renderizarProductos(data.productos);
+  const res = await axios.get(`/products/api/list?${params.toString()}`);
+  const data = res.data;
 
-    // Actualizar el paginador
-    renderizarPaginador(data.page, data.totalPages);
-
+  renderizarProductos(data.productos);
+  renderizarPaginador(data.page, data.totalPages);
 }
+
+
 
 function renderizarProductos(productos) {
 

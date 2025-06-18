@@ -27,17 +27,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       genero: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        type: DataTypes.ENUM('hombre', 'mujer', 'unisex'),
+        allowNull: true
       },
-      
        foto: {
         type: DataTypes.STRING,
         allowNull: true,
       },
       categoria: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        type: DataTypes.ENUM('remera', 'zapatilla', 'abrigo', 'accesorio', 'pantalon'),
+        allowNull: true
       },
       precio: {
         type: DataTypes.DECIMAL(10, 2),
