@@ -1,6 +1,7 @@
 const { where } = require("sequelize");
 const { Reserva } = require("../models");
 const { Usuario } = require("../models");
+const productoService = require("./productServices");
 const jwt = require("jsonwebtoken");
 const { Op, fn, col } = require("sequelize");
 const SECRET = "palabrasecreta";
@@ -14,7 +15,18 @@ const reservaServices = {
       id_producto: idProducto,
     };
     const newReserva = await Reserva.create(nuevaReserva);
-    return { newReserva, id: decoded.id };
+
+    //le mando data del producto que se reservo
+    const productoReservado = await productoService.listProduct(
+      newReserva.id_producto
+    );
+
+    return {
+      newReserva,
+      id: decoded.id,
+      email: decoded.email,
+      productoReservado: productoReservado,
+    };
   },
   deleteReserva: async function deleteReserva(idProducto, token) {
     const decoded = jwt.verify(token, SECRET);
@@ -26,10 +38,11 @@ const reservaServices = {
     });
     return { deletedReserva, id: decoded.id };
   },
-  listReserva: async function listReserva() {
+  listReserva: async function listReserva(idUsuario) {
     const reservas = await Reserva.findAll({
       where: { id_usuario: idUsuario },
       include: { association: "producto" },
+      order: [["created_at", "DESC"]]
     });
     return reservas;
   },
@@ -83,16 +96,37 @@ const reservaServices = {
 
     return { barColumn, bar };
   },
+<<<<<<< HEAD
 findAllReservas: async function findAllReservas(limit, offset, cliente = "") {
   const whereUsuario = cliente //ahora armo una condicion para la busqueda de cliente
     ? where(
         fn("concat", col("usuario.nombre"), " ", col("usuario.apellido")), 
-        {
-          [Op.like]: `%${cliente}%`,
-        }
-      )
-    : undefined;
+=======
+  findAllReservas: async function findAllReservas(limit, offset, cliente = "") {
+    const whereUsuario = cliente
+      ? where(
+          fn("concat", col("usuario.nombre"), " ", col("usuario.apellido")),
+          {
+            [Op.like]: `%${cliente}%`,
+          }
+        )
+      : undefined;
 
+    const { rows: reservas, count: total } = await Reserva.findAndCountAll({
+      limit,
+      offset,
+      order: [["created_at", "DESC"]],
+      include: [
+        { association: "producto" },
+>>>>>>> 800e26289edbdc09a5240741b0174ef81eebc1bc
+        {
+          association: "usuario",
+          where: whereUsuario, // ahora busca por nombre completo concatenado
+        },
+      ],
+    });
+
+<<<<<<< HEAD
   const { rows: reservas, count: total } = await Reserva.findAndCountAll({
     limit,
     offset,
@@ -111,5 +145,12 @@ findAllReservas: async function findAllReservas(limit, offset, cliente = "") {
     total,
   };
 },
+=======
+    return {
+      reservas,
+      total,
+    };
+  },
+>>>>>>> 800e26289edbdc09a5240741b0174ef81eebc1bc
 };
 module.exports = reservaServices;
