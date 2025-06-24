@@ -1,6 +1,7 @@
 const { where } = require("sequelize");
 const { Reserva } = require("../models");
 const { Usuario } = require("../models");
+const productoService = require("./productServices");
 const jwt = require("jsonwebtoken");
 const { Op, fn, col } = require("sequelize");
 const SECRET = "palabrasecreta";
@@ -14,7 +15,12 @@ const reservaServices = {
       id_producto: idProducto,
     };
     const newReserva = await Reserva.create(nuevaReserva);
-    return { newReserva, id: decoded.id };
+    
+    //le mando data del producto que se reservo
+    const productoReservado = await productoService.listProduct(newReserva.id_producto)
+   
+ 
+    return { newReserva, id: decoded.id, email: decoded.email, productoReservado: productoReservado};
   },
   deleteReserva: async function deleteReserva(idProducto, token) {
     const decoded = jwt.verify(token, SECRET);
