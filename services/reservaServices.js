@@ -84,9 +84,9 @@ const reservaServices = {
     return { barColumn, bar };
   },
 findAllReservas: async function findAllReservas(limit, offset, cliente = "") {
-  const whereUsuario = cliente
+  const whereUsuario = cliente //ahora armo una condicion para la busqueda de cliente
     ? where(
-        fn("concat", col("usuario.nombre"), " ", col("usuario.apellido")),
+        fn("concat", col("usuario.nombre"), " ", col("usuario.apellido")), 
         {
           [Op.like]: `%${cliente}%`,
         }
@@ -96,7 +96,7 @@ findAllReservas: async function findAllReservas(limit, offset, cliente = "") {
   const { rows: reservas, count: total } = await Reserva.findAndCountAll({
     limit,
     offset,
-    order: [["created_at", "DESC"]],
+    order: [["created_at", "DESC"]], //activar timestamp
     include: [
       { association: "producto" },
       {

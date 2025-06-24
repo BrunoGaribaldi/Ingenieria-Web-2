@@ -78,6 +78,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   cargarReservas(1);
 
+
+  //listener para busqueda
   document.getElementById("btn-buscar").addEventListener("click", () => {
   const valorBusqueda = document.getElementById("busqueda-cliente").value.trim();
   cargarReservas(1, valorBusqueda); // Cargar desde página 1 con búsqueda
@@ -92,7 +94,7 @@ async function cargarReservas(pagina, cliente = '') {
   console.log('/////////////////////////////////////////');
 
   const params = new URLSearchParams({
-    //crea un objeto como esto: ?page=1&limit=10
+    //crea un objeto como esto: page=1&limit=10&cliente=''
     page: pagina,
     limit,
     cliente,

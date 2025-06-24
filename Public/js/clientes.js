@@ -6,7 +6,7 @@
         const limit = 10;
 
         const params = new URLSearchParams({
-          //crea un objeto como esto: ?page=1&limit=10
+          //crea un objeto como esto: page=1&limit=10
           page: pagina,
           limit,
         });

@@ -8,7 +8,7 @@ Este proyecto es una aplicación web para la visualización y gestión de produc
 ## Cliente
 - Visualizar productos
 - Agregar productos a carrito de compras
-- Agregar productos a favoritos
+- Recibir mail al realizar un pedido
 - Filtrar productos por genero, categoria, precio.
 - Login/Signup/Logout
 ## Administrador

@@ -84,7 +84,7 @@ const productServices = {
 
   getFilters: async function getFilters(){
       const categorias = await Producto.findAll({
-      attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('categoria')), 'categoria']],
+      attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('categoria')), 'categoria']], // devuelve esto: [{ categoria: "Tecnología" },{ categoria: "Arte" },{ categoria: null },{ categoria: "Música" }]
       raw: true,
     });
     const generos = await Producto.findAll({
@@ -93,7 +93,7 @@ const productServices = {
     });
 
     return {
-      categorias: categorias.map(c => c.categoria).filter(c => c !== null), // "categorias": ["remera", "zapatillas", "pantalon"],
+      categorias: categorias.map(c => c.categoria).filter(c => c !== null), // "categorias": ["remera", "zapatillas", "pantalon"], y quita nulls
       generos: generos.map(g => g.genero).filter(g => g !== null), //  "generos": ["hombre", "mujer", "unisex"]
     };
 
