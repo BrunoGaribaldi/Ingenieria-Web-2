@@ -30,8 +30,6 @@ const productController = {
         precioMax: req.query.precioMax ? parseInt(req.query.precioMax) : undefined,
       };
 
-      console.log(filtros);
-
       const response = await productServices.listProducts(limit, offset, filtros);
 
       res.json({
@@ -56,7 +54,6 @@ const productController = {
 },
 
 getFiltersApi: async function (req, res) {
-  console.log('anashei');
   try {
     const filtros = await productServices.getFilters();
     res.json(filtros);

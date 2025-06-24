@@ -86,12 +86,12 @@ function renderFooter() {
             <p class="mb-1">
               Email:
               <a
-                href="mailto:contacto@tuempresa.com"
+                href="mailto:raulcernik@gmail.com"
                 class="text-white text-decoration-underline"
-                >agape@agape.com</a
+                >raulcernik@gmail.com</a
               >
             </p>
-            <p class="mb-1">Tel: +54 11 1234 5678</p>
+            <p class="mb-1">Tel: +54 3644 406999</p>
             <p class="mb-1">
               Ubicación: San Martín 342 H3700BJH Sáenz Peña Chaco
             </p>

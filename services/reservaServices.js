@@ -15,12 +15,18 @@ const reservaServices = {
       id_producto: idProducto,
     };
     const newReserva = await Reserva.create(nuevaReserva);
-    
+
     //le mando data del producto que se reservo
-    const productoReservado = await productoService.listProduct(newReserva.id_producto)
-   
- 
-    return { newReserva, id: decoded.id, email: decoded.email, productoReservado: productoReservado};
+    const productoReservado = await productoService.listProduct(
+      newReserva.id_producto
+    );
+
+    return {
+      newReserva,
+      id: decoded.id,
+      email: decoded.email,
+      productoReservado: productoReservado,
+    };
   },
   deleteReserva: async function deleteReserva(idProducto, token) {
     const decoded = jwt.verify(token, SECRET);
@@ -32,10 +38,11 @@ const reservaServices = {
     });
     return { deletedReserva, id: decoded.id };
   },
-  listReserva: async function listReserva() {
+  listReserva: async function listReserva(idUsuario) {
     const reservas = await Reserva.findAll({
       where: { id_usuario: idUsuario },
       include: { association: "producto" },
+      order: [["created_at", "DESC"]]
     });
     return reservas;
   },
@@ -89,33 +96,33 @@ const reservaServices = {
 
     return { barColumn, bar };
   },
-findAllReservas: async function findAllReservas(limit, offset, cliente = "") {
-  const whereUsuario = cliente
-    ? where(
-        fn("concat", col("usuario.nombre"), " ", col("usuario.apellido")),
+  findAllReservas: async function findAllReservas(limit, offset, cliente = "") {
+    const whereUsuario = cliente
+      ? where(
+          fn("concat", col("usuario.nombre"), " ", col("usuario.apellido")),
+          {
+            [Op.like]: `%${cliente}%`,
+          }
+        )
+      : undefined;
+
+    const { rows: reservas, count: total } = await Reserva.findAndCountAll({
+      limit,
+      offset,
+      order: [["created_at", "DESC"]],
+      include: [
+        { association: "producto" },
         {
-          [Op.like]: `%${cliente}%`,
-        }
-      )
-    : undefined;
+          association: "usuario",
+          where: whereUsuario, // ahora busca por nombre completo concatenado
+        },
+      ],
+    });
 
-  const { rows: reservas, count: total } = await Reserva.findAndCountAll({
-    limit,
-    offset,
-    order: [["created_at", "DESC"]],
-    include: [
-      { association: "producto" },
-      {
-        association: "usuario",
-        where: whereUsuario, // ahora busca por nombre completo concatenado
-      },
-    ],
-  });
-
-  return {
-    reservas,
-    total,
-  };
-},
+    return {
+      reservas,
+      total,
+    };
+  },
 };
 module.exports = reservaServices;
